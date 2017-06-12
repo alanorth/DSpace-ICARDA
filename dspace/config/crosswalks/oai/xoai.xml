@@ -30,6 +30,7 @@
             <Format ref="qdc"/>
             <Format ref="marc"/>
             <Format ref="uketd_dc"/>
+            <Format ref="oaicg"/>
             <!--<Format ref="junii2" />-->
             <Description>
                 This is the default context of the DSpace OAI-PMH data provider.
@@ -166,6 +167,12 @@
             <XSLT>metadataFormats/junii2.xsl</XSLT>
             <Namespace>http://irdb.nii.ac.jp/oai</Namespace>
             <SchemaLocation>http://irdb.nii.ac.jp/oai/junii2-3-1.xsd</SchemaLocation>
+        </Format>
+        <Format id="oaicg">
+            <Prefix>oai_cg</Prefix>
+            <XSLT>metadataFormats/oai_cg.xsl</XSLT>
+            <Namespace>http://drylandsystems.cgiar.org/documents/cg-terms/</Namespace>
+            <SchemaLocation>http://mel.cgiar.org/xmlui/themes/Mirage2/oai_cg.xsd</SchemaLocation>
         </Format>
     </Formats>
 
