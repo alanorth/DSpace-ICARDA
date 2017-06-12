@@ -98,6 +98,11 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
+		<ref bean="searchFilterType" />
+ <ref bean="searchFilterInstitute" />
+ <ref bean="searchFilterRegion" />
+ <ref bean="searchFilterCountry" />
+ <ref bean="searchFilterCrp" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -109,6 +114,12 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
+                <ref bean="searchFilterType" />
+<ref bean="searchFilterInstitute" />
+ <ref bean="searchFilterRegion" />
+ <ref bean="searchFilterCountry" />
+ <ref bean="searchFilterCrp" />
+
             </list>
         </property>
         <!--The sort filters for the discovery search-->
@@ -180,6 +191,11 @@
                         <value>dc.contributor.author</value>
                         <value>dc.creator</value>
                         <value>dc.subject</value>
+                        <value>dc.type</value>
+			<value>cg.contributor.project-lead-institute</value>
+			<value>cg.coverage.region</value>
+			<value>cg.coverage.country</value>
+			<value>cg.contributor.crp</value>
                     </list>
                 </property>
                 <!--The minimum number of matching terms across the metadata fields above before an item is found as related -->
@@ -203,6 +219,11 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
+                <ref bean="searchFilterType" />
+		<ref bean="searchFilterInstitute" />
+		<ref bean="searchFilterRegion" />
+		<ref bean="searchFilterCountry" />
+		<ref bean="searchFilterCrp" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -214,6 +235,11 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
+		<ref bean="searchFilterType" />
+		<ref bean="searchFilterInstitute" />
+                <ref bean="searchFilterRegion" />
+                <ref bean="searchFilterCountry" />
+                <ref bean="searchFilterCrp" />
             </list>
         </property>
         <!--The sort filters for the discovery search (same as defaultConfiguration above)-->
@@ -403,6 +429,61 @@
         </property>
         <property name="type" value="date"/>
         <property name="sortOrder" value="VALUE"/>
+    </bean>
+
+    <bean id="searchFilterType" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="type"/>
+        <property name="metadataFields">
+            <list>
+                <value>dc.type</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrder" value="COUNT"/>
+    </bean>
+
+    <bean id="searchFilterInstitute" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="institute"/>
+        <property name="metadataFields">
+            <list>
+                <value>cg.contributor.project-lead-institute</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrder" value="COUNT"/>
+    </bean>
+
+    <bean id="searchFilterRegion" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="region"/>
+        <property name="metadataFields">
+            <list>
+                <value>cg.coverage.region</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrder" value="COUNT"/>
+    </bean>
+
+    <bean id="searchFilterCountry" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="country"/>
+        <property name="metadataFields">
+            <list>
+                <value>cg.coverage.country</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrder" value="COUNT"/>
+    </bean>
+
+    <bean id="searchFilterCrp" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="crp"/>
+        <property name="metadataFields">
+            <list>
+              <value>cg.contributor.crp</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
+        <property name="sortOrder" value="COUNT"/>
     </bean>
 
     <!--Sort properties-->
