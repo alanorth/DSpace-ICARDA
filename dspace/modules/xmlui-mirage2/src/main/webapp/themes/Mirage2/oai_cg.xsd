@@ -1,0 +1,57 @@
+<schema targetNamespace="http://drylandsystems.cgiar.org/documents/cg-terms/" 
+        xmlns:oai_cg="http://drylandsystems.cgiar.org/documents/cg-terms/" 
+        xmlns:cg="http://drylandsystems.cgiar.org/documents/cg-terms/" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+<annotation>
+  <documentation> 
+      XML Schema 2015-10-20
+      Adjusted for usage in the OAI-PMH.
+      Schema imports the Icarda elements from the DCMI schema for unqualified Dublin Core.
+      2002-12-19 updated to use simpledc20021212.xsd (instead of simpledc20020312.xsd)
+  </documentation>
+</annotation>
+
+<import namespace="http://purl.org/dc/elements/1.1/" 
+        schemaLocation="http://dublincore.org/schemas/xmls/simpledc20021212.xsd"/>
+	
+<element name="cg" type="oai_cg:oai_cgType"/>
+
+<complexType name="oai_cgType">
+  <choice minOccurs="0" maxOccurs="unbounded">
+    <element ref="cg:contact"/>
+    <element ref="cg:contributor.center"/>
+    <element ref="cg:contributor.crp"/>
+    <element ref="cg:contributor.funder"/>
+    <element ref="cg:contributor.partnerId"/>
+    <element ref="cg:contributor.project"/>
+    <element ref="cg:contributor.project-lead-institute"/>
+    <element ref="cg:country"/>
+    <element ref="cg:coverage.admin-unit"/>
+    <element ref="cg:coverage.country"/>
+    <element ref="cg:coverage.end-date"/>
+    <element ref="cg:coverage.geolocation"/>
+    <element ref="cg:coverage.region"/>
+    <element ref="cg:coverage.start-date"/>
+    <element ref="cg:coverage"/>
+    <element ref="cg:creator.ID"/>
+    <element ref="cg:creator.ID-type"/>
+    <element ref="cg:date.embargo-end-date"/>
+    <element ref="cg:identifier.doi"/>
+    <element ref="cg:identifier.status"/>
+    <element ref="cg:identifier.url"/>
+    <element ref="cg:isijournal"/>
+    <element ref="cg:publisher.place"/>
+    <element ref="cg:source.chapter-title"/>
+    <element ref="cg:source.issue"/>
+    <element ref="cg:source.number"/>
+    <element ref="cg:source.pagination"/>
+    <element ref="cg:source.volume"/>
+    <element ref="cg:subject.agrovoc"/>
+    <element ref="cg:subject.domain-specific"/>
+  </choice>
+</complexType>
+
+</schema>
+
