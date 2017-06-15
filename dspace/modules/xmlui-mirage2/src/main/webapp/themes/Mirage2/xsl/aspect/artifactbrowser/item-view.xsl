@@ -189,7 +189,7 @@
                     </img>
                 </xsl:when>
                 <xsl:otherwise>
-                    <img src="/xmlui/themes/Mirage2/images/nothumb.jpg" />
+                    <img src="/themes/Mirage2/images/nothumb.jpg" />
                 </xsl:otherwise>
             </xsl:choose>
         </div>
