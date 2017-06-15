@@ -22,7 +22,7 @@
 		<oai_cg:cg xmlns:oai_cg="http://www.openarchives.org/OAI/2.0/oai_cg/" 
 			xmlns:cg="http://purl.org/dc/elements/1.1/" 
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-			xsi:schemaLocation="http://drylandsystems.cgiar.org/documents/cg-terms/ http://mel.cgiar.org/xmlui/themes/Mirage2/oai_cg.xsd">
+			xsi:schemaLocation="http://drylandsystems.cgiar.org/documents/cg-terms/ https://repo.mel.cgiar.org/themes/Mirage2/oai_cg.xsd">
 			<!-- cg.contact -->
 			<xsl:for-each select="doc:metadata/doc:element[@name='cg']/doc:element[@name='contact']">
 				<cg:contact><xsl:value-of select="." /></cg:contact>
