@@ -11,70 +11,83 @@
  * It will be included in all color schemes
  */
 
-header .navbar-default{
-	background: none;
+header .navbar-default {
+  background: none;
 }
-header .container{
-    height: 104px;
-padding-top: 10px;
-    padding-left: 0;
-    padding-right: 0;
-	}
+
+header .container {
+  height: 104px;
+  padding-top: 10px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .navbar a.navbar-brand {
-    display: none;
+  display: none;
 }
-.navbar-default .navbar-toggle>li>a, .navbar-default .navbar-nav>li>a{
-	color: #FFF;
-			font-weight: bold;
-			line-height: normal;
-			padding-top: 10px;
-			padding-bottom: 10px;
-	}
-		header .navbar-default .navbar-nav>li>a:hover{
-			text-decoration: underline;
-		}
-		header .navbar-default .navbar-toggle>.open>a, header .navbar-default .navbar-toggle>.open>a:hover, header .navbar-default .navbar-toggle>.open>a:focus, header .navbar-default .navbar-nav>.open>a, header .navbar-default .navbar-nav>.open>a:hover, header .navbar-default .navbar-nav>.open>a:focus{
-		background-color:#AA775A;
-			text-decoration: underline;
-		}
-		.trail-wrapper{
-		background:none;
-			border-bottom: 0px;
-		}
-		.trail-wrapper .container{
-		    background-color:#5090d0;
-		    border-bottom: 1px solid #5090d0;
-		}
-		.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus{
-			    background-color: #5f7357;
-				border-color: #5f7357;
-		}
-		
-		.breadcrumb>li{
-		color:#FFF;
-		}
-		.btn-primary{
-                   background-color: #5f7357;
-	           border-color: #5f7357;
-		}
-		a, a:hover{
-			color: #5f7357;
-		}
-		.breadcrumb a{
-			color:#FFF;
-		}
-		.element-label{
-			text-align: right;
-			display: inline-block;
-			width: 65px;
-			padding-right: 10px;
-			color: #757575;
-		}
+
+.navbar-default .navbar-toggle > li > a, .navbar-default .navbar-nav > li > a {
+  color: #FFF;
+  font-weight: bold;
+  line-height: normal;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+header .navbar-default .navbar-nav > li > a:hover {
+  text-decoration: underline;
+}
+
+header .navbar-default .navbar-toggle > .open > a, header .navbar-default .navbar-toggle > .open > a:hover, header .navbar-default .navbar-toggle > .open > a:focus, header .navbar-default .navbar-nav > .open > a, header .navbar-default .navbar-nav > .open > a:hover, header .navbar-default .navbar-nav > .open > a:focus {
+  background-color: #AA775A;
+  text-decoration: underline;
+}
+
+.trail-wrapper {
+  background: none;
+  border-bottom: 0px;
+}
+
+.trail-wrapper .container {
+  background-color: #5090d0;
+  border-bottom: 1px solid #5090d0;
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+  background-color: #5f7357;
+  border-color: #5f7357;
+}
+
+.breadcrumb > li {
+  color: #FFF;
+}
+
+.btn-primary {
+  background-color: #5f7357;
+  border-color: #5f7357;
+}
+
+a, a:hover {
+  color: #5f7357;
+}
+
+.breadcrumb a {
+  color: #FFF;
+}
+
+.element-label {
+  text-align: right;
+  display: inline-block;
+  width: 65px;
+  padding-right: 10px;
+  color: #757575;
+}
+
 #slider1 {
-    margin: 0 auto 0 293px;
-    overflow: hidden;
-    position: relative;
-    padding: 0 5px 0 0;
+  margin: 0 auto 0 293px;
+  overflow: hidden;
+  position: relative;
+  padding: 0 5px 0 0;
 }
 
 @include selection {
@@ -120,82 +133,166 @@ padding-top: 10px;
   }
 }
 #slider1 .viewport {
-    height: 100px;
-    overflow: hidden;
-    position: relative;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
 }
 
 #slider1 .buttons {
-    background: #C01313;
-    border-radius: 35px;
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 35px;
-    height: 35px;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    line-height: 35px;
-    text-decoration: none;
-    font-size: 22px;
+  background: #C01313;
+  border-radius: 35px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  line-height: 35px;
+  text-decoration: none;
+  font-size: 22px;
 }
 
 #slider1 .next {
-    right: 0;
-    left: auto;
-    top: 50%;
+  right: 0;
+  left: auto;
+  top: 50%;
 }
 
 #slider1 .buttons:hover {
-    color: #C01313;
-    background: #fff;
+  color: #C01313;
+  background: #fff;
 }
 
 #slider1 .disable {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 #slider1 .overview {
-    list-style: none;
-    position: absolute;
-    padding: 0;
-    margin: 0;
-    width: 184px;
-    left: 0;
-    top: 0;
+  list-style: none;
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  width: 184px;
+  left: 0;
+  top: 0;
 }
 
 #slider1 .overview li {
-    float: left;
-    margin: 0 10px 0 0;
-    padding: 1px;
-    height: 100px;
-    width: 180px;
- }
-.logo-box{
-    position: absolute;
-    width: 292px;
-    height: 104px;
-    background-color: #FFF;
-    z-index: 2;
-    top:0;
-    text-align:center;
-    padding-top: 8px;
+  float: left;
+  margin: 0 10px 0 0;
+  padding: 1px;
+  height: 100px;
+  width: 180px;
 }
-@media(max-width: 1200px){
-  .logo-box{
-     width:242px;
+
+.logo-box {
+  position: absolute;
+  width: 292px;
+  height: 104px;
+  background-color: #FFF;
+  z-index: 2;
+  top: 0;
+  text-align: center;
+  padding-top: 8px;
+}
+
+@media (max-width: 1200px) {
+  .logo-box {
+    width: 242px;
   }
-  #slider1{
-     margin-left: 242px;
+
+  #slider1 {
+    margin-left: 242px;
   }
 }
+
 .partners-list img {
-    border:0;
-    float: left;
-    max-width: 100px;
-    margin: 2px;
-    max-height: 48px;
+  border: 0;
+  float: left;
+  max-width: 100px;
+  margin: 2px;
+  max-height: 48px;
+}
+
+a.text-primary:hover {
+  color: #4c5e71;
+}
+
+a.bg-primary:hover {
+  background-color: #4c5e71;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #4c5e71;
+  border-color: #3d4d5c;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+.navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: normal;
+  color: #FFF;
+}
+
+@media (max-width: 767px) {
+  .navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.navbar-inverse {
+  background-color: #1f3f5e;
+}
+
+.label-primary[href]:hover,
+.label-primary[href]:focus {
+  background-color: #4c5e71;
+}
+
+header .navbar-default .navbar-toggle,
+header .navbar-default .navbar-nav {
+  color: #222;
+}
+
+header .navbar-default .navbar-toggle .icon-bar,
+header .navbar-default .navbar-nav .icon-bar {
+  background-color: #222;
+}
+
+header .navbar-default .navbar-toggle:hover,
+header .navbar-default .navbar-toggle:focus,
+header .navbar-default .navbar-nav:hover,
+header .navbar-default .navbar-nav:focus {
+  background-color: #b9b9b9;
+}
+
+.trail-wrapper .breadcrumb > li + li:before {
+  color: #fff;
+}
+
+.trail-wrapper .breadcrumb > .active {
+  color: #fff;
 }
