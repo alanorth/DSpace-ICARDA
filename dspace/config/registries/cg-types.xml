@@ -7,143 +7,175 @@
     <namespace>http://drylandsystems.cgiar.org/documents/cg-terms/</namespace>
   </dc-schema>
   <dc-type>
+    <schema>cg</schema>
     <element>contact</element>
+    <qualifier></qualifier>
     <scope_note>For data: email address for group or department to contact in case of questions</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>center</qualifier>
     <scope_note>Research Centers and offices with which creator(s) are affiliated</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>crp</qualifier>
     <scope_note>CGIAR Research Program with which the research is affiliated</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>funder</qualifier>
     <scope_note>Funder, funding agency or sponsor</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>partnerId</qualifier>
     <scope_note>Partners, funding agencies, other CGIAR centers</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>project</qualifier>
     <scope_note>Name of project with which the research is affiliated</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>contributor</element>
     <qualifier>project-lead-institute</qualifier>
     <scope_note>The lead institution for the project (CGIAR or otherwise) connected to the research output being described</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>admin-unit</qualifier>
     <scope_note>Sub-national administrative areas such as provinces, states, or districts</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>country</qualifier>
     <scope_note>Country/countries related to the data which was collected in resource</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>end-date</qualifier>
     <scope_note>Chronological period: end date of activity described in resource</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>geolocation</qualifier>
     <scope_note>Coordinates or polygon points for boundaries of area where research was conducted</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>region</qualifier>
     <scope_note>Supra-national areas (above country level) related to the item being described</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>start-date</qualifier>
     <scope_note>Chronological period: start date of activity described in resource</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
+    <qualifier></qualifier>
     <scope_note>Geospatial coordinates, countries, regions, sub-regions, chronological period</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>creator</element>
     <qualifier>ID</qualifier>
     <scope_note>Used if ORCID, SCOPUS, or other type of creator ID scheme is in use. Used in parallel with cg.creator.ID.type</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>creator</element>
     <qualifier>ID-type</qualifier>
     <scope_note>Used to indicate the type of Creator ID – ex: SCOPUS, ORCID, etc.</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>date</element>
     <qualifier>embargo-end-date</qualifier>
     <scope_note>Used when an item has an embargo by publisher (ex: 6 or 12-month embargo)</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>identifier</element>
     <qualifier>doi</qualifier>
     <scope_note>DOI</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>identifier</element>
     <qualifier>status</qualifier>
     <scope_note>Status (as Open Access/Limited Access)</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>identifier</element>
     <qualifier>url</qualifier>
     <scope_note>URL</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>isijournal</element>
+    <qualifier></qualifier>
     <scope_note>ISI Journal (write as or leave empty)</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>publisher</element>
     <qualifier>place</qualifier>
     <scope_note>For Conference Paper/proceeding only add conference place</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>source</element>
     <qualifier>chapter-title</qualifier>
     <scope_note>Book chapter title - Book Title is in dc.title</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>source</element>
     <qualifier>issue</qualifier>
     <scope_note>Issue</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>source</element>
     <qualifier>number</qualifier>
     <scope_note>Book Chapter number and Serie Number</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>source</element>
     <qualifier>pagination</qualifier>
     <scope_note>Pagination</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>source</element>
     <qualifier>volume</qualifier>
     <scope_note>Volume</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>subject</element>
     <qualifier>agrovoc</qualifier>
     <scope_note>AGROVOC subject matter or research area</scope_note>
   </dc-type>
   <dc-type>
+    <schema>cg</schema>
     <element>subject</element>
     <qualifier>domain-specific</qualifier>
     <scope_note>Subject matter or research area from domain-specific vocabularies, if missing from AGROVOC</scope_note>
