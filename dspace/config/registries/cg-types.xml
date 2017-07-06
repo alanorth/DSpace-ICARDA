@@ -50,6 +50,12 @@
   </dc-type>
   <dc-type>
     <schema>cg</schema>
+    <element>country</element>
+    <qualifier></qualifier>
+    <scope_note>Full name of country/countries related to the data which was collected in resource</scope_note>
+  </dc-type>
+  <dc-type>
+    <schema>cg</schema>
     <element>coverage</element>
     <qualifier>admin-unit</qualifier>
     <scope_note>Sub-national administrative areas such as provinces, states, or districts</scope_note>
