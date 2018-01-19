@@ -355,23 +355,21 @@
                 </h5>
                 <xsl:apply-templates select="$document//dri:referenceSet[@id='aspect.artifactbrowser.ItemViewer.referenceSet.collection-viewer']/dri:reference"/>
             </div>
-
             <div class="partners-list item-page-field-wrapper table">
-                <xsl:for-each select="dim:field[@element='partner' and @qualifier='id']">
-                    <xsl:variable name="src">
-                        <xsl:value-of
-                                select="./node()"/>
-                    </xsl:variable>
-                    <img alt="Thumbnail">
-                        <xsl:attribute name="src">
-                            <xsl:value-of select="$src"/>
-                        </xsl:attribute>
-                    </img>
-                </xsl:for-each>
-
+                 <div class="values">
+                 <xsl:for-each select="dim:field[@element='partner' and @qualifier='id']">
+                      <input type="hidden">
+                          <xsl:attribute name="value">
+                             <xsl:value-of select="./node()"/>
+                          </xsl:attribute>
+                      </input>
+                 </xsl:for-each>
+                 </div>
+                 <div class="logos"></div>
             </div>
         </xsl:if>
     </xsl:template>
+
 
     <xsl:template name="itemSummaryView-DIM-file-section">
         <xsl:choose>

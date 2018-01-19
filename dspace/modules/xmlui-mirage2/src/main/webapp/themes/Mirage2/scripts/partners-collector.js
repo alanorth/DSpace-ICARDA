@@ -1,6 +1,5 @@
 function prepareNames($inputs){
 	var partners = [];
-	//Fix names
 	for(var i =0; i< $inputs.length;i++){
 		var partner = $inputs[i].value;
 		if(partner == "Not Applicable")
@@ -10,7 +9,6 @@ function prepareNames($inputs){
         partners.push(partner);
 	}
 
-	//Remove duplicates
 	partners = partners.filter( function( item, index, inputArray ) {
            return inputArray.indexOf(item) == index;
     });
@@ -23,8 +21,12 @@ function requestLogos(partners, callback){
 	var index = 0;
 	for (var i = 0; i < partners.length; i++) {
 		jQuery.ajax({
-		     url:"https://mel.cgiar.org/api/partners/" + encodeURIComponent(partners[i]),
-		     data: {client_id:1, client_secret: 'hello'},
+		     url:"http://192.168.1.10:745/overview/getlogos",
+		     data: {
+		     	client_id:1,
+				 client_secret: 'hello',
+                 partners: partners[i],
+			 },
 		     dataType: 'jsonp',
 		     success:function(json){
 		     	 index++;
