@@ -110,6 +110,8 @@
    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.country">Country</message>
  <message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.crp">CRP</message>
    <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.crp">CRP</message>
+ <message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.date">Date</message>
+   <message key="xmlui.ArtifactBrowser.SimpleSearch.filter.date">Date</message>
 
    <message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.title">title</message>
    <message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.dateissued">issue date</message>
@@ -150,6 +152,8 @@
         <message key="xmlui.Discovery.AbstractSearch.type_country">Filter by: Country</message>
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_crp">CRP</message>
         <message key="xmlui.Discovery.AbstractSearch.type_crp">Filter by: CRP</message>
+	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_date">Date</message>
+        <message key="xmlui.Discovery.AbstractSearch.type_date">Filter by: Date</message>
 
 
    <!--  some common other possibilities for Advanced Search Fields -->
