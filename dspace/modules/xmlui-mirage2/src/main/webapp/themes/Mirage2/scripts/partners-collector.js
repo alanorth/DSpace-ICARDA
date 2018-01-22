@@ -21,7 +21,7 @@ function requestLogos(partners, callback){
 	var index = 0;
 	for (var i = 0; i < partners.length; i++) {
 		jQuery.ajax({
-		     url:"http://192.168.1.10:745/overview/getlogos",
+		     url:"http://192.168.1.102:745/overview/getlogos",
 		     data: {
 		     	client_id:1,
 				 client_secret: 'hello',

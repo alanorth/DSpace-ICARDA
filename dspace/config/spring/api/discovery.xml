@@ -103,6 +103,7 @@
  <ref bean="searchFilterRegion" />
  <ref bean="searchFilterCountry" />
  <ref bean="searchFilterCrp" />
+ <ref bean="searchFilterYear" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -119,6 +120,7 @@
  <ref bean="searchFilterRegion" />
  <ref bean="searchFilterCountry" />
  <ref bean="searchFilterCrp" />
+ <ref bean="searchFilterYear" />
 
             </list>
         </property>
@@ -196,6 +198,7 @@
 			<value>cg.coverage.region</value>
 			<value>cg.coverage.country</value>
 			<value>cg.contributor.crp</value>
+			<value>dc.date</value>
                     </list>
                 </property>
                 <!--The minimum number of matching terms across the metadata fields above before an item is found as related -->
@@ -224,6 +227,7 @@
 		<ref bean="searchFilterRegion" />
 		<ref bean="searchFilterCountry" />
 		<ref bean="searchFilterCrp" />
+		<ref bean="searchFilterYear" />
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -240,6 +244,7 @@
                 <ref bean="searchFilterRegion" />
                 <ref bean="searchFilterCountry" />
                 <ref bean="searchFilterCrp" />
+                <ref bean="searchFilterYear" />
             </list>
         </property>
         <!--The sort filters for the discovery search (same as defaultConfiguration above)-->
@@ -484,6 +489,15 @@
         </property>
         <property name="facetLimit" value="10"/>
         <property name="sortOrder" value="COUNT"/>
+    </bean>
+    <bean id="searchFilterYear" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+        <property name="indexFieldName" value="year"/>
+        <property name="metadataFields">
+            <list>
+              <value>dc.date</value>
+            </list>
+        </property>
+        <property name="facetLimit" value="10"/>
     </bean>
 
     <!--Sort properties-->
