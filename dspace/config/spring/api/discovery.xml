@@ -198,7 +198,7 @@
 			<value>cg.coverage.region</value>
 			<value>cg.coverage.country</value>
 			<value>cg.contributor.crp</value>
-			<value>dc.date</value>
+			<value>dc.date.year</value>
                     </list>
                 </property>
                 <!--The minimum number of matching terms across the metadata fields above before an item is found as related -->
@@ -494,7 +494,7 @@
         <property name="indexFieldName" value="year"/>
         <property name="metadataFields">
             <list>
-              <value>dc.date</value>
+              <value>dc.date.year</value>
             </list>
         </property>
         <property name="facetLimit" value="10"/>
