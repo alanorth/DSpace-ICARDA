@@ -85,6 +85,7 @@
 
     <!--handles the rendering of a single item in a list in file mode-->
     <!--handles the rendering of a single item in a list in metadata mode-->
+
     <xsl:template match="dim:dim" mode="itemSummaryList-DIM-metadata">
         <xsl:param name="href"/>
         <div class="artifact-description">
@@ -231,13 +232,7 @@
                         </img>
                     </xsl:when>
                     <xsl:otherwise>
-                        <img alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
-                            <xsl:attribute name="data-src">
-                                <xsl:text>holder.js/100%x</xsl:text>
-                                <xsl:value-of select="$thumbnail.maxheight"/>
-                                <xsl:text>/text:No Thumbnail</xsl:text>
-                            </xsl:attribute>
-                        </img>
+                        <xsl:call-template name="itemSummaryView-DIM-thumbnail"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>

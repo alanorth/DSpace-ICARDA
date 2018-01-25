@@ -56,31 +56,21 @@
         </xsl:variable>
 
         <xsl:variable name="emphasis" select="confman:getProperty('xmlui.theme.mirage.item-list.emphasis')"/>
-        <xsl:choose>
-            <xsl:when test="'file' = $emphasis">
+        <div class="item-wrapper row">
+            <div class="col-sm-3 hidden-xs">
+                <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
+                    <xsl:with-param name="href" select="$href"/>
+                </xsl:apply-templates>
+            </div>
 
-
-                <div class="item-wrapper row">
-                    <div class="col-sm-3 hidden-xs">
-                        <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
-                            <xsl:with-param name="href" select="$href"/>
-                        </xsl:apply-templates>
-                    </div>
-
-                    <div class="col-sm-9">
-                        <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                             mode="itemSummaryList-DIM-metadata">
-                            <xsl:with-param name="href" select="$href"/>
-                        </xsl:apply-templates>
-                    </div>
-
-                </div>
-            </xsl:when>
-            <xsl:otherwise>
+            <div class="col-sm-9">
                 <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                     mode="itemSummaryList-DIM-metadata"><xsl:with-param name="href" select="$href"/></xsl:apply-templates>
-            </xsl:otherwise>
-        </xsl:choose>
+                                     mode="itemSummaryList-DIM-metadata">
+                    <xsl:with-param name="href" select="$href"/>
+                </xsl:apply-templates>
+            </div>
+
+        </div>
     </xsl:template>
 
     <!--handles the rendering of a single item in a list in file mode-->
