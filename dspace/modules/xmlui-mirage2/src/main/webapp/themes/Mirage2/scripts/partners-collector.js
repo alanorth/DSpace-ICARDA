@@ -1,5 +1,6 @@
 function prepareNames($inputs){
 	var partners = [];
+	//Fix names
 	for(var i =0; i< $inputs.length;i++){
 		var partner = $inputs[i].value;
 		if(partner == "Not Applicable")
@@ -9,6 +10,7 @@ function prepareNames($inputs){
         partners.push(partner);
 	}
 
+	//Remove duplicates
 	partners = partners.filter( function( item, index, inputArray ) {
            return inputArray.indexOf(item) == index;
     });
@@ -18,30 +20,26 @@ function prepareNames($inputs){
 
 function requestLogos(partners, callback){
 	var images = [];
-	var index = 0;
-	for (var i = 0; i < partners.length; i++) {
-		jQuery.ajax({
-		     url:"https://mel.cgiar.org/dspace/getlogos",
-		     data: {
-		     	client_id:1,
-				 client_secret: 'hello',
-                 partners: partners[i],
-			 },
-		     dataType: 'jsonp',
-		     success:function(json){
-		     	 index++;
-		         if(json.logo && json.logo.length > 38){//be sure logo available 
-		            images.push(json.logo);
-		         }
-		         if(index == partners.length){
-		            callback(images);
-		         }
-		     },
-		     error:function(){
-		     	index++;
-		     }      
-		});
-	}
+    jQuery.ajax({
+        url:"https://mel.cgiar.org/dspace/getpartnerlogos",
+        data: {
+            client_id:1,
+            client_secret: 'hello',
+            partners: partners,
+            height: 48,
+        },
+        dataType: 'jsonp',
+        success:function(json){
+            if(json.data){
+            	$.each(json.data, function(key, value){
+                    images.push(value.logo);
+				});
+                callback(images);
+            }
+        },
+        error:function(){
+        }
+    });
 }
 
 function appendImages(images){

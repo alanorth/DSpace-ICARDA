@@ -513,7 +513,7 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-        <xsl:if test="not((./@element = 'partner' and ./@qualifier = 'id') or (./@element = 'file' and ./@qualifier = 'thumbnail') or (./@element = 'date' and ./@qualifier = 'year'))">
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@element = 'partner' and ./@qualifier = 'id') or (./@element = 'file' and ./@qualifier = 'thumbnail') or (./@element = 'date' and ./@qualifier = 'year'))">
             <tr>
                 <xsl:attribute name="class">
                     <xsl:text>ds-table-row </xsl:text>
