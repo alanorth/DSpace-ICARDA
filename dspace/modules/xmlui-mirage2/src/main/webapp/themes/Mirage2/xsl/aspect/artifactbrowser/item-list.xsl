@@ -64,6 +64,7 @@
                     <div class="col-sm-3 hidden-xs">
                         <xsl:apply-templates select="./mets:fileSec" mode="artifact-preview">
                             <xsl:with-param name="href" select="$href"/>
+                            <xsl:with-param name="mel_thumbnail" select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim/dim:field[@element='file' and @qualifier='thumbnail']"/>
                         </xsl:apply-templates>
                     </div>
 
@@ -219,6 +220,7 @@
 
     <xsl:template match="mets:fileSec" mode="artifact-preview">
         <xsl:param name="href"/>
+        <xsl:param name="mel_thumbnail"/>
         <div class="thumbnail artifact-preview">
             <a class="image-link" href="{$href}">
                 <xsl:choose>
@@ -230,14 +232,16 @@
                             </xsl:attribute>
                         </img>
                     </xsl:when>
-                    <xsl:otherwise>
-                        <img alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
-                            <xsl:attribute name="data-src">
-                                <xsl:text>holder.js/100%x</xsl:text>
-                                <xsl:value-of select="$thumbnail.maxheight"/>
-                                <xsl:text>/text:No Thumbnail</xsl:text>
+                    <xsl:when test="$mel_thumbnail">
+                        <img class="img-responsive" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
+                            <xsl:attribute name="src">
+                                <xsl:value-of
+                                        select="$mel_thumbnail[1]/node()"/>
                             </xsl:attribute>
                         </img>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <img src="/themes/Mirage2/images/nothumb.jpg" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
