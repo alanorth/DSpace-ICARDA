@@ -514,12 +514,14 @@
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
         <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@element = 'partner' and ./@qualifier = 'id') or (./@element = 'file' and ./@qualifier = 'thumbnail') or (./@element = 'date' and ./@qualifier = 'year'))">
-            <tr>
-                <xsl:attribute name="class">
-                    <xsl:text>ds-table-row </xsl:text>
-                    <xsl:if test="(position() div 2 mod 2 = 0)">even </xsl:if>
-                    <xsl:if test="(position() div 2 mod 2 = 1)">odd </xsl:if>
-                </xsl:attribute>
+            <xsl:variable name="elementValue" select="./node()" />
+            <xsl:if test="$elementValue != ''">
+                <tr>
+                    <xsl:attribute name="class">
+                        <xsl:text>ds-table-row </xsl:text>
+                        <xsl:if test="(position() div 2 mod 2 = 0)">even</xsl:if>
+                        <xsl:if test="(position() div 2 mod 2 = 1)">odd</xsl:if>
+                    </xsl:attribute>
                     <td class="label-cell">
                         <xsl:value-of select="./@mdschema"/>
                         <xsl:text>.</xsl:text>
@@ -530,11 +532,14 @@
                         </xsl:if>
                     </td>
 
-            <td class="word-break">
-              <xsl:copy-of select="./node()"/>
-            </td>
-                <td><xsl:value-of select="./@language"/></td>
-            </tr>
+                    <td class="word-break">
+                        <xsl:copy-of select="./node()"/>
+                    </td>
+                    <td>
+                        <xsl:value-of select="./@language"/>
+                    </td>
+                </tr>
+            </xsl:if>
         </xsl:if>
     </xsl:template>
 
