@@ -191,8 +191,7 @@
 
                 <xsl:when test="count(dim:field[@element='file' and @qualifier='thumbnail']) = 1">
                     <xsl:variable name="src">
-                        <xsl:value-of
-                                select="dim:field[@element='file' and @qualifier='thumbnail'][1]/node()"/>
+                        <xsl:value-of select="dim:field[@element='file' and @qualifier='thumbnail'][1]/node()"/>
                     </xsl:variable>
                     <img alt="Thumbnail">
                         <xsl:attribute name="src">
@@ -357,7 +356,7 @@
             </div>
             <div class="partners-list item-page-field-wrapper table">
                  <div class="values">
-                 <xsl:for-each select="dim:field[@element='partner' and @qualifier='id']">
+                 <xsl:for-each select="dim:field[@mdschema = 'mel' and @element='partner' and @qualifier='id']">
                       <input type="hidden">
                           <xsl:attribute name="value">
                              <xsl:value-of select="./node()"/>
@@ -513,8 +512,8 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@element = 'partner' and ./@qualifier = 'id') or (./@element = 'file' and ./@qualifier = 'thumbnail') or (./@element = 'date' and ./@qualifier = 'year'))">
-            <xsl:variable name="elementValue" select="./node()" />
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year'))">
+            <xsl:variable name="elementValue" select="./node()"/>
             <xsl:if test="$elementValue != ''">
                 <tr>
                     <xsl:attribute name="class">
