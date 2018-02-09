@@ -257,5 +257,5 @@ header .navbar-default .navbar-nav:focus {
 
 .thumbnail.artifact-preview > a > img {
   border: 1px solid #ddd;
-  height: 185px;
+  max-height: 185px;
 }
