@@ -254,3 +254,7 @@ header .navbar-default .navbar-nav:focus {
 .trail-wrapper .breadcrumb > .active {
   color: #fff;
 }
+
+.thumbnail.artifact-preview > a > img {
+  border: 1px solid #ddd;
+}

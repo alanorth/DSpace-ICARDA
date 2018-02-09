@@ -95,15 +95,15 @@
         <!--Which sidebar facets are to be displayed-->
         <property name="sidebarFacets">
             <list>
-                <ref bean="searchFilterAuthor" />
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterIssued" />
-		<ref bean="searchFilterType" />
- <ref bean="searchFilterInstitute" />
- <ref bean="searchFilterRegion" />
- <ref bean="searchFilterCountry" />
- <ref bean="searchFilterCrp" />
- <ref bean="searchFilterYear" />
+                <ref bean="searchFilterAuthor"/>
+                <ref bean="searchFilterSubject"/>
+                <ref bean="searchFilterIssued"/>
+                <ref bean="searchFilterType"/>
+                <ref bean="searchFilterInstitute"/>
+                <ref bean="searchFilterRegion"/>
+                <ref bean="searchFilterCountry"/>
+                <ref bean="searchFilterCrp"/>
+                <ref bean="searchFilterYear"/>
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -111,16 +111,16 @@
         <!--The search filters which can be used on the discovery search page-->
         <property name="searchFilters">
             <list>
-                <ref bean="searchFilterTitle" />
-                <ref bean="searchFilterAuthor" />
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterIssued" />
-                <ref bean="searchFilterType" />
-<ref bean="searchFilterInstitute" />
- <ref bean="searchFilterRegion" />
- <ref bean="searchFilterCountry" />
- <ref bean="searchFilterCrp" />
- <ref bean="searchFilterYear" />
+                <ref bean="searchFilterTitle"/>
+                <ref bean="searchFilterAuthor"/>
+                <ref bean="searchFilterSubject"/>
+                <ref bean="searchFilterIssued"/>
+                <ref bean="searchFilterType"/>
+                <ref bean="searchFilterInstitute"/>
+                <ref bean="searchFilterRegion"/>
+                <ref bean="searchFilterCountry"/>
+                <ref bean="searchFilterCrp"/>
+                <ref bean="searchFilterYear"/>
 
             </list>
         </property>
@@ -194,11 +194,11 @@
                         <value>dc.creator</value>
                         <value>dc.subject</value>
                         <value>dc.type</value>
-			<value>cg.contributor.project-lead-institute</value>
-			<value>cg.coverage.region</value>
-			<value>cg.coverage.country</value>
-			<value>cg.contributor.crp</value>
-			<value>dc.date.year</value>
+                        <value>cg.contributor.project-lead-institute</value>
+                        <value>cg.coverage.region</value>
+                        <value>mel.ISO3166/MA</value>
+                        <value>cg.contributor.crp</value>
+                        <value>mel.date.year</value>
                     </list>
                 </property>
                 <!--The minimum number of matching terms across the metadata fields above before an item is found as related -->
@@ -219,15 +219,15 @@
         <!--Which sidebar facets are to be displayed (same as defaultConfiguration above)-->
         <property name="sidebarFacets">
             <list>
-                <ref bean="searchFilterAuthor" />
-                <ref bean="searchFilterSubject" />
-                <ref bean="searchFilterIssued" />
-                <ref bean="searchFilterType" />
-		<ref bean="searchFilterInstitute" />
-		<ref bean="searchFilterRegion" />
-		<ref bean="searchFilterCountry" />
-		<ref bean="searchFilterCrp" />
-		<ref bean="searchFilterYear" />
+                <ref bean="searchFilterAuthor"/>
+                <ref bean="searchFilterSubject"/>
+                <ref bean="searchFilterIssued"/>
+                <ref bean="searchFilterType"/>
+                <ref bean="searchFilterInstitute"/>
+                <ref bean="searchFilterRegion"/>
+                <ref bean="searchFilterCountry"/>
+                <ref bean="searchFilterCrp"/>
+                <ref bean="searchFilterYear"/>
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -473,7 +473,7 @@
         <property name="indexFieldName" value="country"/>
         <property name="metadataFields">
             <list>
-                <value>cg.coverage.country</value>
+                <value>mel.ISO3166/MA</value>
             </list>
         </property>
         <property name="facetLimit" value="10"/>
@@ -494,7 +494,7 @@
         <property name="indexFieldName" value="year"/>
         <property name="metadataFields">
             <list>
-              <value>dc.date.year</value>
+              <value>mel.date.year</value>
             </list>
         </property>
         <property name="facetLimit" value="10"/>

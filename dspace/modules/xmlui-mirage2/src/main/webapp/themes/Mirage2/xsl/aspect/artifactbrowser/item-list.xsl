@@ -235,13 +235,13 @@
                     <xsl:when test="$mel_thumbnail">
                         <img class="img-responsive" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt">
                             <xsl:attribute name="src">
-                                <xsl:value-of
-                                        select="$mel_thumbnail[1]/node()"/>
+                                <xsl:value-of select="$mel_thumbnail[1]/node()"/>
                             </xsl:attribute>
                         </img>
                     </xsl:when>
                     <xsl:otherwise>
-                        <img src="/themes/Mirage2/images/nothumb.jpg" alt="xmlui.mirage2.item-list.thumbnail" i18n:attr="alt"/>
+                        <img src="/themes/Mirage2/images/nothumb.jpg" alt="xmlui.mirage2.item-list.thumbnail"
+                             i18n:attr="alt"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </a>
