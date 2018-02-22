@@ -188,6 +188,18 @@
                         </xsl:attribute>
                     </img>
                 </xsl:when>
+
+                <xsl:when test="count(dim:field[@element='file' and @qualifier='thumbnail']) = 1">
+                    <xsl:variable name="src">
+                        <xsl:value-of select="dim:field[@element='file' and @qualifier='thumbnail'][1]/node()"/>
+                    </xsl:variable>
+                    <img alt="Thumbnail">
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="$src"/>
+                        </xsl:attribute>
+                    </img>
+                </xsl:when>
+
                 <xsl:otherwise>
                     <img src="/themes/Mirage2/images/nothumb.jpg" />
                 </xsl:otherwise>
@@ -344,28 +356,7 @@
             </div>
             <div class="partners-list item-page-field-wrapper table">
                  <div class="values">
-                 <xsl:for-each select="dim:field[@element='contributor' and @qualifier='center']">
-                      <input type="hidden">
-                          <xsl:attribute name="value">
-                             <xsl:value-of select="./node()"/>
-                          </xsl:attribute>
-                      </input>
-                 </xsl:for-each>
-                 <xsl:for-each select="dim:field[@element='contributor' and @qualifier='crp']">
-                      <input type="hidden">
-                          <xsl:attribute name="value">
-                             <xsl:value-of select="./node()"/>
-                          </xsl:attribute>
-                      </input>
-                 </xsl:for-each>
-                 <xsl:for-each select="dim:field[@element='contributor' and @qualifier='funder']">
-                      <input type="hidden">
-                          <xsl:attribute name="value">
-                             <xsl:value-of select="./node()"/>
-                          </xsl:attribute>
-                      </input>
-                 </xsl:for-each>
-                 <xsl:for-each select="dim:field[@element='contributor' and @qualifier='project-lead-institute']">
+                 <xsl:for-each select="dim:field[@mdschema = 'mel' and @element='partner' and @qualifier='id']">
                       <input type="hidden">
                           <xsl:attribute name="value">
                              <xsl:value-of select="./node()"/>
@@ -376,7 +367,7 @@
                  <div class="logos"></div>
             </div>
         </xsl:if>
-    </xsl:template> 
+    </xsl:template>
 
 
     <xsl:template name="itemSummaryView-DIM-file-section">
@@ -521,26 +512,34 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-            <tr>
-                <xsl:attribute name="class">
-                    <xsl:text>ds-table-row </xsl:text>
-                    <xsl:if test="(position() div 2 mod 2 = 0)">even </xsl:if>
-                    <xsl:if test="(position() div 2 mod 2 = 1)">odd </xsl:if>
-                </xsl:attribute>
-                <td class="label-cell">
-                    <xsl:value-of select="./@mdschema"/>
-                    <xsl:text>.</xsl:text>
-                    <xsl:value-of select="./@element"/>
-                    <xsl:if test="./@qualifier">
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year'))">
+            <xsl:variable name="elementValue" select="./node()"/>
+            <xsl:if test="$elementValue != ''">
+                <tr>
+                    <xsl:attribute name="class">
+                        <xsl:text>ds-table-row </xsl:text>
+                        <xsl:if test="(position() div 2 mod 2 = 0)">even</xsl:if>
+                        <xsl:if test="(position() div 2 mod 2 = 1)">odd</xsl:if>
+                    </xsl:attribute>
+                    <td class="label-cell">
+                        <xsl:value-of select="./@mdschema"/>
                         <xsl:text>.</xsl:text>
-                        <xsl:value-of select="./@qualifier"/>
-                    </xsl:if>
-                </td>
-            <td class="word-break">
-              <xsl:copy-of select="./node()"/>
-            </td>
-                <td><xsl:value-of select="./@language"/></td>
-            </tr>
+                        <xsl:value-of select="./@element"/>
+                        <xsl:if test="./@qualifier">
+                            <xsl:text>.</xsl:text>
+                            <xsl:value-of select="./@qualifier"/>
+                        </xsl:if>
+                    </td>
+
+                    <td class="word-break">
+                        <xsl:copy-of select="./node()"/>
+                    </td>
+                    <td>
+                        <xsl:value-of select="./@language"/>
+                    </td>
+                </tr>
+            </xsl:if>
+        </xsl:if>
     </xsl:template>
 
     <!-- don't render the item-view-toggle automatically in the summary view, only when it gets called -->
