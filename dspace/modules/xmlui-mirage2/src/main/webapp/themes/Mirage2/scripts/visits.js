@@ -59,7 +59,7 @@ function Visits() {
     }
 
     function BuildVisitsTable(data) {
-        var html = '<div id="ItemStatistics_div" class="row" style="text-align: center;">';
+        var html = '<div id="ItemStatistics_div" class="row" style="text-align: center; margin-top: 50px;">';
         var visitsTable =
             '<div class="col-md-6">' +
             '<table class="table table-striped table-bordered table-hover">' +
