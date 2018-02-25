@@ -850,21 +850,23 @@
             <script src="{$theme-path}{@src}">&#160;</script>
         </xsl:for-each>
 
-<script src="/themes/Mirage2/scripts/jquery.tinycarousel.js"></script>
-<script src="/themes/Mirage2/scripts/partners-collector.js"></script>
-<script>
-<xsl:text>
-$(document).ready(function () {
-                $('#slider1').tinycarousel(
-                         { interval: true,
-                           buttons: false,
-               animationTime:3000
-             }
-                );
-checkPartners();
-        });
-        </xsl:text>
-</script>
+        <script src="/themes/Mirage2/scripts/jquery.tinycarousel.js"></script>
+        <script src="/themes/Mirage2/scripts/partners-collector.js"></script>
+        <script src="/themes/Mirage2/scripts/visits.js"></script>
+        <script src="/themes/Mirage2/scripts/highcharts.js"></script>
+        <script>
+            <xsl:text>
+                $(document).ready(function () {
+                    $('#slider1').tinycarousel({
+                        interval: true,
+                        buttons: false,
+                        animationTime: 3000
+                    });
+                    Visits();
+                    checkPartners();
+                });
+            </xsl:text>
+        </script>
 
 
         <!-- Add javascipt specified in DRI -->
