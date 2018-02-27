@@ -4,11 +4,7 @@ function Visits() {
 
     if (($('input[name=dspace_item_id]').length > 0 && dspace_item_id != '') || ($('input[name=dspace_item_handle]').length > 0 && dspace_item_handle != '')) {
         GetVisit(dspace_item_id, dspace_item_handle);
-        GetLocation(dspace_item_id, dspace_item_handle, 'visit')
-
-        $('body').on('click', '.item-summary-view-metadata a.open_view_link', function (e) {
-            GetLocation(dspace_item_id, dspace_item_handle, 'link');
-        });
+        GetLocation(dspace_item_id, dspace_item_handle, 'visit');
     }
 
     function GetLocation(dspace_item_id, dspace_item_handle, type, call_back) {
