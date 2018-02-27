@@ -219,9 +219,6 @@
 			<xsl:choose>
 				<xsl:when test="dim:field[@element='identifier'][not(@qualifier)][last()]">
 					<xsl:element name="a">
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'open_view_link'"/>
-                        </xsl:attribute>
 						<xsl:attribute name="href">
 							<xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][last()]/node()"/>
 						</xsl:attribute>
@@ -230,9 +227,6 @@
 				</xsl:when>
 				<xsl:otherwise>
 					<xsl:element name="a">
-                        <xsl:attribute name="class">
-                            <xsl:value-of select="'open_view_link'"/>
-                        </xsl:attribute>
 						<xsl:attribute name="href">
 							<xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][1]/node()"/>
 						</xsl:attribute>
