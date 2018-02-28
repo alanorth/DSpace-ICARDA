@@ -43,7 +43,10 @@
     <xsl:template name="itemSummaryView-DIM">
         <!-- Generate the info about the item from the metadata section -->
         <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-        mode="itemSummaryView-DIM"/>
+        mode="itemSummaryView-DIM">
+            <xsl:with-param name="dspace_item_id" select="substring-after(@OBJEDIT, '/admin/item?itemID=')"/>
+            <xsl:with-param name="dspace_item_handle" select="@OBJID"/>
+        </xsl:apply-templates>
 
         <xsl:copy-of select="$SFXLink" />
 
@@ -66,7 +69,10 @@
     <xsl:template name="itemDetailView-DIM">
         <!-- Output all of the metadata about the item from the metadata section -->
         <xsl:apply-templates select="mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                             mode="itemDetailView-DIM"/>
+                             mode="itemDetailView-DIM">
+            <xsl:with-param name="dspace_item_id" select="substring-after(@OBJEDIT, '/admin/item?itemID=')"/>
+            <xsl:with-param name="dspace_item_handle" select="@OBJID"/>
+        </xsl:apply-templates>
 
         <!-- Generate the bitstream information from the file section -->
         <xsl:choose>
@@ -105,6 +111,10 @@
 
 
     <xsl:template match="dim:dim" mode="itemSummaryView-DIM">
+        <xsl:param name="dspace_item_id"/>
+        <xsl:param name="dspace_item_handle"/>
+        <input type="hidden" name="dspace_item_id" value="{$dspace_item_id}"/>
+        <input type="hidden" name="dspace_item_handle" value="{$dspace_item_handle}"/>
         <div class="item-summary-view-metadata">
             <xsl:call-template name="itemSummaryView-DIM-title"/>
             <div class="row">
@@ -495,6 +505,10 @@
     </xsl:template>
 
     <xsl:template match="dim:dim" mode="itemDetailView-DIM">
+        <xsl:param name="dspace_item_id"/>
+        <xsl:param name="dspace_item_handle"/>
+        <input type="hidden" name="dspace_item_id" value="{$dspace_item_id}"/>
+        <input type="hidden" name="dspace_item_handle" value="{$dspace_item_handle}"/>
         <xsl:call-template name="itemSummaryView-DIM-title"/>
         <div class="ds-table-responsive">
             <table class="ds-includeSet-table detailtable table table-striped table-hover">
