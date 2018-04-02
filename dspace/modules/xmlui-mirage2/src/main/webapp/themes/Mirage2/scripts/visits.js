@@ -2,13 +2,13 @@ function Visits() {
     var popover_table_style = '"border: solid 1px black;border-radius: 50%;padding: 1px 7px;cursor: pointer;" ';
     var GDPR_popover_table = '<i class="popovers" aria-hidden="true" data-trigger="click" data-placement="top" ' +
             'style=' + popover_table_style +
-            'data-content="Dear Visitor, this site complies with the European Union General Data Protection Regulation <a href=\'https://www.eugdpr.org/\' target=\'_blank\'>(GDPR)</a> and all Internet Protocol (IP) addresses are collected with the purpose to generate the information charts (analytics) are anonymized and we cannot identify the user individually." ' +
+            'data-content="Dear Visitor, this site complies with the European Union General Data Protection Regulation <a href=\'https://www.eugdpr.org/\' target=\'_blank\'>(GDPR)</a> and all Internet Protocol (IP) addresses collected with the purpose to generate the information charts (analytics) are anonymized and we cannot identify the user individually. <br>Country label “Gobal” refers to IP addresses not matched with any country." ' +
             'data-container="body" aria-describedby="popover300157"> &#33;</i>';
 
     var popover_chart_style = '"border: solid 1px black;border-radius: 50%;padding: 1px 10px;cursor: pointer; padding-left: 7px;" ';
     var GDPR_popover_chart = '<i class="popovers" aria-hidden="true" data-trigger="click" data-placement="top" ' +
             'style=' + popover_chart_style +
-            'data-content="Dear Visitor, this site complies with the European Union General Data Protection Regulation <a href=\'https://www.eugdpr.org/\' target=\'_blank\'>(GDPR)</a> and all Internet Protocol (IP) addresses are collected with the purpose to generate the information charts (analytics) are anonymized and we cannot identify the user individually." ' +
+            'data-content="Dear Visitor, this site complies with the European Union General Data Protection Regulation <a href=\'https://www.eugdpr.org/\' target=\'_blank\'>(GDPR)</a> and all Internet Protocol (IP) addresses collected with the purpose to generate the information charts (analytics) are anonymized and we cannot identify the user individually. <br>Country label “Gobal” refers to IP addresses not matched with any country." ' +
             'data-container="body" aria-describedby="popover300157"> &#33;</i>';
 
     var dspace_item_id = $('input[name=dspace_item_id]').val();
