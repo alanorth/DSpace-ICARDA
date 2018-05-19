@@ -353,6 +353,7 @@
             </a>
 			<br/><br/>
 			<xsl:value-of select="dim:field[@element='identifier' and @qualifier='status'][1]/node()"/>
+			<xsl:value-of select="dim:field[@mdschema = 'mel' and @element='identifier' and @qualifier='status'][1]/node()"/>
         </div>
     </xsl:template>
 
