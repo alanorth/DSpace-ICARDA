@@ -355,9 +355,9 @@
 			<xsl:value-of select="dim:field[@element='identifier' and @qualifier='status'][1]/node()"/>
             <br/>
 
-            <xsl:when test="count(dim:field[@mdschema = 'mel' and @element='identifier' and @qualifier='status']) = 1">
+            <xsl:when test="count(dim:field[@mdschema = 'mel' and @element='licence' and @qualifier='image']) = 1">
                 <xsl:variable name="src">
-                    <xsl:value-of select="dim:field[@mdschema = 'mel' and @element='identifier' and @qualifier='status'][1]/node()"/>
+                    <xsl:value-of select="dim:field[@mdschema = 'mel' and @element='licence' and @qualifier='image'][1]/node()"/>
                 </xsl:variable>
                 <img alt="status">
                     <xsl:attribute name="src">
