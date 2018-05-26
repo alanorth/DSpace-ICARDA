@@ -353,6 +353,17 @@
             </a>
 			<br/><br/>
 			<xsl:value-of select="dim:field[@element='identifier' and @qualifier='status'][1]/node()"/>
+            <br/>
+            <xsl:if test="count(dim:field[@mdschema = 'mel' and @element='licence' and @qualifier='image']) = 1">
+                <xsl:variable name="src">
+                    <xsl:value-of select="dim:field[@mdschema = 'mel' and @element='licence' and @qualifier='image'][1]/node()"/>
+                </xsl:variable>
+                <img alt="status">
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="$src"/>
+                    </xsl:attribute>
+                </img>
+            </xsl:if>
         </div>
     </xsl:template>
 
@@ -526,7 +537,7 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year'))">
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year') or (./@mdschema = 'mel' and ./@element = 'licence' and ./@qualifier = 'image'))">
             <xsl:variable name="elementValue" select="./node()"/>
             <xsl:if test="$elementValue != ''">
                 <tr>
