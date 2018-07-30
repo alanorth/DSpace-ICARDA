@@ -330,14 +330,14 @@
                     <div id="slider1">	
                         <div class="viewport">
                             <ul class="overview" id="list_logo_slider">
-<li><img src="/themes/Mirage2/images/slider/icrisat.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/icrisat.png" style="padding-top: 12px"/></li>
 <li><img src="/themes/Mirage2/images/slider/irri.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/itta.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/catie.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/cifor.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/iwmi.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/iri.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/icarda.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/icarda.png" style="padding-top: 37px"/></li>
 <li><img src="/themes/Mirage2/images/slider/fao.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/ilri.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/cirad.png" /></li>
@@ -345,7 +345,7 @@
 <li><img src="/themes/Mirage2/images/slider/leeds.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/copenhagen.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/bioversity.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/cip.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/cip.png" style="padding-top: 3px"/></li>
 <li><img src="/themes/Mirage2/images/slider/cimmyt.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/vermont.png" /></li>
 <li><img src="/themes/Mirage2/images/slider/waterfood.png" /></li>
