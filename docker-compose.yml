@@ -28,9 +28,9 @@ services:
       - ADMIN_LASTNAME=Najdawi
       - ADMIN_PASSWD=CodeObia#dspace#web#@!
     restart: always
-#    volumes:
+    volumes:
 #      - ./solrData:/dspace/solr
-#      - ./dspace_logs/dspace:/dspace/log/
-#      - ./dspace_logs/tomcat:/usr/local/tomcat/logs/
+      - ./dspace_logs/dspace:/dspace/log/
+      - ./dspace_logs/tomcat:/usr/local/tomcat/logs/
 
 # vim: set sw=2 ts=2:
