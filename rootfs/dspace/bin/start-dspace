@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+chown -R dspace:dspace $DSPACE_HOME
 # Start the cron service for DSpace's scheduled maintenance tasks
 # See: /etc/cron.d/dspace-maintenance-tasks
 service cron start

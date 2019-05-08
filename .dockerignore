@@ -4,3 +4,7 @@
 */target/
 dspace/modules/*/target/
 Dockerfile.*
+postgresData/
+solrData/
+dspace_logs/
+db_backup/
