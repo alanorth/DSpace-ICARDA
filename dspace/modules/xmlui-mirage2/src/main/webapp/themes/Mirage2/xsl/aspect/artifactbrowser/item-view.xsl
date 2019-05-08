@@ -216,6 +216,18 @@
             </xsl:choose>
         </div>
 		<span>
+            <xsl:if test="dim:field[@mdschema='mel' and @element='contact' and @qualifier='email'][1]/node()!=''">
+                <xsl:element name="i">
+                    <xsl:attribute name="class">glyphicon glyphicon-envelope send_cg_contact</xsl:attribute>
+                    <xsl:attribute name="data-contact_mail">
+                        <xsl:value-of select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='email'][1]/node()"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="data-contact_domain">
+                        <xsl:value-of select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='domain'][1]/node()"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="style">cursor: pointer;</xsl:attribute>
+                </xsl:element>
+            </xsl:if>
 			<xsl:choose>
 				<xsl:when test="dim:field[@element='identifier'][not(@qualifier)][last()]">
 					<xsl:element name="a">

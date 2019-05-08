@@ -166,4 +166,10 @@ function Visits() {
         });
     }
     $('.popovers').popover({html: true});
+
+    $('body').on('click', '.send_cg_contact', function () {
+        var email = $(this).data('contact_mail');
+        var domain = $(this).data('contact_domain');
+        window.location.href = 'mailto:' + email + '@' + domain;
+    });
 }
