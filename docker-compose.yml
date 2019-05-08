@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  database:
+    container_name: dspace_db
+    image: postgres:9.5-alpine
+    volumes:
+      - ./postgresData:/var/lib/postgresql/data
+    restart: always
+# The dspace service will use an existing dspace:latest image, otherwise one
+# will be built from the local context (.). The 'image' command is important
+# because it sets the name of the resulting image to be dspace:latest rather
+# than the name of the current directory, ie docker-dspace.
+  dspace:
+    container_name: dspace
+    build: .
+    image: dspace:latest
+    ports:
+      - 2641:2641
+      - 8000:8000
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+      - POSTGRES_DB_HOST=dspace_db
+      - ADMIN_EMAIL=moayad@codeobia.com
+      - ADMIN_FIRSTNAME=Moayad
+      - ADMIN_LASTNAME=Najdawi
+      - ADMIN_PASSWD=CodeObia#dspace#web#@!
+    restart: always
+#    volumes:
+#      - ./solrData:/dspace/solr
+#      - ./dspace_logs/dspace:/dspace/log/
+#      - ./dspace_logs/tomcat:/usr/local/tomcat/logs/
+
+# vim: set sw=2 ts=2:
