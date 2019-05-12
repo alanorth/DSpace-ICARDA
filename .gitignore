@@ -30,3 +30,7 @@ META-INF/
 
 ##Mac noise
 .DS_Store
+
+solrData/
+dspace_logs/
+postgresData/

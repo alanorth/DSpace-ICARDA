@@ -1,19 +1,18 @@
 #!/bin/bash
 
-echo "$(tput setaf 6)ARE YOU SURE? "$(tput sgr 0)
+echo "$(tput setaf 6)ARE YOU SURE? <yes/no>"$(tput sgr 0)
 read sure
 if [ $sure != 'yes' ]; then
    exit
 fi
 
-echo "$(tput setaf 6)AGAIN ARE YOU SURE?"$(tput sgr 0)
+echo "$(tput setaf 6)AGAIN ARE YOU SURE? <yes/no>"$(tput sgr 0)
 read sureagain
 if [ $sureagain != 'yes' ]; then
    exit
 fi
-echo 'HELLO'
 
-cd /home/ubuntu/db_backup
+cd ./db_backup
 
 echo "$(tput setaf 6)mEnter database number <<default:Last downloaded database>>"$(tput sgr 0)
 read num
