@@ -216,40 +216,46 @@
             </xsl:choose>
         </div>
 		<span>
+			<xsl:choose>
+                <xsl:when test="dim:field[@element='identifier'][not(@qualifier)][last()]">
+                    <xsl:element name="a">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][last()]/node()"/>
+                        </xsl:attribute>
+                        View/Open
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:element name="a">
+                        <xsl:attribute name="href">
+                            <xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][1]/node()"/>
+                        </xsl:attribute>
+                        <xsl:choose>
+                            <xsl:when test="dim:field[@element='identifier'][not(@qualifier)][1]/node()">
+                                View/Open
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:element>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:if test="dim:field[@mdschema='mel' and @element='contact' and @qualifier='email'][1]/node()!=''">
-                <xsl:element name="i">
-                    <xsl:attribute name="class">glyphicon glyphicon-envelope send_cg_contact</xsl:attribute>
+                <xsl:element name="div">
+                    <xsl:attribute name="class">send_cg_contact</xsl:attribute>
                     <xsl:attribute name="data-contact_mail">
-                        <xsl:value-of select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='email'][1]/node()"/>
+                        <xsl:value-of
+                                select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='email'][1]/node()"/>
                     </xsl:attribute>
                     <xsl:attribute name="data-contact_domain">
-                        <xsl:value-of select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='domain'][1]/node()"/>
+                        <xsl:value-of
+                                select="dim:field[@mdschema='mel' and @element='contact' and @qualifier='domain'][1]/node()"/>
                     </xsl:attribute>
                     <xsl:attribute name="style">cursor: pointer;</xsl:attribute>
+                    Corresponding Author
+                    <xsl:element name="i">
+                        <xsl:attribute name="class">glyphicon glyphicon-envelope</xsl:attribute>
+                    </xsl:element>
                 </xsl:element>
             </xsl:if>
-			<xsl:choose>
-				<xsl:when test="dim:field[@element='identifier'][not(@qualifier)][last()]">
-					<xsl:element name="a">
-						<xsl:attribute name="href">
-							<xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][last()]/node()"/>
-						</xsl:attribute>
-						View/Open
-					</xsl:element>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:element name="a">
-						<xsl:attribute name="href">
-							<xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][1]/node()"/>
-						</xsl:attribute>
-						<xsl:choose>
-							<xsl:when test="dim:field[@element='identifier'][not(@qualifier)][1]/node()">
-								View/Open
-							</xsl:when>
-						</xsl:choose>
-					</xsl:element>
-				</xsl:otherwise>
-			</xsl:choose>
 		</span>
 		
     </xsl:template>
