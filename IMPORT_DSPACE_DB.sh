@@ -61,7 +61,7 @@ docker cp update-sequences.sql dspace_db:/
 docker exec dspace_db psql -U dspace -f /update-sequences.sql dspace
 
 echo "$(tput setaf 6)Cleaning up..."$(tput sgr 0)
-docker exec -it dspace_db bash -c "rm dspace-1545868801.dump"
+docker exec -it dspace_db bash -c "rm dspace-$num.dump"
 docker exec -it dspace_db bash -c "rm update-sequences.sql"
 rm dspace-$num.dump
 
