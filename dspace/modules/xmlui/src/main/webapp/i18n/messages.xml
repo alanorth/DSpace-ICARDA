@@ -145,7 +145,7 @@
 	<message key="xmlui.Discovery.AbstractSearch.type_type">Filter by: Type</message>
 
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_institute">Institute</message>
-        <message key="xmlui.Discovery.AbstractSearch.type_institute">Filter by: Institue</message>
+        <message key="xmlui.Discovery.AbstractSearch.type_institute">Filter by: Institute</message>
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_region">Region</message>
         <message key="xmlui.Discovery.AbstractSearch.type_region">Filter by: Region</message>
 	<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_country">Country</message>
