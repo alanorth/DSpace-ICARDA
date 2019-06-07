@@ -26,7 +26,7 @@ services:
       - ADMIN_EMAIL=moayad@codeobia.com
       - ADMIN_FIRSTNAME=Moayad
       - ADMIN_LASTNAME=Najdawi
-      - ADMIN_PASSWD=CodeObia#dspace#web#@!
+      - ADMIN_PASSWD=CHANGE_PASSWORD
     restart: always
     volumes:
 #      - ./solrData:/dspace/solr
