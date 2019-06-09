@@ -43,9 +43,6 @@ function requestLogos(partners, callback) {
 }
 
 function appendImages(images) {
-    if (images.length > 0) {
-        jQuery('.partners-list .logos').prepend('<h5>Partners</h5>');
-    }
     for (var i = 0; i < images.length; i++) {
         jQuery('.partners-list .logos').append('<img src="' + images[i] + '" />');
     }
