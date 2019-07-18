@@ -90,6 +90,11 @@ RUN apt-get -y autoremove
 
 WORKDIR $DSPACE_HOME
 
+# Change to dspace user for for adding the job
+USER dspace
+RUN (crontab -l 2>/dev/null; echo '0 0 * * * /dspace/bin/dspace generate-sitemaps') | crontab -
+USER root
+
 # Build info
 RUN echo "Debian GNU/Linux `cat /etc/debian_version` image. (`uname -rsv`)" >> /root/.built && \
     echo "- with `java -version 2>&1 | awk 'NR == 2'`" >> /root/.built && \
