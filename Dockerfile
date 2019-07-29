@@ -7,7 +7,7 @@ LABEL maintainer "Alan Orth <alan.orth@gmail.com>"
 
 # Allow custom DSpace hostname at build time (default to localhost if undefined)
 # To override, pass --build-arg DSPACE_HOSTNAME=repo.example.org to docker build
-ARG DSPACE_HOSTNAME=repo.mel.cgiar.org
+ARG DSPACE_HOSTNAME=digitalarchive.worldfishcenter.org/
 # Cater for environments where Tomcat is being reverse proxied via another HTTP
 # server like nginx on port 80, for example. DSpace needs to know its publicly
 # accessible URL for various places where it writes its own URL.

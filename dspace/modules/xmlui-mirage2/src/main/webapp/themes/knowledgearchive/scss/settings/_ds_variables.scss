@@ -1,0 +1,51 @@
+// @import url(http://fonts.googleapis.com/earlyaccess/tharlon.css);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600);
+@import "compass-imagehelper";
+//color-pallete
+//-- color:start --//
+$blue: #0077BB; //navbar top border
+$dark-blue: #364149; //navbar, footer
+$light-white: #D4EBF9; //article box bg
+$cyan: #39beea;
+$primary-color: $blue;
+$secondary-color: $dark-blue;
+//$body-background			: #ececec;
+$body-font-color: #333;
+$navbar-background: $blue;
+$navbar-link: lighten($navbar-background, 40%);
+$navbar-link-hover: lighten($navbar-background, 60%);
+$title-color: #002a50; //body font color
+$sidebar-bg: transparent; //sidebar-bg
+$sidebar-heading-color: #85919b;
+$sidebar-link: $body-font-color;
+$sidebar-link-hover: $body-font-color;
+$sidebar-hover-bg: #dadada;
+$sidebar-link-active: $body-font-color;
+$sidebar_link-border: #ffffff;
+$sidebar-link-hover-border: #003d75;
+$breadcrumb-text-color: #94A2AD;
+$link-color: $primary-color;
+$footer-link1: #BEC1C8;
+$footer-link2: #ffffff;
+$copyright-bg: #303437;
+$copyright-color: #95999C;
+$page-header-border-color: #F4F5F8;
+//font
+$font-openSans: "Open Sans", Arial, sans-serif;
+$font-verdana: Verdana, "Geneva", sans-serif;
+$font-georgia: Georgia, Verdana, sans-serif;
+$font-tharlon: "Tharlon", "Helvetica Neue", Helvetica, Arial, sans-serif;
+//heading
+$font-size-body: 12px;
+$font-body: $font-openSans;
+$font-heading1: $font-openSans;
+$font-heading2: $font-openSans;
+//logo
+$nav-min-height: 60px;
+// $nav-border-top: 16px solid $blue;
+$nav-border-top: none;
+//$logo: null;
+//$logo: 'logo.png';
+// $logo-width: 349px;
+// $logo-height: 65px;
+$logo-top-padding: 0;

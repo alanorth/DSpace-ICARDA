@@ -1,0 +1,21 @@
+html {
+	font-size: $font-size-body;
+}
+
+body {
+	font-family: $font-body;
+	a {
+		transition: all 0.3s;
+	}
+}
+
+h3,
+h4,
+h5,
+h6,
+.h3,
+.h4,
+.h5,
+.h6 {
+	@include fontFamily ($font-tharlon);
+}

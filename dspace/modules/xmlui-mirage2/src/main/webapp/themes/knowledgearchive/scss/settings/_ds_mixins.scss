@@ -1,0 +1,21 @@
+@mixin fontFamily ($family: "Open Sans" + "," + Arial + "," + sans-serif) {
+	font-family: $family;
+}
+
+@mixin setLogo($logo: null) {
+	@if ($logo==null) {
+		background: none;
+	}
+	@else {
+		background: image-url($logo);
+		display: inline-block; // width: image-width($logo);
+		// height: image-height($logo);
+		text-indent: 100%;
+		width: 300px;
+		white-space: nowrap;
+		overflow: hidden;
+		background-size: contain;
+		background-repeat: no-repeat; // margin-top:10px;
+		//margin-bottom:10px;
+	}
+}

@@ -1,0 +1,11 @@
+.trail-wrapper {
+	.container {
+		padding-left: 0;
+	}
+}
+
+.main-content {
+	@media (min-width: $screen-md-min) {
+		float: right;
+	}
+}
