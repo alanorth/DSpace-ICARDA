@@ -160,6 +160,7 @@
             <div class="col-sm-3 hidden-xs">
                 <xsl:apply-templates select="$metsDoc/mets:METS/mets:fileSec" mode="artifact-preview">
                     <xsl:with-param name="href" select="concat($context-path, '/handle/', $handle)"/>
+                    <xsl:with-param name="mel_thumbnail" select="$metsDoc/mets:METS//mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim/dim:field[@element='file' and @qualifier='thumbnail']"/>
                 </xsl:apply-templates>
             </div>
 

@@ -182,7 +182,7 @@
         <!-- <theme name="Test Theme 2" regex="community-list" path="theme2/"/> -->
 
         <!-- Mirage theme, @mire contributed theme, default since DSpace 3.0 -->
-        <theme name="knowledgearchive Theme" regex=".*" path="knowledgearchive/" />
+        <theme name="CONFIG_DSPACE_ACTIVE_THEME Theme" regex=".*" path="CONFIG_DSPACE_ACTIVE_THEME/" />
 
         <!-- Reference theme, the default Manakin XMLUI layout up to DSpace 1.8 -->
         <!-- <theme name="Default Reference Theme" regex=".*" path="Reference/" /> -->

@@ -12,6 +12,12 @@
     Main structure of the page, determines where
     header, footer, body, navigation are structurally rendered.
     Rendering of the header, footer, trail and alerts
+
+    Author: art.lowel at atmire.com
+    Author: lieven.droogmans at atmire.com
+    Author: ben at atmire.com
+    Author: Alexey Maslov
+
 -->
 
 <xsl:stylesheet xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
@@ -95,17 +101,16 @@
 
                                 <div class="row row-offcanvas row-offcanvas-right">
                                     <div class="horizontal-slider clearfix">
-                                        <div class="col-xs-12 col-sm-12 col-md-9 main-content">
+                                        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                                            <xsl:apply-templates select="dri:options"/>
+                                        </div>
+										<div class="col-xs-12 col-sm-12 col-md-9 main-content">
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
                                             <div class="visible-xs visible-sm">
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                                            <xsl:apply-templates select="dri:options"/>
-                                        </div>
-
                                     </div>
                                 </div>
 
@@ -151,7 +156,7 @@
             <link rel="shortcut icon">
                 <xsl:attribute name="href">
                     <xsl:value-of select="$theme-path"/>
-                    <xsl:text>images/favicon.ico</xsl:text>
+                    <xsl:text>images/fav-mel.png</xsl:text>
                 </xsl:attribute>
             </link>
             <link rel="apple-touch-icon">
@@ -186,7 +191,7 @@
                 </link>
             </xsl:for-each>
 
-            <link rel="stylesheet" href="{concat($theme-path, 'css/template.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'styles/main.css')}"/>
 
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">
@@ -212,7 +217,8 @@
                         <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='serverPort']"/>
                         <xsl:value-of select="$context-path"/>
                         <xsl:text>/</xsl:text>
-                        <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='autolink']"/>
+                        <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='context']"/>
+                        <xsl:text>description.xml</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="title" >
                         <xsl:value-of select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='opensearch'][@qualifier='shortName']"/>
@@ -255,7 +261,7 @@
 
             <xsl:text disable-output-escaping="yes">&lt;!--[if lt IE 9]&gt;
                 &lt;script src="</xsl:text><xsl:value-of select="concat($theme-path, 'vendor/html5shiv/dist/html5shiv.js')"/><xsl:text disable-output-escaping="yes">"&gt;&#160;&lt;/script&gt;
-                &lt;script src="</xsl:text><xsl:value-of select="concat($theme-path, 'vendor/respond/dest/respond.min.js')"/><xsl:text disable-output-escaping="yes">"&gt;&#160;&lt;/script&gt;
+                &lt;script src="</xsl:text><xsl:value-of select="concat($theme-path, 'vendor/respond/respond.min.js')"/><xsl:text disable-output-escaping="yes">"&gt;&#160;&lt;/script&gt;
                 &lt;![endif]--&gt;</xsl:text>
 
             <!-- Modernizr enables HTML5 elements & feature detects -->
@@ -318,6 +324,36 @@
         <header>
             <div class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container">
+                    <div class="logo-box">
+                       <img src="/themes/Mirage2/images/Mel-logo.png" />
+                    </div>
+                    <div id="slider1">	
+                        <div class="viewport">
+                            <ul class="overview" id="list_logo_slider">
+<li><img src="/themes/Mirage2/images/slider/icrisat.png" style="padding-top: 12px"/></li>
+<li><img src="/themes/Mirage2/images/slider/irri.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/itta.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/catie.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/cifor.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/iwmi.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/iri.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/icarda.png" style="padding-top: 37px"/></li>
+<li><img src="/themes/Mirage2/images/slider/fao.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/ilri.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/cirad.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/ciat.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/leeds.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/copenhagen.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/bioversity.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/cip.png" style="padding-top: 3px"/></li>
+<li><img src="/themes/Mirage2/images/slider/cimmyt.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/vermont.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/waterfood.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/worldfish.png" /></li>
+<li><img src="/themes/Mirage2/images/slider/eci.png" /></li>
+                            </ul>
+                       </div>
+                    </div>
                     <div class="navbar-header">
 
                         <button type="button" class="navbar-toggle" data-toggle="offcanvas">
@@ -329,7 +365,9 @@
                             <span class="icon-bar"></span>
                         </button>
 
-                        <a href="{$context-path}/" class="navbar-brand">&#160;</a>
+                        <a href="{$context-path}/" class="navbar-brand">
+                            <img src="{$theme-path}/images/DSpace-logo-line.svg" />
+                        </a>
 
 
                         <div class="navbar-header pull-right visible-xs hidden-sm hidden-md hidden-lg">
@@ -408,7 +446,31 @@
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                         </ul>
-                        <ul class="nav navbar-nav pull-left">
+
+                        <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
+                            <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+    </xsl:template>
+
+
+    <!-- The header (distinct from the HTML head element) contains the title, subtitle, login box and various
+        placeholders for header images -->
+    <xsl:template name="buildTrail">
+        <div class="trail-wrapper hidden-print">
+            <div class="container">
+                <div class="row">
+                    <!--TODO-->
+                    <div class="col-xs-12">
+						<ul class="nav navbar-nav pull-right">
                             <xsl:choose>
                                 <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
                                     <li class="dropdown">
@@ -453,30 +515,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </ul>
-
-                        <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
-                            <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </header>
-
-    </xsl:template>
-
-
-    <!-- The header (distinct from the HTML head element) contains the title, subtitle, login box and various
-        placeholders for header images -->
-    <xsl:template name="buildTrail">
-        <div class="trail-wrapper hidden-print">
-            <div class="container">
-                <div class="row">
-                    <!--TODO-->
-                    <div class="col-xs-12">
+					
                         <xsl:choose>
                             <xsl:when test="count(/dri:document/dri:meta/dri:pageMeta/dri:trail) > 1">
                                 <div class="breadcrumb dropdown visible-xs">
@@ -685,9 +724,9 @@
         <footer>
                 <div class="row">
                     <hr/>
-                    <div class="col-xs-7 col-sm-8">
+                    <div class="col-xs-4 col-sm-4">
                         <div>
-Copyright &#169; 2018 WorldFish
+                            <a href="http://www.dspace.org/" target="_blank">DSpace software</a> copyright&#160;&#169;&#160;2002-2015&#160; <a href="http://www.duraspace.org/" target="_blank">DuraSpace</a>
                         </div>
                         <div class="hidden-print">
                             <a>
@@ -709,11 +748,19 @@ Copyright &#169; 2018 WorldFish
                             </a>
                         </div>
                     </div>
-                    <div class="col-xs-5 col-sm-4 hidden-print">
+                    <div class="col-xs-5 col-sm-5" style="text-align: justify;">
+                        Disclaimer:<br/>
+                        MELSpace content providers and partners accept no liability to any consequence resulting from use of the content or data made available in this repository. Users of this content assume full responsibility for compliance with all relevant national or international regulations and legislation.
+                    </div>
+                    <div class="col-xs-3 col-sm-3 hidden-print">
                         <div class="pull-right">
-                            <span>Powered by </span>
-                            <a title="KnowledgeArc" target="_blank" href="https://www.knowledgearc.com">KnowledgeArc</a>
+                            <span class="theme-by">Theme by&#160;</span>
+                            <br/>
+                            <a title="@mire NV" target="_blank" href="http://atmire.com">
+                                <img alt="@mire NV" src="{concat($theme-path, '/images/@mirelogo-small.png')}"/>
+                            </a>
                         </div>
+
                     </div>
                 </div>
                 <!--Invisible link to HTML sitemap (for search engines) -->
@@ -803,6 +850,25 @@ Copyright &#169; 2018 WorldFish
             <script src="{$theme-path}{@src}">&#160;</script>
         </xsl:for-each>
 
+        <script src="/themes/Mirage2/scripts/jquery.tinycarousel.js"></script>
+        <script src="/themes/Mirage2/scripts/partners-collector.js"></script>
+        <script src="/themes/Mirage2/scripts/visits.js"></script>
+        <script src="/themes/Mirage2/scripts/highcharts.js"></script>
+        <script>
+            <xsl:text>
+                $(document).ready(function () {
+                    $('#slider1').tinycarousel({
+                        interval: true,
+                        buttons: false,
+                        animationTime: 3000
+                    });
+                    Visits();
+                    checkPartners();
+                });
+            </xsl:text>
+        </script>
+
+
         <!-- Add javascipt specified in DRI -->
         <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='javascript'][not(@qualifier)]">
             <script>
@@ -855,24 +921,6 @@ Copyright &#169; 2018 WorldFish
                   ga('send', 'pageview');
            </xsl:text></script>
         </xsl:if>
-
-        <xsl:text>&#xa;&#xa;</xsl:text>
-
-<!-- Matomo -->
-<script type="text/javascript">
-  var _paq = _paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//statistics.worldfish.knowledgearc.app/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
-<!-- End Matomo Code -->
     </xsl:template>
 
     <!--The Language Selection-->
