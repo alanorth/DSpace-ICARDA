@@ -5,20 +5,17 @@
 FROM tomcat:8.5
 LABEL maintainer "Alan Orth <alan.orth@gmail.com>"
 
-
-##0e71373bb4815b6afd376d5172382bf6
-
 # Allow custom DSpace hostname at build time (default to localhost if undefined)
 ARG CONFIG_DSPACE_PROTOCOL="http"
 # To override, pass --build-arg CONFIG_DSPACE_HOSTNAME=repo.example.org to docker build
-ARG CONFIG_DSPACE_HOSTNAME="localhost"
+ARG CONFIG_DSPACE_HOSTNAME="repo.mel.cgiar.org"
 # Cater for environments where Tomcat is being reverse proxied via another HTTP
 # server like nginx on port 80, for example. DSpace needs to know its publicly
 # accessible URL for various places where it writes its own URL.
-ARG CONFIG_DSPACE_PROXY_PORT=":8080"
+ARG CONFIG_DSPACE_PROXY_PORT=""
 ARG CONFIG_DSPACE_INTERNAL_PROXY_PORT=":8080"
 # Build configuration variables
-ARG CONFIG_DSPACE_NAME="DSpace at My University"
+ARG CONFIG_DSPACE_NAME="MELSpace"
 ARG CONFIG_MAIL_SERVER="smtp.example.com"
 ARG CONFIG_MAIL_SERVER_PORT="25"
 ARG CONFIG_MAIL_SERVER_USERNAME=""
@@ -28,13 +25,13 @@ ARG CONFIG_MAIL_FEEDBACK_RECIPIENT="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_ADMIN="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_ALERT_RECIPIENT="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_REGISTRATION_NOTIFY="dspace-noreply@myu.edu"
-ARG CONFIG_HANDLE_CANONICAL_PREFIX="http://hdl.handle.net/"
-ARG CONFIG_HANDLE_PREFIX="123456789"
+ARG CONFIG_HANDLE_CANONICAL_PREFIX="https://hdl.handle.net/"
+ARG CONFIG_HANDLE_PREFIX="20.500.11766"
 
 # Active DSpace theme
-ARG CONFIG_DSPACE_ACTIVE_THEME="Mirage2"
+ARG CONFIG_DSPACE_ACTIVE_THEME="MELSpace"
 #
-ARG CONFIG_GOOGLE_ANALYTICS_KEY=""
+ARG CONFIG_GOOGLE_ANALYTICS_KEY="UA-65705913-2"
 
 # Environment variables
 ENV DSPACE_HOME=/dspace
