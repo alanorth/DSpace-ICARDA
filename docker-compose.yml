@@ -26,10 +26,11 @@ services:
       - ADMIN_EMAIL=moayad@codeobia.com
       - ADMIN_FIRSTNAME=Moayad
       - ADMIN_LASTNAME=Najdawi
-      - ADMIN_PASSWD=CHANGE_PASSWORD
+      - ADMIN_PASSWD=ADMIN_PASSWD
     restart: always
     volumes:
 #      - ./solrData:/dspace/solr
+      - ./assetstore/dspace:/dspace/assetstore
       - ./dspace_logs/dspace:/dspace/log/
       - ./dspace_logs/tomcat:/usr/local/tomcat/logs/
 
