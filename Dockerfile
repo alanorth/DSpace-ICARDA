@@ -74,12 +74,12 @@ USER dspace
 COPY config/build.properties dspace
 
 # Copy Handle server
-RUN if [ -f $DSPACE_HOME/costum_configuration/handle-server ] \
-    then cp -r $DSPACE_HOME/costum_configuration/handle-server $DSPACE_HOME/rootfs/dspace/ \
+RUN if [ -f dspace/costum_configuration/handle-server ]; \
+    then cp -r dspace/costum_configuration/handle-server dspace/rootfs/dspace/; \
     fi
 # Copy Active theme
-RUN if [ -f $DSPACE_HOME/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME ] \
-    then cp -r $DSPACE_HOME/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME $DSPACE_HOME/dspace/modules/xmlui-mirage2/src/main/webapp/themes/ \
+RUN if [ -f dspace/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME ]; \
+    then cp -r dspace/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME dspace/dspace/modules/xmlui-mirage2/src/main/webapp/themes/; \
     fi
 
 # Set DSpace confirgation variables
@@ -100,43 +100,43 @@ RUN sed -i -e "s/CONFIG_DSPACE_PROTOCOL/$CONFIG_DSPACE_PROTOCOL/" \
     -e "s/CONFIG_HANDLE_CANONICAL_PREFIX/$CONFIG_HANDLE_CANONICAL_PREFIX/" \
     -e "s/CONFIG_HANDLE_PREFIX/$CONFIG_HANDLE_PREFIX/" \
     dspace/build.properties && \
-    sed -i -e "s/CONFIG_DSPACE_ACTIVE_THEME/$CONFIG_DSPACE_ACTIVE_THEME/" $DSPACE_HOME/dspace/config/xmlui.xconf
-    sed -i -e "s/CONFIG_DSPACE_NAME/$CONFIG_DSPACE_NAME/" $DSPACE_HOME/dspace-xmlui/src/main/webapp/i18n/messages.xml
+    sed -i -e "s/CONFIG_DSPACE_ACTIVE_THEME/$CONFIG_DSPACE_ACTIVE_THEME/" dspace/dspace/config/xmlui.xconf && \
+    sed -i -e "s/CONFIG_DSPACE_NAME/$CONFIG_DSPACE_NAME/" dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml
 
 #Set google analytics code
 RUN if [ ! -z "$CONFIG_GOOGLE_ANALYTICS_KEY"]; \
-    then echo "xmlui.google.analytics.key=$CONFIG_GOOGLE_ANALYTICS_KEY" >> $DSPACE_HOME/dspace/config/dspace.cfg \
+    then echo "xmlui.google.analytics.key=$CONFIG_GOOGLE_ANALYTICS_KEY" >> dspace/dspace/config/dspace.cfg; \
     fi
 
 # Add additional org.dspace.app.xmlui.artifactbrowser.AbstractSearch
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml
-RUN if [ -f $current_path_to_check ] \
-    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace-xmlui/src/main/webapp/i18n/messages.xml \
+ENV current_path_to_check=dspace/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml
+RUN if [ -f $current_path_to_check ]; \
+    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
     fi
 # Add additional org.dspace.app.xmlui.artifactbrowser.AdvancedSearch
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AdvancedSearch.xml
+ENV current_path_to_check=dspace/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AdvancedSearch.xml
 RUN if [ ! -z "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace-xmlui/src/main/webapp/i18n/messages.xml \
+    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryConfiguration
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.xml
+ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.xml
 RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace/config/spring/api/discovery.xml \
+    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryConfiguration.details details
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.details.xml
+ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.details.xml
 RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace/config/spring/api/discovery.xml \
+    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration.xml
+ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration.xml
 RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace/config/spring/api/discovery.xml \
+    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
     fi
 # Custom page header
-ENV current_path_to_check=$DSPACE_HOME/costum_configuration/costum.main.page.header.html
+ENV current_path_to_check=dspace/costum_configuration/costum.main.page.header.html
 RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_MAIN_PAGE_HEADER/{r $current_path_to_check' -e 'd}' $DSPACE_HOME/dspace/config/news-xmlui.xml \
+    then sed -i -e '/CONFIG_MAIN_PAGE_HEADER/{r $current_path_to_check' -e 'd}' dspace/dspace/config/news-xmlui.xml; \
     fi
 ENV current_path_to_check=""
 
