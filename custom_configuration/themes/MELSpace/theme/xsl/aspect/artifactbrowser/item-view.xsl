@@ -211,7 +211,7 @@
                 </xsl:when>
 
                 <xsl:otherwise>
-                    <img src="/themes/Mirage2/images/nothumb.jpg" />
+                    <img src="/themes/MELSpace/images/nothumb.jpg" />
                 </xsl:otherwise>
             </xsl:choose>
         </div>

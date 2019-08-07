@@ -98,7 +98,7 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
-                CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL
+                #CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -110,7 +110,7 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
-                CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL
+                #CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#
             </list>
         </property>
         <!--The sort filters for the discovery search-->
@@ -182,7 +182,7 @@
                         <value>dc.contributor.author</value>
                         <value>dc.creator</value>
                         <value>dc.subject</value>
-                        CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL
+                        #CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL#
                     </list>
                 </property>
                 <!--The minimum number of matching terms across the metadata fields above before an item is found as related -->
@@ -206,7 +206,7 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
-                CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL
+                #CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#
             </list>
         </property>
         <!-- Set TagCloud configuration per discovery configuration -->
@@ -218,7 +218,7 @@
                 <ref bean="searchFilterAuthor" />
                 <ref bean="searchFilterSubject" />
                 <ref bean="searchFilterIssued" />
-                CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL
+                #CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#
             </list>
         </property>
         <!--The sort filters for the discovery search (same as defaultConfiguration above)-->
@@ -410,7 +410,7 @@
         <property name="sortOrder" value="VALUE"/>
     </bean>
 
-    CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL
+    #CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL#
 
     <!--Sort properties-->
     <bean id="sortTitle" class="org.dspace.discovery.configuration.DiscoverySortFieldConfiguration">

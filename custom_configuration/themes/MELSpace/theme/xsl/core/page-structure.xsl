@@ -325,32 +325,74 @@
             <div class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container">
                     <div class="logo-box">
-                       <img src="/themes/Mirage2/images/Mel-logo.png" />
+                       <img src="/themes/MELSpace/images/Mel-logo.png" />
                     </div>
                     <div id="slider1">	
                         <div class="viewport">
                             <ul class="overview" id="list_logo_slider">
-<li><img src="/themes/Mirage2/images/slider/icrisat.png" style="padding-top: 12px"/></li>
-<li><img src="/themes/Mirage2/images/slider/irri.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/itta.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/catie.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/cifor.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/iwmi.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/iri.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/icarda.png" style="padding-top: 37px"/></li>
-<li><img src="/themes/Mirage2/images/slider/fao.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/ilri.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/cirad.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/ciat.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/leeds.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/copenhagen.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/bioversity.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/cip.png" style="padding-top: 3px"/></li>
-<li><img src="/themes/Mirage2/images/slider/cimmyt.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/vermont.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/waterfood.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/worldfish.png" /></li>
-<li><img src="/themes/Mirage2/images/slider/eci.png" /></li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/icrisat.png" style="padding-top: 12px"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/irri.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/itta.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/catie.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/cifor.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/iwmi.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/iri.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/icarda.png" style="padding-top: 37px"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/fao.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/ilri.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/cirad.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/ciat.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/leeds.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/copenhagen.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/bioversity.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/cip.png" style="padding-top: 3px"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/cimmyt.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/vermont.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/waterfood.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/worldfish.png"/>
+                                </li>
+                                <li>
+                                    <img src="/themes/MELSpace/images/slider/eci.png"/>
+                                </li>
                             </ul>
                        </div>
                     </div>
@@ -850,10 +892,10 @@
             <script src="{$theme-path}{@src}">&#160;</script>
         </xsl:for-each>
 
-        <script src="/themes/Mirage2/scripts/jquery.tinycarousel.js"></script>
-        <script src="/themes/Mirage2/scripts/partners-collector.js"></script>
-        <script src="/themes/Mirage2/scripts/visits.js"></script>
-        <script src="/themes/Mirage2/scripts/highcharts.js"></script>
+        <script src="/themes/MELSpace/scripts/jquery.tinycarousel.js"></script>
+        <script src="/themes/MELSpace/scripts/partners-collector.js"></script>
+        <script src="/themes/MELSpace/scripts/visits.js"></script>
+        <script src="/themes/MELSpace/scripts/highcharts.js"></script>
         <script>
             <xsl:text>
                 $(document).ready(function () {

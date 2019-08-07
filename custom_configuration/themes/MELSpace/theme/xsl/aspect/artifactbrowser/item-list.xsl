@@ -240,7 +240,7 @@
                         </img>
                     </xsl:when>
                     <xsl:otherwise>
-                        <img src="/themes/Mirage2/images/nothumb.jpg" alt="xmlui.mirage2.item-list.thumbnail"
+                        <img src="/themes/MELSpace/images/nothumb.jpg" alt="xmlui.mirage2.item-list.thumbnail"
                              i18n:attr="alt"/>
                     </xsl:otherwise>
                 </xsl:choose>

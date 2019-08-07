@@ -3,10 +3,7 @@
 #
 
 FROM tomcat:8.5
-LABEL maintainer "Alan Orth <alan.orth@gmail.com>"
-
-
-##0e71373bb4815b6afd376d5172382bf6
+LABEL maintainer="Alan Orth <alan.orth@gmail.com>"
 
 # Allow custom DSpace hostname at build time (default to localhost if undefined)
 ARG CONFIG_DSPACE_PROTOCOL="http"
@@ -73,72 +70,69 @@ USER dspace
 # Copy customized DSpace build properties
 COPY config/build.properties dspace
 
-# Copy Handle server
-RUN if [ -f dspace/costum_configuration/handle-server ]; \
-    then cp -r dspace/costum_configuration/handle-server dspace/rootfs/dspace/; \
-    fi
 # Copy Active theme
-RUN if [ -f dspace/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME ]; \
-    then cp -r dspace/costum_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME dspace/dspace/modules/xmlui-mirage2/src/main/webapp/themes/; \
+RUN if [ -d dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/theme ]; \
+        then cp -r dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/theme dspace/dspace/modules/xmlui-mirage2/src/main/webapp/themes/$CONFIG_DSPACE_ACTIVE_THEME; \
+        else echo "No theme is defined"; \
     fi
 
 # Set DSpace confirgation variables
-RUN sed -i -e "s/CONFIG_DSPACE_PROTOCOL/$CONFIG_DSPACE_PROTOCOL/" \
-    -e "s/CONFIG_DSPACE_HOSTNAME/$CONFIG_DSPACE_HOSTNAME/" \
-    -e "s/CONFIG_DSPACE_PROXY_PORT/$CONFIG_DSPACE_PROXY_PORT/" \
-    -e "s/CONFIG_DSPACE_INTERNAL_PROXY_PORT/$CONFIG_DSPACE_INTERNAL_PROXY_PORT/" \
-    -e "s/CONFIG_DSPACE_NAME/$CONFIG_DSPACE_NAME/" \
-    -e "s/CONFIG_MAIL_SERVER/$CONFIG_MAIL_SERVER/" \
-    -e "s/CONFIG_MAIL_SERVER_PORT/$CONFIG_MAIL_SERVER_PORT/" \
-    -e "s/CONFIG_MAIL_SERVER_USERNAME/$CONFIG_MAIL_SERVER_USERNAME/" \
-    -e "s/CONFIG_MAIL_SERVER_PASSWORD/$CONFIG_MAIL_SERVER_PASSWORD/" \
-    -e "s/CONFIG_MAIL_FROM_ADDRESS/$CONFIG_MAIL_FROM_ADDRESS/" \
-    -e "s/CONFIG_MAIL_FEEDBACK_RECIPIENT/$CONFIG_MAIL_FEEDBACK_RECIPIENT/" \
-    -e "s/CONFIG_MAIL_ADMIN/$CONFIG_MAIL_ADMIN/" \
-    -e "s/CONFIG_MAIL_ALERT_RECIPIENT/$CONFIG_MAIL_ALERT_RECIPIENT/" \
-    -e "s/CONFIG_MAIL_REGISTRATION_NOTIFY/$CONFIG_MAIL_REGISTRATION_NOTIFY/" \
-    -e "s/CONFIG_HANDLE_CANONICAL_PREFIX/$CONFIG_HANDLE_CANONICAL_PREFIX/" \
-    -e "s/CONFIG_HANDLE_PREFIX/$CONFIG_HANDLE_PREFIX/" \
+RUN sed -i -e "s/#CONFIG_DSPACE_PROTOCOL#/$CONFIG_DSPACE_PROTOCOL/g" \
+    -e "s/#CONFIG_DSPACE_HOSTNAME#/$CONFIG_DSPACE_HOSTNAME/g" \
+    -e "s/#CONFIG_DSPACE_PROXY_PORT#/$CONFIG_DSPACE_PROXY_PORT/g" \
+    -e "s/#CONFIG_DSPACE_INTERNAL_PROXY_PORT#/$CONFIG_DSPACE_INTERNAL_PROXY_PORT/g" \
+    -e "s/#CONFIG_DSPACE_NAME#/$CONFIG_DSPACE_NAME/g" \
+    -e "s/#CONFIG_MAIL_SERVER#/$CONFIG_MAIL_SERVER/g" \
+    -e "s/#CONFIG_MAIL_SERVER_PORT#/$CONFIG_MAIL_SERVER_PORT/g" \
+    -e "s/#CONFIG_MAIL_SERVER_USERNAME#/$CONFIG_MAIL_SERVER_USERNAME/g" \
+    -e "s/#CONFIG_MAIL_SERVER_PASSWORD#/$CONFIG_MAIL_SERVER_PASSWORD/g" \
+    -e "s/#CONFIG_MAIL_FROM_ADDRESS#/$CONFIG_MAIL_FROM_ADDRESS/g" \
+    -e "s/#CONFIG_MAIL_FEEDBACK_RECIPIENT#/$CONFIG_MAIL_FEEDBACK_RECIPIENT/g" \
+    -e "s/#CONFIG_MAIL_ADMIN#/$CONFIG_MAIL_ADMIN/g" \
+    -e "s/#CONFIG_MAIL_ALERT_RECIPIENT#/$CONFIG_MAIL_ALERT_RECIPIENT/g" \
+    -e "s/#CONFIG_MAIL_REGISTRATION_NOTIFY#/$CONFIG_MAIL_REGISTRATION_NOTIFY/g" \
+    -e "s/#CONFIG_HANDLE_CANONICAL_PREFIX#/$CONFIG_HANDLE_CANONICAL_PREFIX/g" \
+    -e "s/#CONFIG_HANDLE_PREFIX#/$CONFIG_HANDLE_PREFIX/g" \
     dspace/build.properties && \
-    sed -i -e "s/CONFIG_DSPACE_ACTIVE_THEME/$CONFIG_DSPACE_ACTIVE_THEME/" dspace/dspace/config/xmlui.xconf && \
-    sed -i -e "s/CONFIG_DSPACE_NAME/$CONFIG_DSPACE_NAME/" dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml
-
-#Set google analytics code
-RUN if [ ! -z "$CONFIG_GOOGLE_ANALYTICS_KEY"]; \
-    then echo "xmlui.google.analytics.key=$CONFIG_GOOGLE_ANALYTICS_KEY" >> dspace/dspace/config/dspace.cfg; \
+    sed -i -e "s/#CONFIG_DSPACE_ACTIVE_THEME#/$CONFIG_DSPACE_ACTIVE_THEME/g" dspace/dspace/config/xmlui.xconf && \
+    sed -i -e "s/#CONFIG_DSPACE_NAME#/$CONFIG_DSPACE_NAME/g" dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml && \
+    if [ ! -z "$CONFIG_GOOGLE_ANALYTICS_KEY"]; \
+        then echo "xmlui.google.analytics.key=$CONFIG_GOOGLE_ANALYTICS_KEY" >> dspace/dspace/config/dspace.cfg; \
+        else echo "xmlui.google.analytics.key IS NOT DEFINED"; \
     fi
 
+WORKDIR /tmp/dspace/custom_configuration/$CONFIG_DSPACE_ACTIVE_THEME/custom
 # Add additional org.dspace.app.xmlui.artifactbrowser.AbstractSearch
-ENV current_path_to_check=dspace/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml
-RUN if [ -f $current_path_to_check ]; \
-    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
+RUN if [ -f org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml ]; \
+    then sed -i -e '/#CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL#/{r org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
+    else sed -i -e '/#CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL#//g' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml && echo "CONFIG_XMLUI_ARTIFACT_BROWSER_SEARCH_ADDITIONAL IS NOT EXISTS"; \
     fi
 # Add additional org.dspace.app.xmlui.artifactbrowser.AdvancedSearch
-ENV current_path_to_check=dspace/costum_configuration/org.dspace.app.xmlui.artifactbrowser.AdvancedSearch.xml
-RUN if [ ! -z "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
+RUN if [ -f org.dspace.app.xmlui.artifactbrowser.AdvancedSearch.xml ]; \
+    then sed -i -e '/#CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL#/{r org.dspace.app.xmlui.artifactbrowser.AdvancedSearch.xml' -e 'd}' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml; \
+    else sed -i -e 's/#CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL#//g' dspace/dspace-xmlui/src/main/webapp/i18n/messages.xml && echo "CONFIG_XMLUI_ARTIFACT_BROWSER_ADVANCED_SEARCH_ADDITIONAL IS NOT EXISTS"; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryConfiguration
-ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.xml
-RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+RUN if [ -f org.dspace.discovery.configuration.DiscoveryConfiguration.xml ]; \
+    then sed -i -e '/#CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#/{r org.dspace.discovery.configuration.DiscoveryConfiguration.xml' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+    else sed -i -e 's/#CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL#//g' dspace/dspace/config/spring/api/discovery.xml && echo "CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_ADDITIONAL IS NOT EXISTS"; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryConfiguration.details details
-ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryConfiguration.details.xml
-RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+RUN if [ -f org.dspace.discovery.configuration.DiscoveryConfiguration.details.xml ]; \
+    then sed -i -e '/#CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL#/{r org.dspace.discovery.configuration.DiscoveryConfiguration.details.xml' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+    else sed -i -e 's/#CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL#//g' dspace/dspace/config/spring/api/discovery.xml && echo "CONFIG_SPRING_API_DISCOVERY_SIDEBAR_SEARCH_DETAILS_ADDITIONAL IS NOT EXISTS"; \
     fi
 # Add additional org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration
-ENV current_path_to_check=dspace/costum_configuration/org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration.xml
-RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL/{r $current_path_to_check' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+RUN if [ -f org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration.xml ]; \
+    then sed -i -e '/#CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL#/{r org.dspace.discovery.configuration.DiscoveryMoreLikeThisConfiguration.xml' -e 'd}' dspace/dspace/config/spring/api/discovery.xml; \
+    else sed -i -e 's/#CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL#//g' dspace/dspace/config/spring/api/discovery.xml && echo "CONFIG_SPRING_API_DISCOVERY_SIMILARITY_METADATA_ADDITIONAL IS NOT EXISTS"; \
     fi
 # Custom page header
-ENV current_path_to_check=dspace/costum_configuration/costum.main.page.header.html
-RUN if [ -f "$current_path_to_check"]; \
-    then sed -i -e '/CONFIG_MAIN_PAGE_HEADER/{r $current_path_to_check' -e 'd}' dspace/dspace/config/news-xmlui.xml; \
+RUN if [ -f costum.main.page.header.html ]; \
+    then sed -i -e '/#CONFIG_MAIN_PAGE_HEADER#/{r costum.main.page.header.html' -e 'd}' dspace/dspace/config/news-xmlui.xml; \
+    else sed -i -e 's/#CONFIG_MAIN_PAGE_HEADER#//g' dspace/dspace/config/news-xmlui.xml && echo "CONFIG_MAIN_PAGE_HEADER IS NOT EXISTS"; \
     fi
-ENV current_path_to_check=""
+WORKDIR /tmp
 
 
 # Build DSpace with Mirage 2 enabled
@@ -159,22 +153,21 @@ USER root
 # Tweak default Tomcat server configuration
 COPY config/server.xml "$CATALINA_HOME"/conf/server.xml
 
-RUN sed -i "s/PROXY_PORT/$DSPACE_PROXY_PORT/" "$CATALINA_HOME"/conf/server.xml
-
-# Install root filesystem
-COPY rootfs /
-
-# Docker's COPY instruction always sets ownership to the root user, so we need
-# to explicitly change ownership of those files and directories that we copied
-# from rootfs.
-RUN chown dspace:dspace $DSPACE_HOME $DSPACE_HOME/bin/* $DSPACE_HOME/handle-server/*
-
-# Make sure the crontab uses the correct DSpace directory
-RUN sed -i "s#DSPACE=/dspace#DSPACE=$DSPACE_HOME#" /etc/cron.d/dspace-maintenance-tasks
-
-RUN rm -rf "$DSPACE_HOME/.m2" /tmp/*
-#RUN apt-get remove -y openjdk-8-jdk-headless
-RUN apt-get -y autoremove
+RUN sed -i "s/PROXY_PORT/$DSPACE_PROXY_PORT/g" "$CATALINA_HOME"/conf/server.xml && \
+    # Install root filesystem
+    cp -r /tmp/dspace/rootfs/* / && \
+    # Copy Handle server
+    if [ -d /tmp/dspace/custom_configuration/$CONFIG_DSPACE_ACTIVE_THEME/handle-server ]; \
+        then cp -r /tmp/dspace/custom_configuration/$CONFIG_DSPACE_ACTIVE_THEME/handle-server $DSPACE_HOME/; \
+        else echo "No Handle server files found"; \
+    fi && \
+    # Docker's COPY instruction always sets ownership to the root user, so we need
+    # to explicitly change ownership of those files and directories that we copied
+    # from rootfs.
+    chown -R dspace:dspace $DSPACE_HOME && \
+    # Make sure the crontab uses the correct DSpace directory
+    sed -i "s#DSPACE=/dspace#DSPACE=$DSPACE_HOME#g" /etc/cron.d/dspace-maintenance-tasks && \
+    rm -rf "$DSPACE_HOME/.m2" /tmp/* && apt-get -y autoremove
 
 WORKDIR $DSPACE_HOME
 
