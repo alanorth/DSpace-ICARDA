@@ -392,6 +392,7 @@
         <property name="metadataFields">
             <list>
                 <value>dc.subject.*</value>
+                <value>cg.subject.*</value>
             </list>
         </property>
         <property name="facetLimit" value="10"/>
