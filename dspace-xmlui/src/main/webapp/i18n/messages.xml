@@ -632,8 +632,8 @@
 
 
 	<!-- general submission aspect messages -->
-	<message key="xmlui.Submission.general.mydspace_home">#CONFIG_DSPACE_NAME# Home</message>
-	<message key="xmlui.Submission.general.go_mydspace">Go to #CONFIG_DSPACE_NAME# Home</message>
+	<message key="xmlui.Submission.general.mydspace_home">My #CONFIG_DSPACE_NAME# Home</message>
+	<message key="xmlui.Submission.general.go_mydspace">Go to My #CONFIG_DSPACE_NAME# Home</message>
 	<message key="xmlui.Submission.general.submission.title">Item submission</message>
 	<message key="xmlui.Submission.general.submission.trail">Item submission</message>
 	<message key="xmlui.Submission.general.submission.head">Item submission</message>
