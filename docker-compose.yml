@@ -30,7 +30,7 @@ services:
     restart: always
     volumes:
 #      - ./solrData:/dspace/solr
-      - ./assetstore/dspace:/dspace/assetstore
+      - ./assetstore:/dspace/assetstore
       - ./dspace_logs/dspace:/dspace/log/
       - ./dspace_logs/tomcat:/usr/local/tomcat/logs/
 

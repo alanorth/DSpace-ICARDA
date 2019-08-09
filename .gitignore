@@ -34,3 +34,4 @@ META-INF/
 solrData/
 dspace_logs/
 postgresData/
+assetstore/
