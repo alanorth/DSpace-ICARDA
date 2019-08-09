@@ -30,8 +30,9 @@ ARG CONFIG_HANDLE_PREFIX="123456789"
 
 # Active DSpace theme
 ARG CONFIG_DSPACE_ACTIVE_THEME="Mirage2"
-#
+
 ARG CONFIG_GOOGLE_ANALYTICS_KEY=""
+ARG REQUEST_ITEM_HELPDESK_OVERRIDE=false
 
 # Environment variables
 ENV DSPACE_HOME=/dspace
@@ -102,6 +103,10 @@ RUN sed -i -e "s/#CONFIG_DSPACE_PROTOCOL#/$CONFIG_DSPACE_PROTOCOL/g" \
     if [ ! -z $CONFIG_GOOGLE_ANALYTICS_KEY ]; \
         then echo "xmlui.google.analytics.key=$CONFIG_GOOGLE_ANALYTICS_KEY" >> dspace/dspace/config/dspace.cfg; \
         else echo "xmlui.google.analytics.key IS NOT DEFINED"; \
+    fi && \
+    if [ ! -z $REQUEST_ITEM_HELPDESK_OVERRIDE ]; \
+        then echo "request.item.helpdesk.override=$REQUEST_ITEM_HELPDESK_OVERRIDE" >> dspace/dspace/config/dspace.cfg; \
+        else echo "request.item.helpdesk.override=false" >> dspace/dspace/config/dspace.cfg; \
     fi
 
 WORKDIR /tmp/dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/custom
