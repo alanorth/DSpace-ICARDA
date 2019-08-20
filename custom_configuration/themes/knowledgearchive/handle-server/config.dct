@@ -1,6 +1,6 @@
 {
 "hdl_http_config" = {
-"bind_address" = "0.0.0.0"
+"bind_address" = "172.20.0.3"
 "num_threads" = "15"
 "bind_port" = "8000"
 "backlog" = "5"
@@ -9,14 +9,14 @@
 
 "server_type" = "server"
 "hdl_udp_config" = {
-"bind_address" = "0.0.0.0"
+"bind_address" = "172.20.0.3"
 "num_threads" = "15"
 "bind_port" = "2641"
 "log_accesses" = "no"
 }
 
 "hdl_tcp_config" = {
-"bind_address" = "0.0.0.0"
+"bind_address" = "172.20.0.3"
 "num_threads" = "15"
 "bind_port" = "2641"
 "backlog" = "5"
@@ -31,15 +31,12 @@
 )
 
 "server_config" = {
-"storage_type" = "CUSTOM"
-"storage_class" = "org.dspace.handle.HandlePlugin"
-
 "server_admins" = (
 "300:0.NA/20.500.12348"
 )
 
 "replication_admins" = (
-"300:0.NA/20.500.12348"
+"300:0.NA/20.500.123487"
 )
 
 "max_session_time" = "86400000"
@@ -50,6 +47,8 @@
 )
 
 "case_sensitive" = "no"
+"storage_type" = "CUSTOM"
+"storage_class" = "org.dspace.handle.HandlePlugin"
 }
 
 }
