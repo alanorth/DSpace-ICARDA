@@ -242,6 +242,19 @@
                         </xsl:choose>
                         </small></span>
                     <xsl:text> </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="dri:list[@n=(concat($handle, ':dc.type'))]/dri:item">
+                            <div class="h4">
+                                <small class="element-label">Type:</small>
+                                <xsl:element name="small">
+                                    <xsl:value-of
+                                            select="dri:list[@n=(concat($handle, ':dc.type'))]/dri:item[1]/node()"/>
+                                </xsl:element>
+                            </div>
+                        </xsl:when>
+                        <xsl:otherwise>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <!--xsl:if test="dri:list[@n=(concat($handle, ':dc.date.issued'))]">
                         <span class="publisher-date h4">   <small>
                             <xsl:text>(</xsl:text>

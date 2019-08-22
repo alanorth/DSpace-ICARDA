@@ -95,6 +95,83 @@
 
                                 <div class="row row-offcanvas row-offcanvas-right">
                                     <div class="horizontal-slider clearfix">
+                                        <div class="col-xs-12 col-sm-12 col-md-9" id="search-section">
+                                            <xsl:if test="not(contains(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI'], 'discover'))">
+                                                <div id="ds-search-option" class="ds-option-set">
+                                                    <!-- The form, complete with a text box and a button, all built from attributes referenced
+                                                 from under pageMeta. -->
+                                                    <form id="ds-search-form" class="" method="post">
+                                                        <xsl:attribute name="action">
+                                                            <xsl:value-of
+                                                                    select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath']"/>
+                                                            <xsl:value-of
+                                                                    select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='search'][@qualifier='simpleURL']"/>
+                                                        </xsl:attribute>
+                                                        <fieldset>
+                                                            <input class="ds-text-field form-control" type="text"
+                                                                   placeholder="xmlui.general.search"
+                                                                   i18n:attr="placeholder">
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of
+                                                                            select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='search'][@qualifier='queryField']"/>
+                                                                </xsl:attribute>
+                                                            </input>
+                                                            <button class="ds-button-field btn btn-primary"
+                                                                    title="xmlui.general.go" i18n:attr="title">
+                                                                <span class="glyphicon glyphicon-search"
+                                                                      aria-hidden="true"/>
+                                                                <xsl:attribute name="onclick">
+                                                                            <xsl:text>
+                                                                                var radio = document.getElementById(&quot;ds-search-form-scope-container&quot;);
+                                                                                if (radio != undefined &amp;&amp; radio.checked) {
+                                                                                var form = document.getElementById(&quot;ds-search-form&quot;);
+                                                                                form.action=
+                                                                            </xsl:text>
+                                                                    <xsl:text>&quot;</xsl:text>
+                                                                    <xsl:value-of
+                                                                            select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='contextPath']"/>
+                                                                    <xsl:text>/handle/&quot; + radio.value + &quot;</xsl:text>
+                                                                    <xsl:value-of
+                                                                            select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='search'][@qualifier='simpleURL']"/>
+                                                                    <xsl:text>&quot; ; </xsl:text>
+                                                                    <xsl:text> } </xsl:text>
+                                                                </xsl:attribute>
+                                                            </button>
+
+                                                            <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='focus'][@qualifier='container']">
+                                                                <div class="radio">
+                                                                    <label class="radio-inline">
+                                                                        <input id="ds-search-form-scope-all"
+                                                                               type="radio" name="scope" value=""
+                                                                               checked="checked"/>
+                                                                        <i18n:text>xmlui.dri2xhtml.structural.search</i18n:text>
+                                                                    </label>
+                                                                    <label class="radio-inline">
+                                                                        <input id="ds-search-form-scope-container"
+                                                                               type="radio" name="scope">
+                                                                            <xsl:attribute name="value">
+                                                                                <xsl:value-of
+                                                                                        select="substring-after(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='focus'][@qualifier='container'],':')"/>
+                                                                            </xsl:attribute>
+                                                                        </input>
+                                                                        <xsl:choose>
+                                                                            <xsl:when
+                                                                                    test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='focus'][@qualifier='containerType']/text() = 'type:community'">
+                                                                                <i18n:text>xmlui.dri2xhtml.structural.search-in-community</i18n:text>
+                                                                            </xsl:when>
+                                                                            <xsl:otherwise>
+                                                                                <i18n:text>xmlui.dri2xhtml.structural.search-in-collection</i18n:text>
+                                                                            </xsl:otherwise>
+
+                                                                        </xsl:choose>
+                                                                    </label>
+                                                                </div>
+                                                            </xsl:if>
+                                                        </fieldset>
+                                                    </form>
+                                                </div>
+                                            </xsl:if>
+                                        </div>
                                         <div class="col-xs-12 col-sm-12 col-md-9 main-content">
                                             <xsl:apply-templates select="*[not(self::dri:options)]"/>
 
@@ -102,7 +179,16 @@
                                                 <xsl:call-template name="buildFooter"/>
                                             </div>
                                         </div>
-                                        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                                        <div id="sidebar" role="navigation">
+                                            <xsl:attribute name="class">
+                                                col-xs-6 col-sm-3 sidebar-offcanvas
+                                                <xsl:if test="not(contains(/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='request'][@qualifier='URI'], 'discover'))">
+                                                    search-bar-visible
+                                                    <xsl:if test="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='focus'][@qualifier='container']">
+                                                        search-radio-buttons-visible
+                                                    </xsl:if>
+                                                </xsl:if>
+                                            </xsl:attribute>
                                             <xsl:apply-templates select="dri:options"/>
                                         </div>
 
@@ -408,51 +494,6 @@
                         <ul class="nav navbar-nav pull-left">
                               <xsl:call-template name="languageSelection"/>
                         </ul>
-                        <ul class="nav navbar-nav pull-left">
-                            <xsl:choose>
-                                <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
-                                    <li class="dropdown">
-                                        <a id="user-dropdown-toggle" href="#" role="button" class="dropdown-toggle"
-                                           data-toggle="dropdown">
-                                            <span class="hidden-xs">
-                                                <xsl:value-of select="/dri:document/dri:meta/dri:userMeta/
-                            dri:metadata[@element='identifier' and @qualifier='firstName']"/>
-                                                <xsl:text> </xsl:text>
-                                                <xsl:value-of select="/dri:document/dri:meta/dri:userMeta/
-                            dri:metadata[@element='identifier' and @qualifier='lastName']"/>
-                                                &#160;
-                                                <b class="caret"/>
-                                            </span>
-                                        </a>
-                                        <ul class="dropdown-menu pull-right" role="menu"
-                                            aria-labelledby="user-dropdown-toggle" data-no-collapse="true">
-                                            <li>
-                                                <a href="{/dri:document/dri:meta/dri:userMeta/
-                            dri:metadata[@element='identifier' and @qualifier='url']}">
-                                                    <i18n:text>xmlui.EPerson.Navigation.profile</i18n:text>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="{/dri:document/dri:meta/dri:userMeta/
-                            dri:metadata[@element='identifier' and @qualifier='logoutURL']}">
-                                                    <i18n:text>xmlui.dri2xhtml.structural.logout</i18n:text>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <li>
-                                        <a href="{/dri:document/dri:meta/dri:userMeta/
-                            dri:metadata[@element='identifier' and @qualifier='loginURL']}">
-                                            <span class="hidden-xs">
-                                                <i18n:text>xmlui.dri2xhtml.structural.login</i18n:text>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </ul>
 
                         <button data-toggle="offcanvas" class="navbar-toggle visible-sm" type="button">
                             <span class="sr-only"><i18n:text>xmlui.mirage2.page-structure.toggleNavigation</i18n:text></span>
@@ -510,6 +551,51 @@
                                 </ul>
                             </xsl:otherwise>
                         </xsl:choose>
+                        <ul class="nav navbar-nav pull-right login-user-nav">
+                            <xsl:choose>
+                                <xsl:when test="/dri:document/dri:meta/dri:userMeta/@authenticated = 'yes'">
+                                    <li class="dropdown">
+                                        <a id="user-dropdown-toggle" href="#" role="button" class="dropdown-toggle"
+                                           data-toggle="dropdown">
+                                            <span class="hidden-xs">
+                                                <xsl:value-of select="/dri:document/dri:meta/dri:userMeta/
+                            dri:metadata[@element='identifier' and @qualifier='firstName']"/>
+                                                <xsl:text> </xsl:text>
+                                                <xsl:value-of select="/dri:document/dri:meta/dri:userMeta/
+                            dri:metadata[@element='identifier' and @qualifier='lastName']"/>
+                                                &#160;
+                                                <b class="caret"/>
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right" role="menu"
+                                            aria-labelledby="user-dropdown-toggle" data-no-collapse="true">
+                                            <li>
+                                                <a href="{/dri:document/dri:meta/dri:userMeta/
+                            dri:metadata[@element='identifier' and @qualifier='url']}">
+                                                    <i18n:text>xmlui.EPerson.Navigation.profile</i18n:text>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{/dri:document/dri:meta/dri:userMeta/
+                            dri:metadata[@element='identifier' and @qualifier='logoutURL']}">
+                                                    <i18n:text>xmlui.dri2xhtml.structural.logout</i18n:text>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <li>
+                                        <a href="{/dri:document/dri:meta/dri:userMeta/
+                            dri:metadata[@element='identifier' and @qualifier='loginURL']}">
+                                            <span class="hidden-xs">
+                                                <i18n:text>xmlui.dri2xhtml.structural.login</i18n:text>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -687,7 +773,7 @@
                     <hr/>
                     <div class="col-xs-7 col-sm-8">
                         <div>
-Copyright &#169; 2018 WorldFish
+                            Copyright &#169; 2018 WorldFish
                         </div>
                         <div class="hidden-print">
                             <a>
@@ -712,7 +798,7 @@ Copyright &#169; 2018 WorldFish
                     <div class="col-xs-5 col-sm-4 hidden-print">
                         <div class="pull-right">
                             <span>Powered by </span>
-                            <a title="KnowledgeArc" target="_blank" href="https://www.knowledgearc.com">KnowledgeArc</a>
+                            <a title="CodeObia" target="_blank" href="http://codeobia.com">CodeObia</a>
                         </div>
                     </div>
                 </div>

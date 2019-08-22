@@ -153,6 +153,21 @@
                         </small></span>
                 </xsl:if>
             </div>
+
+            <xsl:choose>
+                <xsl:when test="dim:field[@element='type']">
+                    <div class="artifact-info">
+                        <div class="h4">
+                            <small class="element-label">Type:</small>
+                            <xsl:element name="small">
+                                <xsl:value-of select="dim:field[@element='type'][1]/node()"/>
+                            </xsl:element>
+                        </div>
+                    </div>
+                </xsl:when>
+                <xsl:otherwise>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:if test="dim:field[@element = 'description' and @qualifier='abstract']">
                 <xsl:variable name="abstract" select="dim:field[@element = 'description' and @qualifier='abstract']/node()"/>
                 <div class="artifact-abstract">
@@ -290,6 +305,21 @@
                         </span>
                     </xsl:if>
                 </div>
+                <xsl:choose>
+                    <xsl:when test="dim:field[@element='type']">
+                        <div class="artifact-info">
+                            <div class="h4">
+                                <small class="element-label">Type:</small>
+                                <xsl:element name="small">
+                                    <xsl:value-of select="dim:field[@element='type'][1]/node()"/>
+                                </xsl:element>
+                            </div>
+                        </div>
+                    </xsl:when>
+                    <xsl:otherwise>
+                    </xsl:otherwise>
+                </xsl:choose>
+
             </div>
         </xsl:template>
 
