@@ -158,7 +158,7 @@
                 <xsl:when test="dim:field[@element='type']">
                     <div class="artifact-info">
                         <div class="h4">
-                            <small class="element-label">Type:</small>
+                            <small class="element-label">Type: </small>
                             <xsl:element name="small">
                                 <xsl:value-of select="dim:field[@element='type'][1]/node()"/>
                             </xsl:element>
@@ -309,7 +309,7 @@
                     <xsl:when test="dim:field[@element='type']">
                         <div class="artifact-info">
                             <div class="h4">
-                                <small class="element-label">Type:</small>
+                                <small class="element-label">Type: </small>
                                 <xsl:element name="small">
                                     <xsl:value-of select="dim:field[@element='type'][1]/node()"/>
                                 </xsl:element>

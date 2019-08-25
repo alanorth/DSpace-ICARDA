@@ -245,7 +245,7 @@
                     <xsl:choose>
                         <xsl:when test="dri:list[@n=(concat($handle, ':dc.type'))]/dri:item">
                             <div class="h4">
-                                <small class="element-label">Type:</small>
+                                <small class="element-label">Type: </small>
                                 <xsl:element name="small">
                                     <xsl:value-of
                                             select="dri:list[@n=(concat($handle, ':dc.type'))]/dri:item[1]/node()"/>
