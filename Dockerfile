@@ -12,7 +12,7 @@ ARG CONFIG_DSPACE_HOSTNAME="localhost"
 # Cater for environments where Tomcat is being reverse proxied via another HTTP
 # server like nginx on port 80, for example. DSpace needs to know its publicly
 # accessible URL for various places where it writes its own URL.
-ARG CONFIG_DSPACE_PROXY_PORT=":8080"
+ARG CONFIG_DSPACE_PROXY_PORT="8080"
 ARG CONFIG_DSPACE_INTERNAL_PROXY_PORT=":8080"
 # Build configuration variables
 ARG CONFIG_DSPACE_NAME="DSpace at My University"
@@ -25,7 +25,7 @@ ARG CONFIG_MAIL_FEEDBACK_RECIPIENT="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_ADMIN="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_ALERT_RECIPIENT="dspace-noreply@myu.edu"
 ARG CONFIG_MAIL_REGISTRATION_NOTIFY="dspace-noreply@myu.edu"
-ARG CONFIG_HANDLE_CANONICAL_PREFIX="http://hdl.handle.net/"
+ARG CONFIG_HANDLE_CANONICAL_PREFIX="http:\/\/hdl.handle.net\/"
 ARG CONFIG_HANDLE_PREFIX="123456789"
 
 # Active DSpace theme
@@ -77,10 +77,11 @@ RUN if [ -d dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/theme
         else echo "No theme is defined"; \
     fi
 
+ENV CONFIG_DSPACE_PROXY_PORT_STRING=${CONFIG_DSPACE_PROXY_PORT:+":"}$CONFIG_DSPACE_PROXY_PORT
+ENV CONFIG_DSPACE_BASE_URL="$CONFIG_DSPACE_PROTOCOL:\/\/$CONFIG_DSPACE_HOSTNAME$CONFIG_DSPACE_PROXY_PORT_STRING"
 # Set DSpace confirgation variables
-RUN sed -i -e "s/#CONFIG_DSPACE_PROTOCOL#/$CONFIG_DSPACE_PROTOCOL/g" \
+RUN sed -i -e "s/#CONFIG_DSPACE_BASE_URL#/$CONFIG_DSPACE_BASE_URL/g" \
     -e "s/#CONFIG_DSPACE_HOSTNAME#/$CONFIG_DSPACE_HOSTNAME/g" \
-    -e "s/#CONFIG_DSPACE_PROXY_PORT#/$CONFIG_DSPACE_PROXY_PORT/g" \
     -e "s/#CONFIG_DSPACE_INTERNAL_PROXY_PORT#/$CONFIG_DSPACE_INTERNAL_PROXY_PORT/g" \
     -e "s/#CONFIG_DSPACE_NAME#/$CONFIG_DSPACE_NAME/g" \
     -e "s/#CONFIG_MAIL_SERVER#/$CONFIG_MAIL_SERVER/g" \
@@ -161,7 +162,7 @@ USER root
 # Tweak default Tomcat server configuration
 COPY config/server.xml "$CATALINA_HOME"/conf/server.xml
 
-RUN sed -i "s/PROXY_PORT/$DSPACE_PROXY_PORT/g" "$CATALINA_HOME"/conf/server.xml && \
+RUN sed -i "s/#CONFIG_DSPACE_PROXY_PORT#/$CONFIG_DSPACE_PROXY_PORT/g" "$CATALINA_HOME"/conf/server.xml && \
     # Install root filesystem
     cp -r /tmp/dspace/rootfs/* / && \
     # Copy Handle server
@@ -179,12 +180,7 @@ RUN sed -i "s/PROXY_PORT/$DSPACE_PROXY_PORT/g" "$CATALINA_HOME"/conf/server.xml 
 
 WORKDIR $DSPACE_HOME
 
-# Change to dspace user for for adding the job
-USER dspace
-RUN (crontab -l 2>/dev/null; echo '0 0 * * * /dspace/bin/dspace generate-sitemaps') | crontab -
-USER root
-
-RUN chown -R dspace:dspace $DSPACE_HOME /usr/local/tomcat/logs
+RUN chown -R dspace:dspace $DSPACE_HOME /usr/local/tomcat/logs $CATALINA_HOME/conf
 
 # Build info
 RUN echo "Debian GNU/Linux `cat /etc/debian_version` image. (`uname -rsv`)" >> /root/.built && \
