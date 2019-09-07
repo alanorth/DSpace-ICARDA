@@ -150,7 +150,7 @@ RUN cd dspace && mvn -Dmirage2.on=true package
 
 # Install compiled applications to $CATALINA_HOME
 RUN cd dspace/dspace/target/dspace-installer \
-    && ant init_installation init_configs install_code copy_webapps \
+    && ant init_installation init_configs install_code copy_webapps update_geolite \
     && rm -rf "$CATALINA_HOME/webapps" && mv -f "$DSPACE_HOME/webapps" "$CATALINA_HOME" \
     && sed -i s/CONFIDENTIAL/NONE/ "$CATALINA_HOME"/webapps/rest/WEB-INF/web.xml
 
