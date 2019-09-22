@@ -126,8 +126,24 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-title">
-        <div class="well">Please use this identifier to cite or link to this item:
-            <code><xsl:value-of select="dim:field[@element='identifier'][@qualifier='uri'][1]"/></code>
+        <div class="well" id="cite_link">
+            <div>
+                Please use this identifier to cite or link to this item:
+                <code><xsl:value-of select="dim:field[@element='identifier'][@qualifier='uri'][1]"/></code>
+            </div>
+            <div id="social_media_share">
+                <xsl:attribute name="data-url">
+                    <xsl:value-of select="dim:field[@element='identifier'][@qualifier='uri'][1]"/>
+                </xsl:attribute>
+                <xsl:attribute name="data-title">
+                    <xsl:value-of select="dim:field[@element='title'][not(@qualifier)][1]/node()"/>
+                </xsl:attribute>
+                <xsl:attribute name="data-keywords">
+                    <xsl:for-each select="dim:field[@element='subject']">
+                        <xsl:value-of select="./node()" /><xsl:if test="position() != last()">,</xsl:if>
+                    </xsl:for-each>
+                </xsl:attribute>
+            </div>
         </div>
 
         <xsl:choose>

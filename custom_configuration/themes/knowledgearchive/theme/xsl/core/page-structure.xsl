@@ -273,6 +273,9 @@
             </xsl:for-each>
 
             <link rel="stylesheet" href="{concat($theme-path, 'css/template.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'vendor/font-awesome-4.7.0/css/font-awesome.min.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials-theme-minima.css')}"/>
 
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">
@@ -943,8 +946,23 @@
         </xsl:if>
 
         <xsl:text>&#xa;&#xa;</xsl:text>
-
+        <script src="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials.min.js')}">&#160;</script>
+        <script>
+            $(document).ready(function () {
+                jsSocials.setDefaults('twitter', {
+                    hashtags: $('#social_media_share').data('keywords')
+                });
+                $('#social_media_share').jsSocials({
+                    shares: ['email', 'twitter', 'facebook', 'linkedin', 'whatsapp'],
+                    url: $('#social_media_share').data('url'),
+                    text: $('#social_media_share').data('text'),
+                    showLabel: false,
+                    showCount: false,
+                });
+            });
+        </script>
     </xsl:template>
+
 
     <!--The Language Selection-->
     <xsl:template name="languageSelection">
