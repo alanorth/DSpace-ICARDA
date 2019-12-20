@@ -135,8 +135,16 @@
                 </div>
                 <div class="col-sm-8">
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
-                    <xsl:call-template name="itemSummaryView-DIM-URI"/>
-                    <xsl:call-template name="itemSummaryView-collections"/>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <xsl:call-template name="itemSummaryView-DIM-URI"/>
+                            <xsl:call-template name="itemSummaryView-collections"/>
+                        </div>
+                        <div class="col-sm-4" style="text-align: right; margin-top: 10px;">
+                            <xsl:call-template name="itemSummaryView-ALTMETRICS"/>
+                        </div>
+                    </div>
+                    <div class="logos"></div>
                 </div>
             </div>
         </div>
@@ -403,11 +411,21 @@
                       </input>
                  </xsl:for-each>
                  </div>
-                 <div class="logos"></div>
             </div>
         </xsl:if>
     </xsl:template>
 
+    <xsl:template name="itemSummaryView-ALTMETRICS">
+        <xsl:if test="dim:field[@element='identifier' and @qualifier='uri' and descendant::text()]">
+            <div class="altmetric-embed" data-link-target="_blank" data-badge-type="medium-donut"
+                 data-badge-popover="top" data-hide-less-than="1">
+                <xsl:attribute name="data-handle">
+                    <xsl:value-of
+                            select="substring-after(dim:field[@element='identifier' and @qualifier='uri'][1]/node(),'hdl.handle.net/')"/>
+                </xsl:attribute>
+            </div>
+        </xsl:if>
+    </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-file-section">
         <xsl:choose>

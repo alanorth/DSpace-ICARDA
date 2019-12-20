@@ -896,6 +896,7 @@
         <script src="/themes/MELSpace/scripts/partners-collector.js"></script>
         <script src="/themes/MELSpace/scripts/visits.js"></script>
         <script src="/themes/MELSpace/scripts/highcharts.js"></script>
+        <script src="/themes/MELSpace/scripts/altmetrics.js"></script>
         <script>
             <xsl:text>
                 $(document).ready(function () {
