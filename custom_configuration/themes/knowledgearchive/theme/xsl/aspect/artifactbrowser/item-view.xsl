@@ -107,6 +107,11 @@
                             <xsl:call-template name="itemSummaryView-DIM-thumbnail"/>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-12" style="text-align: center;">
+                            <xsl:call-template name="itemSummaryView-ALTMETRICS"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-8">
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
@@ -353,6 +358,18 @@
                     <i18n:text>xmlui.mirage2.itemSummaryView.Collections</i18n:text>
                 </h5>
                 <xsl:apply-templates select="$document//dri:referenceSet[@id='aspect.artifactbrowser.ItemViewer.referenceSet.collection-viewer']/dri:reference"/>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-ALTMETRICS">
+        <xsl:if test="dim:field[@element='identifier' and @qualifier='uri' and descendant::text()]">
+            <div class="altmetric-embed" data-link-target="_blank" data-badge-type="large-donut"
+                 data-badge-popover="top" data-hide-less-than="1">
+                <xsl:attribute name="data-handle">
+                    <xsl:value-of
+                            select="substring-after(dim:field[@element='identifier' and @qualifier='uri'][1]/node(),'hdl.handle.net/')"/>
+                </xsl:attribute>
             </div>
         </xsl:if>
     </xsl:template>
