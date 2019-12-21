@@ -1027,7 +1027,7 @@
         <xsl:param name="value"/>
         <xsl:param name="filtertype"/>
         <xsl:variable name="filterlink">
-            <xsl:value-of select="concat($context-path,'/discover?filtertype=',$filtertype,'&amp;filter_relational_operator=equals&amp;filter=',url:encode(node()))"></xsl:value-of>
+            <xsl:value-of select="concat($context-path,'/discover?filtertype=',$filtertype,'&amp;filter_relational_operator=equals&amp;filter=',url:encode($value))"></xsl:value-of>
         </xsl:variable>
         <a target="_blank">
             <xsl:attribute name="href" >
