@@ -34,6 +34,7 @@
     xmlns:encoder="xalan://java.net.URLEncoder"
     xmlns:util="org.dspace.app.xmlui.utils.XSLUtils"
     xmlns:confman="org.dspace.core.ConfigurationManager"
+    xmlns:url="http://whatever/java/java.net.URLEncoder"
     exclude-result-prefixes="xalan encoder i18n dri mets dim xlink xsl util confman">
 
     <xsl:output indent="yes"/>
@@ -112,47 +113,8 @@
                 </span>
             </h4>
             <div class="artifact-info">
-				<span class="element-label">
-                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text>
-                </span>
-                <span class="author h4">
-                    <small>
-                    <xsl:choose>
-                        <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">
-                            <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">
-                                <span>
-                                  <xsl:if test="@authority">
-                                    <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
-                                  </xsl:if>
-                                  <xsl:copy-of select="node()"/>
-                                </span>
-                                <xsl:if test="count(following-sibling::dim:field[@element='contributor'][@qualifier='author']) != 0">
-                                    <xsl:text>; </xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                        </xsl:when>
-                        <xsl:when test="dim:field[@element='creator']">
-                            <xsl:for-each select="dim:field[@element='creator']">
-                                <xsl:copy-of select="node()"/>
-                                <xsl:if test="count(following-sibling::dim:field[@element='creator']) != 0">
-                                    <xsl:text>; </xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                        </xsl:when>
-                        <xsl:when test="dim:field[@element='contributor']">
-                            <xsl:for-each select="dim:field[@element='contributor']">
-                                <xsl:copy-of select="node()"/>
-                                <xsl:if test="count(following-sibling::dim:field[@element='contributor']) != 0">
-                                    <xsl:text>; </xsl:text>
-                                </xsl:if>
-                            </xsl:for-each>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <i18n:text>xmlui.dri2xhtml.METS-1.0.no-author</i18n:text>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                    </small>
-                </span>
+                <xsl:call-template name="itemDetailList-DIM-authors" />
+
                 <xsl:text> </xsl:text>
                 <xsl:if test="dim:field[@element='date' and @qualifier='issued']">
 	                <span class="publisher-date h4">  <small>
@@ -187,7 +149,10 @@
 				<xsl:element name="span">
                     <xsl:choose>
                         <xsl:when test="dim:field[@element='type']">
-                            <xsl:value-of select="dim:field[@element='type'][1]/node()"/>
+                            <xsl:call-template name="discovery-link">
+                                <xsl:with-param name="value" select="dim:field[@element='type'][1]/node()"/>
+                                <xsl:with-param name="filtertype" select="'type'"/>
+                            </xsl:call-template>
                         </xsl:when>
                         <xsl:otherwise>
                         </xsl:otherwise>
@@ -250,9 +215,84 @@
         </div>
     </xsl:template>
 
+    <xsl:template name="itemDetailList-DIM-authors">
+        <span class="element-label">
+            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text>
+        </span>
+        <span class="author h4">
+            <small>
+                <xsl:if test="dim:field[@element='creator'][not(@qualifier)]">
+                    <xsl:for-each select="dim:field[@element='creator'][not(@qualifier)]">
+                        <xsl:call-template name="itemDetailList-DIM-authors-entry" />
+                        <xsl:if test="count(following-sibling::dim:field[@element='creator'][not(@qualifier)]) != 0">
+                            <xsl:text>; </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:if>
+                <xsl:if test="count(dim:field[@element='creator'][not(@qualifier)]) != 0 and count(dim:field[@element='contributor'][not(@qualifier)]) != 0">
+                    <xsl:text>; </xsl:text>
+                </xsl:if>
+                <xsl:if test="dim:field[@element='contributor'][not(@qualifier)]">
+                    <xsl:for-each select="dim:field[@element='contributor'][not(@qualifier)]">
+                        <xsl:call-template name="itemDetailList-DIM-authors-entry" />
+                        <xsl:if test="count(following-sibling::dim:field[@element='contributor'][not(@qualifier)]) != 0">
+                            <xsl:text>; </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:if>
+            </small>
+        </span>
+    </xsl:template>
 
+    <!--    TEMP, to activate when updating CGCore-->
+    <!--    <xsl:template name="itemDetailList-DIM-authors">-->
+    <!--        <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">-->
+    <!--            <div class="simple-item-view-authors item-page-field-wrapper table">-->
+    <!--                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text></h5>-->
+    <!--                <xsl:choose>-->
+    <!--                    <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">-->
+    <!--                        <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">-->
+    <!--                            <xsl:call-template name="itemDetailList-DIM-authors-entry" />-->
+    <!--                        </xsl:for-each>-->
+    <!--                    </xsl:when>-->
+    <!--                    <xsl:when test="dim:field[@element='creator']">-->
+    <!--                        <xsl:for-each select="dim:field[@element='creator']">-->
+    <!--                            <xsl:call-template name="itemDetailList-DIM-authors-entry" />-->
+    <!--                        </xsl:for-each>-->
+    <!--                    </xsl:when>-->
+    <!--                    <xsl:when test="dim:field[@element='contributor']">-->
+    <!--                        <xsl:for-each select="dim:field[@element='contributor']">-->
+    <!--                            <xsl:call-template name="itemDetailList-DIM-authors-entry" />-->
+    <!--                        </xsl:for-each>-->
+    <!--                    </xsl:when>-->
+    <!--                    <xsl:otherwise>-->
+    <!--                        <i18n:text>xmlui.dri2xhtml.METS-1.0.no-author</i18n:text>-->
+    <!--                    </xsl:otherwise>-->
+    <!--                </xsl:choose>-->
+    <!--            </div>-->
+    <!--        </xsl:if>-->
+    <!--    </xsl:template>-->
+    <xsl:template name="itemDetailList-DIM-authors-entry">
+        <xsl:call-template name="discovery-link">
+            <xsl:with-param name="value" select="node()"/>
+            <xsl:with-param name="filtertype" select="'author'"/>
+        </xsl:call-template>
+    </xsl:template>
 
-
+    <!--Helper template that creates a link to the discovery page based on a given node and filtertype to inject into the link-->
+    <xsl:template name="discovery-link">
+        <xsl:param name="value"/>
+        <xsl:param name="filtertype"/>
+        <xsl:variable name="filterlink">
+            <xsl:value-of select="concat($context-path,'/discover?filtertype=',$filtertype,'&amp;filter_relational_operator=equals&amp;filter=',url:encode($value))"></xsl:value-of>
+        </xsl:variable>
+        <a target="_blank">
+            <xsl:attribute name="href" >
+                <xsl:value-of select="$filterlink"/>
+            </xsl:attribute>
+            <xsl:copy-of select="$value"/>
+        </a>
+    </xsl:template>
     <!--
         Rendering of a list of items (e.g. in a search or
         browse results page)

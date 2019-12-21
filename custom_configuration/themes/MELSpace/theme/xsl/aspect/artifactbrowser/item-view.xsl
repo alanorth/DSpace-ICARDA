@@ -129,6 +129,12 @@
                         </div>
                     </div>
                     <xsl:call-template name="itemSummaryView-DIM-date"/>
+                    <xsl:if test="count(dim:field[@mdschema='mel' and @element='impact-factor'][not(@qualifier)]) = 1">
+                        <h5>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-impact-factor</i18n:text>:
+                            <xsl:value-of select="dim:field[@mdschema='mel' and @element='impact-factor'][not(@qualifier)][1]/node()"/>
+                        </h5>
+                    </xsl:if>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
                     <xsl:if test="$ds_item_view_toggle_url != ''">
                         <xsl:call-template name="itemSummaryView-show-full"/>
@@ -152,7 +158,7 @@
                     <div class="logos"></div>
                 </div>
             </div>
-            <div class="item_map">
+            <div id="item_map">
                 <xsl:for-each select="dim:field[@mdschema = 'cg' and @element='coverage' and @qualifier='country']">
                     <input type="hidden">
                         <xsl:attribute name="value">
