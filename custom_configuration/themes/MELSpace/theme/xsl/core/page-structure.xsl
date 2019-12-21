@@ -895,11 +895,10 @@
         </xsl:for-each>
 
         <script src="/themes/MELSpace/scripts/jquery.tinycarousel.js"></script>
-        <script src="/themes/MELSpace/scripts/partners-collector.js"></script>
-        <script src="/themes/MELSpace/scripts/visits.js"></script>
         <script src="/themes/MELSpace/scripts/highcharts.js"></script>
         <script src="/themes/MELSpace/scripts/Leaflet_1.6.0/leaflet.js"></script>
         <script src="/themes/MELSpace/scripts/altmetrics.js"></script>
+        <script src="/themes/MELSpace/scripts/main.js"></script>
         <script>
             <xsl:text>
                 $(document).ready(function () {

@@ -1,14 +1,70 @@
+function prepareNames($inputs) {
+    var partners = [];
+    for (var i = 0; i < $inputs.length; i++) {
+        var partner = $inputs[i].value;
+        if (partner == "Not Applicable")
+            continue;
+        partner = partner.replace(/ *\([^)]*\) */g, ""); //Remove brackets
+        partner = partner.replace(/ *\-[^]*\ */g, ""); //Remove dashes
+        partners.push(partner);
+    }
+
+    partners = partners.filter(function (item, index, inputArray) {
+        return inputArray.indexOf(item) == index;
+    });
+
+    return partners;
+}
+
+function requestLogos(partners, callback) {
+    var images = [];
+    jQuery.ajax({
+        url: "https://mel.cgiar.org/dspace/getpartnerlogos",
+        data: {
+            client_id: 1,
+            client_secret: 'hello',
+            partners: partners,
+            height: 48,
+        },
+        dataType: 'jsonp',
+        success: function (json) {
+            if (json.data) {
+                $.each(json.data, function (key, value) {
+                    images.push(value.logo);
+                });
+                callback(images);
+            }
+        },
+        error: function () {
+        }
+    });
+}
+
+function appendImages(images) {
+    for (var i = 0; i < images.length; i++) {
+        jQuery('.partners-list .logos').append('<img src="' + images[i] + '" />');
+    }
+}
+
+function checkPartners() {
+    if (jQuery('.partners-list').length > 0) {
+        $inputs = jQuery('.partners-list .values input');
+        var partners = prepareNames($inputs);
+        requestLogos(partners, appendImages);
+    }
+}
+
 function Visits() {
     var popoverContent = 'Dear Visitor, this site complies with the European Union General Data Protection Regulation <a href=\'https://www.eugdpr.org\' target=\'_blank\'>(GDPR)</a> and all Internet Protocol (IP) addresses collected with the purpose to generate the information charts (analytics) are anonymized and we cannot identify the user individually. <br>Country label \'\'Global\'\' refers to IP addresses not matched with any country.';
     var popover_table_style = '"border: solid 1px black;border-radius: 50%;padding: 1px 7px;cursor: pointer;" ';
     var GDPR_popover_table = '<i class="popovers" data-trigger="click" data-placement="top" style=' + popover_table_style +
-            'data-content="'+popoverContent+'" ' +
-            'data-container="body"> &#33;</i>';
+        'data-content="'+popoverContent+'" ' +
+        'data-container="body"> &#33;</i>';
 
     var popover_chart_style = '"border: solid 1px black;border-radius: 50%;padding: 1px 10px;cursor: pointer; padding-left: 7px;" ';
     var GDPR_popover_chart = '<i class="popovers" data-trigger="click" data-placement="top" style=' + popover_chart_style +
-            'data-content="'+popoverContent+'" ' +
-            'data-container="body"> &#33;</i>';
+        'data-content="'+popoverContent+'" ' +
+        'data-container="body"> &#33;</i>';
 
     var dspace_item_id = $('input[name=dspace_item_id]').val();
     var dspace_item_handle = $('input[name=dspace_item_handle]').val();
@@ -172,4 +228,39 @@ function Visits() {
         var domain = $(this).data('contact_domain');
         window.location.href = 'mailto:' + email + '@' + domain;
     });
+}
+
+function item_map() {
+    if ($('#item_map input:hidden').length > 0) {
+        $('#item_map').css('height', '500px');
+        var visualization_map = L.map('item_map').setView([0, 0], 2);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+        }).addTo(visualization_map);
+
+        $.getJSON('/themes/MELSpace/countries.json', function (data) {
+            var markers = {};
+
+            $('#item_map input:hidden').each(function () {
+                var iso = $(this).val();
+                if (data.hasOwnProperty(iso) && data[iso].lat != null) {
+                    markers[iso] = new L.marker([data[iso].lat, data[iso].lng]);
+
+                    markers[iso].bindPopup(data[iso].name);
+                    markers[iso].addTo(visualization_map);
+                    markers[iso].on('mouseover', function (e) {
+                        e.target.openPopup();
+                    });
+                    markers[iso].on('mouseout', function (e) {
+                        e.target.closePopup();
+                    });
+
+                    markers[iso].on('click', function (e) {
+                        e.target.openPopup();
+                        visualization_map.setView([e.latlng.lat, e.latlng.lng], 4);
+                    });
+                }
+            });
+        });
+    }
 }
