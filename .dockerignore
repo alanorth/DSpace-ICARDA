@@ -3,8 +3,11 @@
 .settings/
 */target/
 dspace/modules/*/target/
-Dockerfile.*
+Dockerfile*
 postgresData/
 solrData/
 dspace_logs/
 db_backup/
+DSPACE_BACKUP.sh
+IMPORT_DSPACE_DB.sh
+docker-compose.yml
