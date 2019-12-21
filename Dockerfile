@@ -38,7 +38,7 @@ ARG REQUEST_ITEM_HELPDESK_OVERRIDE=false
 
 # Environment variables
 ENV DSPACE_HOME=/dspace
-ENV CATALINA_OPTS="-Xmx512M -Dfile.encoding=UTF-8" \
+ENV CATALINA_OPTS="-Xmx512M -Xms512M -Dfile.encoding=UTF-8" \
     MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1" \
     PATH=$CATALINA_HOME/bin:$DSPACE_HOME/bin:$PATH
 
@@ -145,9 +145,57 @@ RUN if [ -f costum.main.page.header.html ]; \
     fi
 WORKDIR /tmp
 
+## Install Dmirage2 deps
+USER root
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+USER dspace
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
+ENV NVM_DIR /dspace/.nvm
+ENV NODE_VERSION 8.17.0
+RUN source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+RUN npm install -g bower grunt grunt-cli
+
+USER root
+RUN apt-get update && apt-get install -y libyaml-dev \
+    sqlite3 \
+    autoconf \
+    libgdbm-dev \
+    libncurses5-dev \
+    automake \
+    libtool \
+    bison \
+    pkg-config \
+    libffi-dev \
+    gawk \
+    g++ \
+    libreadline6-dev \
+    zlib1g-dev \
+    libssl-dev \
+    libsqlite3-dev \
+    libgmp-dev \
+    rubygems \
+    ruby-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install rubygems libgemplugin-ruby
+RUN mkdir -p ~/.gnupg && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import - \
+RUN curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+RUN gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+RUN curl -sSL https://get.rvm.io | bash -s stable --ruby
+
+RUN gem install sass -v 3.3.14
+RUN gem install compass -v 1.0.3
+
+ENV GEM_HOME /var/lib/gems/2.3.0
+ENV GEM_PATH /var/lib/gems/2.3.0
 
 # Build DSpace with Mirage 2 enabled
-RUN cd dspace && mvn -Dmirage2.on=true package
+RUN cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false
 
 # Install compiled applications to $CATALINA_HOME
 RUN cd dspace/dspace/target/dspace-installer \
