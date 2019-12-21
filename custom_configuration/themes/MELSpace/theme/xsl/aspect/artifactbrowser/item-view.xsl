@@ -152,6 +152,15 @@
                     <div class="logos"></div>
                 </div>
             </div>
+            <div class="item_map">
+                <xsl:for-each select="dim:field[@mdschema = 'cg' and @element='coverage' and @qualifier='country']">
+                    <input type="hidden">
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="./node()"/>
+                        </xsl:attribute>
+                    </input>
+                </xsl:for-each>
+            </div>
         </div>
     </xsl:template>
 

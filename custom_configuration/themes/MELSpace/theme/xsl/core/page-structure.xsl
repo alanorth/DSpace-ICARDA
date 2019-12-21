@@ -193,6 +193,7 @@
 
             <link rel="stylesheet" href="{concat($theme-path, 'styles/main.css')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'styles/academicons-1.8.6/css/academicons.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'scripts/Leaflet_1.6.0/leaflet.css')}"/>
 
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">
@@ -897,6 +898,7 @@
         <script src="/themes/MELSpace/scripts/partners-collector.js"></script>
         <script src="/themes/MELSpace/scripts/visits.js"></script>
         <script src="/themes/MELSpace/scripts/highcharts.js"></script>
+        <script src="/themes/MELSpace/scripts/Leaflet_1.6.0/leaflet.js"></script>
         <script src="/themes/MELSpace/scripts/altmetrics.js"></script>
         <script>
             <xsl:text>
@@ -906,8 +908,9 @@
                         buttons: false,
                         animationTime: 3000
                     });
-                    Visits();
                     checkPartners();
+                    Visits();
+                    item_map();
                 });
             </xsl:text>
         </script>
