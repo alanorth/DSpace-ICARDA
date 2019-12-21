@@ -112,7 +112,9 @@
                 </span>
             </h4>
             <div class="artifact-info">
-				<span class="element-label">Author: </span>
+				<span class="element-label">
+                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text>
+                </span>
                 <span class="author h4">
                     <small>
                     <xsl:choose>

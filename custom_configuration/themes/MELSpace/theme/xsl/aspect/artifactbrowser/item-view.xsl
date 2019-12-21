@@ -36,6 +36,7 @@
     xmlns:jstring="java.lang.String"
     xmlns:rights="http://cosimo.stanford.edu/sdr/metsrights/"
     xmlns:confman="org.dspace.core.ConfigurationManager"
+    xmlns:url="http://whatever/java/java.net.URLEncoder"
     exclude-result-prefixes="xalan encoder i18n dri mets dim xlink xsl util jstring rights confman">
 
     <xsl:output indent="yes"/>
@@ -134,6 +135,7 @@
                     </xsl:if>
                 </div>
                 <div class="col-sm-8">
+                    <xsl:call-template name="itemSummaryView-DIM-citation"/>
                     <xsl:call-template name="itemSummaryView-DIM-abstract"/>
                     <div class="row">
                         <div class="col-sm-8">
@@ -144,6 +146,9 @@
                             <xsl:call-template name="itemSummaryView-ALTMETRICS"/>
                         </div>
                     </div>
+                    <xsl:call-template name="itemSummaryView-DIM-orcids"/>
+                    <xsl:call-template name="itemSummaryView-DIM-subject"/>
+                    <xsl:call-template name="itemSummaryView-DIM-subject-AGROVOC"/>
                     <div class="logos"></div>
                 </div>
             </div>
@@ -268,6 +273,32 @@
 		
     </xsl:template>
 
+    <xsl:template name="itemSummaryView-DIM-citation">
+        <xsl:if test="dim:field[@element='identifier' and @qualifier='citation']">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-citation</i18n:text></h5>
+                <div>
+                    <xsl:for-each select="dim:field[@element='identifier' and @qualifier='citation']">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <xsl:copy-of select="node()"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@element='identifier' and @qualifier='citation']) != 0">
+                            <div class="spacer">&#160;</div>
+                        </xsl:if>
+                    </xsl:for-each>
+                    <xsl:if test="count(dim:field[@element='identifier' and @qualifier='citation']) &gt; 1">
+                        <div class="spacer">&#160;</div>
+                    </xsl:if>
+                </div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
             <div class="simple-item-view-description item-page-field-wrapper table">
@@ -295,39 +326,99 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-authors">
-        <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">
+        <xsl:if test="dim:field[@mdschema='dc' and @element='creator'] or dim:field[@mdschema='dc' and @element='contributor']">
             <div class="simple-item-view-authors item-page-field-wrapper table">
-                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-author</i18n:text></h5>
-                <xsl:choose>
-                    <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">
-                        <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">
-                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:when test="dim:field[@element='creator']">
-                        <xsl:for-each select="dim:field[@element='creator']">
-                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:when test="dim:field[@element='contributor']">
-                        <xsl:for-each select="dim:field[@element='contributor']">
-                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <i18n:text>xmlui.dri2xhtml.METS-1.0.no-author</i18n:text>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text></h5>
+                <xsl:if test="dim:field[@element='creator'][not(@qualifier)]">
+                    <xsl:for-each select="dim:field[@element='creator'][not(@qualifier)]">
+                        <xsl:call-template name="itemSummaryView-DIM-authors-entry" />
+                    </xsl:for-each>
+                </xsl:if>
+                <xsl:if test="dim:field[@element='contributor'][not(@qualifier)]">
+                    <xsl:for-each select="dim:field[@element='contributor'][not(@qualifier)]">
+                        <xsl:call-template name="itemSummaryView-DIM-authors-entry" />
+                    </xsl:for-each>
+                </xsl:if>
             </div>
         </xsl:if>
     </xsl:template>
 
+<!--    TEMP, to activate when updating CGCore-->
+<!--    <xsl:template name="itemSummaryView-DIM-authors">-->
+<!--        <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">-->
+<!--            <div class="simple-item-view-authors item-page-field-wrapper table">-->
+<!--                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-authors</i18n:text></h5>-->
+<!--                <xsl:choose>-->
+<!--                    <xsl:when test="dim:field[@element='contributor'][@qualifier='author']">-->
+<!--                        <xsl:for-each select="dim:field[@element='contributor'][@qualifier='author']">-->
+<!--                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />-->
+<!--                        </xsl:for-each>-->
+<!--                    </xsl:when>-->
+<!--                    <xsl:when test="dim:field[@element='creator']">-->
+<!--                        <xsl:for-each select="dim:field[@element='creator']">-->
+<!--                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />-->
+<!--                        </xsl:for-each>-->
+<!--                    </xsl:when>-->
+<!--                    <xsl:when test="dim:field[@element='contributor']">-->
+<!--                        <xsl:for-each select="dim:field[@element='contributor']">-->
+<!--                            <xsl:call-template name="itemSummaryView-DIM-authors-entry" />-->
+<!--                        </xsl:for-each>-->
+<!--                    </xsl:when>-->
+<!--                    <xsl:otherwise>-->
+<!--                        <i18n:text>xmlui.dri2xhtml.METS-1.0.no-author</i18n:text>-->
+<!--                    </xsl:otherwise>-->
+<!--                </xsl:choose>-->
+<!--            </div>-->
+<!--        </xsl:if>-->
+<!--    </xsl:template>-->
+
     <xsl:template name="itemSummaryView-DIM-authors-entry">
         <div>
-            <xsl:if test="@authority">
-                <xsl:attribute name="class"><xsl:text>ds-dc_contributor_author-authority</xsl:text></xsl:attribute>
-            </xsl:if>
-            <xsl:copy-of select="node()"/>
+            <xsl:call-template name="discovery-link">
+                <xsl:with-param name="value" select="node()"/>
+                <xsl:with-param name="filtertype" select="'author'"/>
+            </xsl:call-template>
+        </div>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-orcids">
+        <xsl:if test="dim:field[@mdschema='cg' and @element='creator'][@qualifier='id' and descendant::text()]">
+            <div class="simple-item-view-authors item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-orcid</i18n:text></h5>
+
+                <xsl:for-each select="dim:field[@mdschema='cg' and @element='creator'][@qualifier='id']">
+                    <xsl:call-template name="itemSummaryView-DIM-orcids-entry" />
+                </xsl:for-each>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-orcids-entry">
+        <!-- extract and strip orcid from cg.creator.id and build profile link -->
+        <xsl:variable name="orcid-link" select="concat('https://orcid.org/', normalize-space(substring-after(node(), ':')))"/>
+        <!-- extract and strip author name from cg.creator.id -->
+        <xsl:variable name="orcid-name" select="normalize-space(substring-before(node(), ':'))"/>
+
+        <div>
+            <xsl:attribute name="class"><xsl:text>ds-cg_creator_orcid</xsl:text></xsl:attribute>
+
+            <xsl:value-of select="$orcid-name"/>
+
+            <a>
+                <xsl:attribute name="target">_blank</xsl:attribute>
+                <xsl:attribute name="rel">noopener</xsl:attribute>
+
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$orcid-link"/>
+                </xsl:attribute>
+
+                <span>
+                    <xsl:attribute name="class">ai ai-orcid</xsl:attribute>
+                    <xsl:attribute name="aria-hidden">true</xsl:attribute>
+                </span>
+
+                <xsl:value-of select="$orcid-link"/>
+            </a>
         </div>
     </xsl:template>
 
@@ -423,6 +514,72 @@
                     <xsl:value-of
                             select="substring-after(dim:field[@element='identifier' and @qualifier='uri'][1]/node(),'hdl.handle.net/')"/>
                 </xsl:attribute>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-subject">
+        <xsl:if test="dim:field[@element='subject' and not(@qualifier)]">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-subjects</i18n:text></h5>
+                <div>
+                    <xsl:for-each select="dim:field[@element='subject' and not(@qualifier)]">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <xsl:call-template name="discovery-link">
+                                    <xsl:with-param name="filtertype" select="'subject'"/>
+                                    <xsl:with-param name="value" select="node()"/>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@element='subject' and not(@qualifier)]) != 0">
+                            <xsl:text>; </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+
+                </div>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-subject-AGROVOC">
+        <xsl:if test="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-agrovoc-terms</i18n:text></h5>
+                <div>
+                    <xsl:for-each select="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
+                        <xsl:choose>
+                            <xsl:when test="node()">
+                                <!-- extract and strip keyword from mel.keywor.agrovoc -->
+                                <xsl:variable name="agrovoc-keyword" select="normalize-space(substring-before(node(), '|'))"/>
+                                <!-- extract and strip AGROVOC link from mel.keywor.agrovoc -->
+                                <xsl:variable name="agrovoc-link" select="normalize-space(substring-after(node(), '|'))"/>
+
+                                <xsl:call-template name="discovery-link">
+                                    <xsl:with-param name="value" select="$agrovoc-keyword"/>
+                                    <xsl:with-param name="filtertype" select="'subject'"/>
+                                </xsl:call-template>
+                                <a target="_blank">
+                                    <xsl:attribute name="href" >
+                                        <xsl:value-of select="$agrovoc-link"/>
+                                    </xsl:attribute>
+                                    <img class="agrovoc-image" src="/themes/MELSpace/images/AGROVOC-logo.gif" />
+                                </a>
+
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>&#160;</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="count(following-sibling::dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']) != 0">
+                            <xsl:text>; </xsl:text>
+                        </xsl:if>
+                    </xsl:for-each>
+
+                </div>
             </div>
         </xsl:if>
     </xsl:template>
@@ -573,7 +730,7 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year') or (./@mdschema = 'mel' and ./@element = 'licence' and ./@qualifier = 'image') or (./@mdschema = 'mel' and ./@element = 'contact' and ./@qualifier = 'email') or (./@mdschema = 'mel' and ./@element = 'contact' and ./@qualifier = 'domain'))">
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'ISO3166/MA') or (./@mdschema = 'mel' and ./@element = 'ISO3166-1/ALFA3') or (./@mdschema = 'mel' and ./@element = 'iso3166-1/Numeric') or (./@mdschema = 'mel' and ./@element = 'partner' and ./@qualifier = 'id') or (./@mdschema = 'mel' and ./@element = 'file' and ./@qualifier = 'thumbnail') or (./@mdschema = 'mel' and ./@element = 'date' and ./@qualifier = 'year') or (./@mdschema = 'mel' and ./@element = 'licence' and ./@qualifier = 'image') or (./@mdschema = 'mel' and ./@element = 'contact' and ./@qualifier = 'email') or (./@mdschema = 'mel' and ./@element = 'contact' and ./@qualifier = 'domain') or (./@mdschema = 'mel' and ./@element = 'subject' and ./@qualifier = 'agrovoc'))">
             <xsl:variable name="elementValue" select="./node()"/>
             <xsl:if test="$elementValue != ''">
                 <tr>
@@ -856,5 +1013,18 @@
         <i18n:text i18n:key="{$mimetype-key}"><xsl:value-of select="$mimetype"/></i18n:text>
     </xsl:template>
 
-
+    <!--Helper template that creates a link to the discovery page based on a given node and filtertype to inject into the link-->
+    <xsl:template name="discovery-link">
+        <xsl:param name="value"/>
+        <xsl:param name="filtertype"/>
+        <xsl:variable name="filterlink">
+            <xsl:value-of select="concat($context-path,'/discover?filtertype=',$filtertype,'&amp;filter_relational_operator=equals&amp;filter=',url:encode(node()))"></xsl:value-of>
+        </xsl:variable>
+        <a target="_blank">
+            <xsl:attribute name="href" >
+                <xsl:value-of select="$filterlink"/>
+            </xsl:attribute>
+            <xsl:copy-of select="$value"/>
+        </a>
+    </xsl:template>
 </xsl:stylesheet>

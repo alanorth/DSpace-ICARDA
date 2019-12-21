@@ -380,6 +380,7 @@
         <property name="metadataFields">
             <list>
                 <value>dc.contributor.author</value>
+                <value>dc.contributor</value>
                 <value>dc.creator</value>
             </list>
         </property>

@@ -259,3 +259,15 @@ header .navbar-default .navbar-nav:focus {
   border: 1px solid #ddd;
   max-height: 185px;
 }
+
+/* ORCID branding guidelines: https://orcid.org/trademark-and-id-display-guidelines */
+.item-summary-view-metadata .ai-orcid {
+  color: #A6CE39;
+  margin-left: .25em; /* left and right margin should be 25% of size */
+  margin-right: .25em;
+}
+
+.item-summary-view-metadata .agrovoc-image {
+  margin-left: .25em;
+  height: 14px;
+}
