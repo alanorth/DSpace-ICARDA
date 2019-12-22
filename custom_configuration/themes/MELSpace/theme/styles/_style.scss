@@ -271,3 +271,29 @@ header .navbar-default .navbar-nav:focus {
   margin-left: .25em;
   height: 14px;
 }
+
+.item-summary-view-metadata .view-download {
+  height: 18px;
+}
+
+.overlay-layer-parent {
+  width: 100%;
+  height: 500px;
+  z-index: 9999999;
+  position: absolute;
+}
+
+.overlay-layer {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 23%;
+  font-size: 50px;
+  background-color: #00000052;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+.overlay-layer:hover {
+  opacity: 1
+}

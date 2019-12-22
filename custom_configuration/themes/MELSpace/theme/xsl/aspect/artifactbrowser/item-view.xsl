@@ -133,6 +133,9 @@
                         <h5>
                             <i18n:text>xmlui.dri2xhtml.METS-1.0.item-impact-factor</i18n:text>:
                             <xsl:value-of select="dim:field[@mdschema='mel' and @element='impact-factor'][not(@qualifier)][1]/node()"/>
+                            <xsl:if test="count(dim:field[@mdschema='mel' and @element='date' and @qualifier='year']) = 1">
+                                (Year: <xsl:value-of select="dim:field[@mdschema='mel' and @element='date' and @qualifier='year'][1]/node()"/>)
+                            </xsl:if>
                         </h5>
                     </xsl:if>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
@@ -158,7 +161,12 @@
                     <div class="logos"></div>
                 </div>
             </div>
-            <div id="item_map">
+            <div id="item_map" class="item_map">
+                <div class="overlay-layer-parent">
+                    <div class="overlay-layer">
+                        Click to enable
+                    </div>
+                </div>
                 <xsl:for-each select="dim:field[@mdschema = 'cg' and @element='coverage' and @qualifier='country']">
                     <input type="hidden">
                         <xsl:attribute name="value">
@@ -247,9 +255,13 @@
 			<xsl:choose>
                 <xsl:when test="dim:field[@element='identifier'][not(@qualifier)][last()]">
                     <xsl:element name="a">
+                        <xsl:attribute name="class">view-download</xsl:attribute>
                         <xsl:attribute name="href">
                             <xsl:value-of select="dim:field[@element='identifier'][not(@qualifier)][last()]/node()"/>
                         </xsl:attribute>
+                        <xsl:element name="i">
+                            <xsl:attribute name="class">glyphicon glyphicon-download-alt</xsl:attribute>
+                        </xsl:element>
                         View/Open
                     </xsl:element>
                 </xsl:when>

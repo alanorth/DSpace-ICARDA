@@ -214,6 +214,7 @@ function Visits() {
                 }
             },
             series: [{
+                innerSize: '70%',
                 data: [
                     {name: 'Views', y: visits, color: '#5090d0'},
                     {name: 'Downloads', y: downloads, color: '#5e7357'}
@@ -261,6 +262,36 @@ function item_map() {
                     });
                 }
             });
+            visualization_map._handlers.forEach(function(handler) {
+                handler.disable();
+            });
+        });
+        $('body').on('click', '*', function(e){
+            var target = $(e.target);
+            console.log(target);
+            var enable = false;
+            if (target.hasClass('overlay-layer-parent') || target.parents('.overlay-layer-parent').length > 0)
+                enable = true;
+            else if (target.hasClass('item_map') || target.parents('.item_map').length > 0)
+                return;
+
+            if (enable) {
+                if ($('.overlay-layer-parent:visible').length > 0) {
+                    visualization_map._handlers.forEach(function (handler) {
+                        handler.enable();
+                    });
+                    $('.overlay-layer-parent').hide();
+                    console.log('operation 1')
+                }
+            } else {
+                if ($('.overlay-layer-parent:visible').length === 0) {
+                    visualization_map._handlers.forEach(function (handler) {
+                        handler.disable();
+                    });
+                    $('.overlay-layer-parent').show();
+                    console.log('operation 2')
+                }
+            }
         });
     }
 }
