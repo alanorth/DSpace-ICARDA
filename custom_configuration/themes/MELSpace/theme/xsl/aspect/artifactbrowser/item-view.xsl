@@ -329,7 +329,7 @@
     <xsl:template name="itemSummaryView-DIM-abstract">
         <xsl:if test="dim:field[@element='description' and @qualifier='abstract']">
             <div class="simple-item-view-description item-page-field-wrapper table">
-                <h5 class="visible-xs"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text></h5>
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-abstract</i18n:text></h5>
                 <div>
                     <xsl:for-each select="dim:field[@element='description' and @qualifier='abstract']">
                         <xsl:choose>
