@@ -2234,9 +2234,10 @@
 	<message key="xmlui.dri2xhtml.METS-1.0.item-files-viewOpen">Download</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-no-files">There are no files associated with this item.</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-agrovoc-terms">AGROVOC Keywords</message>
-	<message key="xmlui.dri2xhtml.METS-1.0.item-orcid">CGIAR Author ORCID iDs</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-orcid">Author(s) ORCID(s)</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-citation">Citation</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.item-impact-factor">Impact factor</message>
+	<message key="xmlui.dri2xhtml.METS-1.0.item-doi">DOI</message>
 
 	<message key="xmlui.dri2xhtml.METS-1.0.size-bytes">bytes</message>
 	<message key="xmlui.dri2xhtml.METS-1.0.size-kilobytes">Kb</message>
