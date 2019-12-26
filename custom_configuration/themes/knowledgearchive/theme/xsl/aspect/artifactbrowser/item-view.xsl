@@ -278,24 +278,44 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-URI">
-        <xsl:if test="dim:field[@element='identifier' and @qualifier='url' and descendant::text()]">
-            <div class="simple-item-view-uri item-page-field-wrapper table">
-                <!--h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-uri</i18n:text></h5-->
-                <ul>
-                    <xsl:for-each select="dim:field[@element='identifier' and @qualifier='url']">
-                        <li>
-                            <b><xsl:text>External link to download this item: </xsl:text></b>
-                            <a>
-                                <xsl:attribute name="href">
+        <xsl:choose>
+            <xsl:when test="dim:field[@element='identifier' and @qualifier='doi' and descendant::text()]">
+                <div class="simple-item-view-uri item-page-field-wrapper table">
+                    <!--h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-uri</i18n:text></h5-->
+                    <ul>
+                        <xsl:for-each select="dim:field[@element='identifier' and @qualifier='doi']">
+                            <li>
+                                <b><xsl:text>External link to download this item: </xsl:text></b>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:copy-of select="./node()"/>
+                                    </xsl:attribute>
                                     <xsl:copy-of select="./node()"/>
-                                </xsl:attribute>
-                                <xsl:copy-of select="./node()"/>
-                            </a>
-                        </li>
-                    </xsl:for-each>
-                </ul>
-            </div>
-        </xsl:if>
+                                </a>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </div>
+            </xsl:when>
+            <xsl:when test="dim:field[@element='identifier' and @qualifier='url' and descendant::text()]">
+                <div class="simple-item-view-uri item-page-field-wrapper table">
+                    <!--h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-uri</i18n:text></h5-->
+                    <ul>
+                        <xsl:for-each select="dim:field[@element='identifier' and @qualifier='url']">
+                            <li>
+                                <b><xsl:text>External link to download this item: </xsl:text></b>
+                                <a>
+                                    <xsl:attribute name="href">
+                                        <xsl:copy-of select="./node()"/>
+                                    </xsl:attribute>
+                                    <xsl:copy-of select="./node()"/>
+                                </a>
+                            </li>
+                        </xsl:for-each>
+                    </ul>
+                </div>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-date">
