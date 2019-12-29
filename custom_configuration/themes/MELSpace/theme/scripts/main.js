@@ -293,5 +293,7 @@ function item_map() {
                 }
             }
         });
+    } else {
+        $('#item_map').remove();
     }
 }
