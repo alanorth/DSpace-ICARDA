@@ -11,3 +11,4 @@ db_backup/
 DSPACE_BACKUP.sh
 IMPORT_DSPACE_DB.sh
 docker-compose.yml
+assetstore/
