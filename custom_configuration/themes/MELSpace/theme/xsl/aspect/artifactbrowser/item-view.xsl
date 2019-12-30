@@ -159,7 +159,7 @@
                     <xsl:call-template name="itemSummaryView-DIM-orcids"/>
                     <xsl:call-template name="itemSummaryView-DIM-subject"/>
                     <xsl:call-template name="itemSummaryView-DIM-subject-AGROVOC"/>
-                    <div class="logos"></div>
+                    <div class="partners-list-logos"></div>
                 </div>
             </div>
             <div id="item_map" class="item_map">

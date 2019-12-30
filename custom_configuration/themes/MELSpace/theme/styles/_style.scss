@@ -167,7 +167,7 @@ a, a:hover {
   }
 }
 
-.partners-list img {
+.partners-list-logos img {
   border: 0;
   float: left;
   /*max-width: 100px;*/
@@ -296,4 +296,8 @@ header .navbar-default .navbar-nav:focus {
 
 .overlay-layer:hover {
   opacity: 1
+}
+
+#item_map {
+  margin-top: 15px;
 }

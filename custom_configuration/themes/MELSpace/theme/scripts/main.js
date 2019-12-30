@@ -42,7 +42,7 @@ function requestLogos(partners, callback) {
 
 function appendImages(images) {
     for (var i = 0; i < images.length; i++) {
-        jQuery('.partners-list .logos').append('<img src="' + images[i] + '" />');
+        jQuery('.partners-list-logos').append('<img src="' + images[i] + '" />');
     }
 }
 
