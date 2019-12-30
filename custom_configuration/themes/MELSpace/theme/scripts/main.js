@@ -268,7 +268,6 @@ function item_map() {
         });
         $('body').on('click', '*', function(e){
             var target = $(e.target);
-            console.log(target);
             var enable = false;
             if (target.hasClass('overlay-layer-parent') || target.parents('.overlay-layer-parent').length > 0)
                 enable = true;
@@ -281,7 +280,6 @@ function item_map() {
                         handler.enable();
                     });
                     $('.overlay-layer-parent').hide();
-                    console.log('operation 1')
                 }
             } else {
                 if ($('.overlay-layer-parent:visible').length === 0) {
@@ -289,7 +287,6 @@ function item_map() {
                         handler.disable();
                     });
                     $('.overlay-layer-parent').show();
-                    console.log('operation 2')
                 }
             }
         });
