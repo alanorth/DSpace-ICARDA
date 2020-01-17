@@ -458,9 +458,12 @@
         <xsl:param name="size" />
         <div>
             <a>
-                <xsl:attribute name="href">
-                    <xsl:value-of select="$href"/>
-                </xsl:attribute>
+                <xsl:call-template name="bitstream-link-attributes">
+                    <xsl:with-param name="href">
+                        <xsl:value-of select="$href"/>
+                    </xsl:with-param>
+                </xsl:call-template>
+
                 <xsl:call-template name="getFileIcon">
                     <xsl:with-param name="mimetype">
                         <xsl:value-of select="substring-before($mimetype,'/')"/>
@@ -605,9 +608,11 @@
             <div class="col-xs-6 col-sm-3">
                 <div class="thumbnail">
                     <a class="image-link">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
-                        </xsl:attribute>
+                        <xsl:call-template name="bitstream-link-attributes">
+                            <xsl:with-param name="href">
+                                <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                            </xsl:with-param>
+                        </xsl:call-template>
                         <xsl:choose>
                             <xsl:when test="$context/mets:fileSec/mets:fileGrp[@USE='THUMBNAIL']/
                         mets:file[@GROUPID=current()/@GROUPID]">
@@ -726,11 +731,37 @@
 
     <xsl:template name="view-open">
         <a>
-            <xsl:attribute name="href">
-                <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
-            </xsl:attribute>
+            <xsl:call-template name="bitstream-link-attributes">
+                <xsl:with-param name="href">
+                    <xsl:value-of select="mets:FLocat[@LOCTYPE='URL']/@xlink:href"/>
+                </xsl:with-param>
+            </xsl:call-template>
+
+            <xsl:call-template name="getFileIcon">
+                <xsl:with-param name="mimetype">NA</xsl:with-param>
+            </xsl:call-template>
+
             <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-viewOpen</i18n:text>
         </a>
+    </xsl:template>
+
+    <xsl:template name="bitstream-link-attributes">
+        <xsl:param name="href"/>
+        <xsl:choose>
+            <xsl:when test="contains(mets:FLocat[@LOCTYPE='URL']/@xlink:href,'isAllowed=n')">
+                <xsl:attribute name="class">popovers bitstream_limited_access</xsl:attribute>
+                <xsl:attribute name="type">button</xsl:attribute>
+                <xsl:attribute name="data-trigger">hover</xsl:attribute>
+                <xsl:attribute name="data-content">This file is in restricted access</xsl:attribute>
+                <xsl:attribute name="data-placement">top</xsl:attribute>
+                <xsl:attribute name="data-container">body</xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$href"/>
+                </xsl:attribute>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="display-rights">
