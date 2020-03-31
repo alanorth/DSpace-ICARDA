@@ -254,6 +254,8 @@ RUN (crontab -l 2>/dev/null; echo '# Compress DSpace logs (checker.log, cocoon.l
     && (crontab -l 2>/dev/null; echo '35 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.txt" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec schedtool -B -e ionice -c2 -n7 xz {} \;') | crontab -
 USER root
 
+COPY GeoLite2-City/GeoLite2-City.mmdb $DSPACE_HOME/config/
+
 RUN chown -R dspace:dspace $DSPACE_HOME /usr/local/tomcat/logs $CATALINA_HOME/conf
 
 # Build info
