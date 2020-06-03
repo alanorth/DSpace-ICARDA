@@ -29,6 +29,7 @@
     xmlns:jstring="java.lang.String"
     xmlns:rights="http://cosimo.stanford.edu/sdr/metsrights/"
     xmlns:confman="org.dspace.core.ConfigurationManager"
+    xmlns:url="http://whatever/java/java.net.URLEncoder"
     exclude-result-prefixes="xalan encoder i18n dri mets dim xlink xsl util jstring rights confman">
 
     <xsl:output indent="yes"/>
@@ -57,43 +58,61 @@
 
     <!-- An item rendered in the detailView pattern, the "full item record" view of a DSpace item in Manakin. -->
     <xsl:template name="itemDetailView-DIM">
-        <!-- Output all of the metadata about the item from the metadata section -->
-        <xsl:apply-templates select="mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                             mode="itemDetailView-DIM"/>
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'subject' and ./@qualifier = 'agrovoc'))">
+            <!-- Output all of the metadata about the item from the metadata section -->
+            <xsl:apply-templates select="mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                                 mode="itemDetailView-DIM"/>
 
-        <!-- Generate the bitstream information from the file section -->
-        <xsl:choose>
-            <xsl:when test="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE']/mets:file">
-                <h3><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text></h3>
-                <div class="file-list">
-                    <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE' or @USE='CC-LICENSE']">
-                        <xsl:with-param name="context" select="."/>
-                        <xsl:with-param name="primaryBitstream" select="./mets:structMap[@TYPE='LOGICAL']/mets:div[@TYPE='DSpace Item']/mets:fptr/@FILEID"/>
-                    </xsl:apply-templates>
-                </div>
-            </xsl:when>
-            <!-- Special case for handling ORE resource maps stored as DSpace bitstreams -->
-            <xsl:when test="./mets:fileSec/mets:fileGrp[@USE='ORE']">
-                <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='ORE']" mode="itemDetailView-DIM" />
-            </xsl:when>
-            <xsl:otherwise>
-                <h2><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text></h2>
-                <table class="ds-table file-list">
-                    <tr class="ds-table-header-row">
-                        <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-file</i18n:text></th>
-                        <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-size</i18n:text></th>
-                        <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-format</i18n:text></th>
-                        <th><i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-view</i18n:text></th>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <p><i18n:text>xmlui.dri2xhtml.METS-1.0.item-no-files</i18n:text></p>
-                        </td>
-                    </tr>
-                </table>
-            </xsl:otherwise>
-        </xsl:choose>
-
+            <!-- Generate the bitstream information from the file section -->
+            <xsl:choose>
+                <xsl:when
+                        test="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE']/mets:file">
+                    <h3>
+                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
+                    </h3>
+                    <div class="file-list">
+                        <xsl:apply-templates
+                                select="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE' or @USE='CC-LICENSE']">
+                            <xsl:with-param name="context" select="."/>
+                            <xsl:with-param name="primaryBitstream"
+                                            select="./mets:structMap[@TYPE='LOGICAL']/mets:div[@TYPE='DSpace Item']/mets:fptr/@FILEID"/>
+                        </xsl:apply-templates>
+                    </div>
+                </xsl:when>
+                <!-- Special case for handling ORE resource maps stored as DSpace bitstreams -->
+                <xsl:when test="./mets:fileSec/mets:fileGrp[@USE='ORE']">
+                    <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='ORE']" mode="itemDetailView-DIM"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <h2>
+                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
+                    </h2>
+                    <table class="ds-table file-list">
+                        <tr class="ds-table-header-row">
+                            <th>
+                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-file</i18n:text>
+                            </th>
+                            <th>
+                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-size</i18n:text>
+                            </th>
+                            <th>
+                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-format</i18n:text>
+                            </th>
+                            <th>
+                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-view</i18n:text>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <p>
+                                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-no-files</i18n:text>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
 
 
@@ -120,6 +139,11 @@
                     <xsl:call-template name="itemSummaryView-DIM-file-section"/>
                     <xsl:call-template name="itemSummaryView-DIM-date"/>
                     <xsl:call-template name="itemSummaryView-DIM-authors"/>
+
+                    <xsl:call-template name="itemSummaryView-DIM-orcids"/>
+                    <xsl:call-template name="itemSummaryView-DIM-subject"/>
+                    <xsl:call-template name="itemSummaryView-DIM-subject-AGROVOC"/>
+
                     <xsl:call-template name="itemSummaryView-DIM-types"/>
                     <xsl:call-template name="itemSummaryView-DIM-publishers"/>
                     <xsl:if test="$ds_item_view_toggle_url != ''">
@@ -239,7 +263,7 @@
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-authors">
-        <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">
+        <xsl:if test="dim:field[@element='contributor'][@qualifier='author' and descendant::text()] or dim:field[@mdschema='dc'][@element='creator' and descendant::text()] or dim:field[@element='contributor' and descendant::text()]">
             <div class="simple-item-view-authors item-page-field-wrapper table">
                 <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-author</i18n:text></h5>
                 <ul>
@@ -249,8 +273,8 @@
                             <li><xsl:call-template name="itemSummaryView-DIM-authors-entry" /></li>
                         </xsl:for-each>
                     </xsl:when>
-                    <xsl:when test="dim:field[@element='creator']">
-                        <xsl:for-each select="dim:field[@element='creator']">
+                    <xsl:when test="dim:field[@mdschema='dc'][@element='creator']">
+                        <xsl:for-each select="dim:field[@mdschema='dc'][@element='creator']">
                             <li><xsl:call-template name="itemSummaryView-DIM-authors-entry" /></li>
                         </xsl:for-each>
                     </xsl:when>
@@ -275,6 +299,116 @@
             </xsl:if>
             <xsl:copy-of select="node()"/>
         </div>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-orcids">
+        <xsl:if test="dim:field[@mdschema='cg' and @element='creator'][@qualifier='id' and descendant::text()]">
+            <div class="simple-item-view-authors item-page-field-wrapper table">
+                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-orcid</i18n:text></h5>
+                <ul>
+                    <xsl:for-each select="dim:field[@mdschema='cg' and @element='creator'][@qualifier='id']">
+                        <xsl:call-template name="itemSummaryView-DIM-orcids-entry" />
+                    </xsl:for-each>
+                </ul>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-orcids-entry">
+        <!-- extract and strip orcid from cg.creator.id and build profile link -->
+        <xsl:variable name="orcid-link" select="concat('https://orcid.org/', normalize-space(substring-after(node(), ':')))"/>
+        <!-- extract and strip author name from cg.creator.id -->
+        <xsl:variable name="orcid-name" select="normalize-space(substring-before(node(), ':'))"/>
+
+        <li>
+            <xsl:attribute name="class"><xsl:text>ds-cg_creator_orcid</xsl:text></xsl:attribute>
+
+            <xsl:value-of select="$orcid-name"/>
+
+            <a>
+                <xsl:attribute name="target">_blank</xsl:attribute>
+                <xsl:attribute name="rel">noopener</xsl:attribute>
+
+                <xsl:attribute name="href">
+                    <xsl:value-of select="$orcid-link"/>
+                </xsl:attribute>
+
+                <span>
+                    <xsl:attribute name="class">ai ai-orcid</xsl:attribute>
+                    <xsl:attribute name="aria-hidden">true</xsl:attribute>
+                </span>
+
+                <xsl:value-of select="$orcid-link"/>
+            </a>
+        </li>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-subject">
+        <xsl:if test="dim:field[@element='subject' and not(@qualifier)]">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-subjects</i18n:text></h5>
+                <ul>
+                    <li>
+                        <xsl:for-each select="dim:field[@element='subject' and not(@qualifier)]">
+                            <xsl:choose>
+                                <xsl:when test="node()">
+                                    <xsl:call-template name="discovery-link">
+                                        <xsl:with-param name="filtertype" select="'subject'"/>
+                                        <xsl:with-param name="value" select="node()"/>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>&#160;</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:if test="count(following-sibling::dim:field[@element='subject' and not(@qualifier)]) != 0">
+                                <xsl:text>; </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </li>
+                </ul>
+            </div>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="itemSummaryView-DIM-subject-AGROVOC">
+        <xsl:if test="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
+            <div class="simple-item-view-description item-page-field-wrapper table">
+                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-agrovoc-terms</i18n:text></h5>
+                <ul>
+                    <li>
+                        <xsl:for-each select="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
+                            <xsl:choose>
+                                <xsl:when test="node()">
+                                    <!-- extract and strip keyword from mel.keywor.agrovoc -->
+                                    <xsl:variable name="agrovoc-keyword" select="normalize-space(substring-before(node(), '|'))"/>
+                                    <!-- extract and strip AGROVOC link from mel.keywor.agrovoc -->
+                                    <xsl:variable name="agrovoc-link" select="normalize-space(substring-after(node(), '|'))"/>
+
+                                    <xsl:call-template name="discovery-link">
+                                        <xsl:with-param name="value" select="$agrovoc-keyword"/>
+                                        <xsl:with-param name="filtertype" select="'subject'"/>
+                                    </xsl:call-template>
+                                    <a target="_blank">
+                                        <xsl:attribute name="href" >
+                                            <xsl:value-of select="$agrovoc-link"/>
+                                        </xsl:attribute>
+                                        <img class="agrovoc-image" src="/themes/knowledgearchive/images/AGROVOC-logo.gif" />
+                                    </a>
+
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>&#160;</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:if test="count(following-sibling::dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']) != 0">
+                                <xsl:text>; </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </li>
+                </ul>
+            </div>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="itemSummaryView-DIM-URI">
@@ -844,6 +978,21 @@
 
         <!--Lookup the MIME Type's key in messages.xml language file.  If not found, just display MIME Type-->
         <i18n:text i18n:key="{$mimetype-key}"><xsl:value-of select="$mimetype"/></i18n:text>
+    </xsl:template>
+
+    <!--Helper template that creates a link to the discovery page based on a given node and filtertype to inject into the link-->
+    <xsl:template name="discovery-link">
+        <xsl:param name="value"/>
+        <xsl:param name="filtertype"/>
+        <xsl:variable name="filterlink">
+            <xsl:value-of select="concat($context-path,'/discover?filtertype=',$filtertype,'&amp;filter_relational_operator=equals&amp;filter=',url:encode($value))"></xsl:value-of>
+        </xsl:variable>
+        <a target="_blank">
+            <xsl:attribute name="href" >
+                <xsl:value-of select="$filterlink"/>
+            </xsl:attribute>
+            <xsl:copy-of select="$value"/>
+        </a>
     </xsl:template>
 
 

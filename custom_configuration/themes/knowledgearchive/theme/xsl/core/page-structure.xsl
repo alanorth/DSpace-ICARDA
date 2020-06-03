@@ -276,6 +276,7 @@
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/font-awesome-4.7.0/css/font-awesome.min.css')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials.css')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials-theme-minima.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'vendor/academicons-1.8.6/css/academicons.css')}"/>
 
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">
