@@ -335,45 +335,45 @@
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/icrisat.png" style="padding-top: 12px"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/irri.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/irri.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/itta.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/catie.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/catie.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/cifor.png"/>
                                 </li>
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/iwmi.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/iri.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/iri.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/icarda.png" style="padding-top: 37px"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/fao.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/fao.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/ilri.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/cirad.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/cirad.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/ciat.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/leeds.png"/>
-                                </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/copenhagen.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/leeds.png"/>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/copenhagen.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/bioversity.png"/>
                                 </li>
@@ -383,18 +383,18 @@
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/cimmyt.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/vermont.png"/>
-                                </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/waterfood.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/vermont.png"/>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/waterfood.png"/>-->
+<!--                                </li>-->
                                 <li>
                                     <img src="/themes/MELSpace/images/slider/worldfish.png"/>
                                 </li>
-                                <li>
-                                    <img src="/themes/MELSpace/images/slider/eci.png"/>
-                                </li>
+<!--                                <li>-->
+<!--                                    <img src="/themes/MELSpace/images/slider/eci.png"/>-->
+<!--                                </li>-->
                             </ul>
                        </div>
                     </div>
