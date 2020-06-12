@@ -12317,8 +12317,8 @@ p.toggler-wrap
 #aspect_artifactbrowser_ItemViewer_div_item-view .item-page-field-wrapper h5
 {
     display: block;
-
     width: 18%;
+    margin-bottom: 8.5px;
 }
 
 #aspect_artifactbrowser_ItemViewer_div_item-view .item-page-field-wrapper > div

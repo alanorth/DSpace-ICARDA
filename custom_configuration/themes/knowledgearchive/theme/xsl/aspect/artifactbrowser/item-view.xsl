@@ -374,7 +374,7 @@
     <xsl:template name="itemSummaryView-DIM-subject-AGROVOC">
         <xsl:if test="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
             <div class="simple-item-view-description item-page-field-wrapper table">
-                <h5 class="bold"><i18n:text>xmlui.dri2xhtml.METS-1.0.item-agrovoc-terms</i18n:text></h5>
+                <h5><i18n:text>xmlui.dri2xhtml.METS-1.0.item-agrovoc-terms</i18n:text></h5>
                 <ul>
                     <li>
                         <xsl:for-each select="dim:field[@mdschema='mel' and @element='subject' and @qualifier='agrovoc']">
