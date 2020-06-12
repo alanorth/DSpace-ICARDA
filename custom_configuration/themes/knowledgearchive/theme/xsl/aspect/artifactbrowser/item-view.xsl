@@ -58,61 +58,59 @@
 
     <!-- An item rendered in the detailView pattern, the "full item record" view of a DSpace item in Manakin. -->
     <xsl:template name="itemDetailView-DIM">
-        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'subject' and ./@qualifier = 'agrovoc'))">
-            <!-- Output all of the metadata about the item from the metadata section -->
-            <xsl:apply-templates select="mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-                                 mode="itemDetailView-DIM"/>
+        <!-- Output all of the metadata about the item from the metadata section -->
+        <xsl:apply-templates select="mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
+                             mode="itemDetailView-DIM"/>
 
-            <!-- Generate the bitstream information from the file section -->
-            <xsl:choose>
-                <xsl:when
-                        test="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE']/mets:file">
-                    <h3>
-                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
-                    </h3>
-                    <div class="file-list">
-                        <xsl:apply-templates
-                                select="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE' or @USE='CC-LICENSE']">
-                            <xsl:with-param name="context" select="."/>
-                            <xsl:with-param name="primaryBitstream"
-                                            select="./mets:structMap[@TYPE='LOGICAL']/mets:div[@TYPE='DSpace Item']/mets:fptr/@FILEID"/>
-                        </xsl:apply-templates>
-                    </div>
-                </xsl:when>
-                <!-- Special case for handling ORE resource maps stored as DSpace bitstreams -->
-                <xsl:when test="./mets:fileSec/mets:fileGrp[@USE='ORE']">
-                    <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='ORE']" mode="itemDetailView-DIM"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <h2>
-                        <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
-                    </h2>
-                    <table class="ds-table file-list">
-                        <tr class="ds-table-header-row">
-                            <th>
-                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-file</i18n:text>
-                            </th>
-                            <th>
-                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-size</i18n:text>
-                            </th>
-                            <th>
-                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-format</i18n:text>
-                            </th>
-                            <th>
-                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-view</i18n:text>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <p>
-                                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-no-files</i18n:text>
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
+        <!-- Generate the bitstream information from the file section -->
+        <xsl:choose>
+            <xsl:when
+                    test="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE']/mets:file">
+                <h3>
+                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
+                </h3>
+                <div class="file-list">
+                    <xsl:apply-templates
+                            select="./mets:fileSec/mets:fileGrp[@USE='CONTENT' or @USE='ORIGINAL' or @USE='LICENSE' or @USE='CC-LICENSE']">
+                        <xsl:with-param name="context" select="."/>
+                        <xsl:with-param name="primaryBitstream"
+                                        select="./mets:structMap[@TYPE='LOGICAL']/mets:div[@TYPE='DSpace Item']/mets:fptr/@FILEID"/>
+                    </xsl:apply-templates>
+                </div>
+            </xsl:when>
+            <!-- Special case for handling ORE resource maps stored as DSpace bitstreams -->
+            <xsl:when test="./mets:fileSec/mets:fileGrp[@USE='ORE']">
+                <xsl:apply-templates select="./mets:fileSec/mets:fileGrp[@USE='ORE']" mode="itemDetailView-DIM"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <h2>
+                    <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-head</i18n:text>
+                </h2>
+                <table class="ds-table file-list">
+                    <tr class="ds-table-header-row">
+                        <th>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-file</i18n:text>
+                        </th>
+                        <th>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-size</i18n:text>
+                        </th>
+                        <th>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-format</i18n:text>
+                        </th>
+                        <th>
+                            <i18n:text>xmlui.dri2xhtml.METS-1.0.item-files-view</i18n:text>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <p>
+                                <i18n:text>xmlui.dri2xhtml.METS-1.0.item-no-files</i18n:text>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 
@@ -677,11 +675,13 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
+        <xsl:variable name="elementValue" select="./node()"/>
+        <xsl:if test="$elementValue != ''">
             <tr>
                 <xsl:attribute name="class">
                     <xsl:text>ds-table-row </xsl:text>
-                    <xsl:if test="(position() div 2 mod 2 = 0)">even </xsl:if>
-                    <xsl:if test="(position() div 2 mod 2 = 1)">odd </xsl:if>
+                    <xsl:if test="(position() div 2 mod 2 = 0)">even</xsl:if>
+                    <xsl:if test="(position() div 2 mod 2 = 1)">odd</xsl:if>
                 </xsl:attribute>
                 <td class="label-cell">
                     <xsl:value-of select="./@mdschema"/>
@@ -692,11 +692,14 @@
                         <xsl:value-of select="./@qualifier"/>
                     </xsl:if>
                 </td>
-            <td class="word-break">
-              <xsl:copy-of select="./node()"/>
-            </td>
-                <td><xsl:value-of select="./@language"/></td>
+                <td class="word-break">
+                    <xsl:copy-of select="./node()"/>
+                </td>
+                <td>
+                    <xsl:value-of select="./@language"/>
+                </td>
             </tr>
+        </xsl:if>
     </xsl:template>
 
     <!-- don't render the item-view-toggle automatically in the summary view, only when it gets called -->
