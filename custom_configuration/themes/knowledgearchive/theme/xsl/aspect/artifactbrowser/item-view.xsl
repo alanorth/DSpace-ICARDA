@@ -675,30 +675,32 @@
     </xsl:template>
 
     <xsl:template match="dim:field" mode="itemDetailView-DIM">
-        <xsl:variable name="elementValue" select="./node()"/>
-        <xsl:if test="$elementValue != ''">
-            <tr>
-                <xsl:attribute name="class">
-                    <xsl:text>ds-table-row </xsl:text>
-                    <xsl:if test="(position() div 2 mod 2 = 0)">even</xsl:if>
-                    <xsl:if test="(position() div 2 mod 2 = 1)">odd</xsl:if>
-                </xsl:attribute>
-                <td class="label-cell">
-                    <xsl:value-of select="./@mdschema"/>
-                    <xsl:text>.</xsl:text>
-                    <xsl:value-of select="./@element"/>
-                    <xsl:if test="./@qualifier">
+        <xsl:if test="not((./@mdschema = 'mel' and ./@element = 'subject' and ./@qualifier = 'agrovoc'))">
+            <xsl:variable name="elementValue" select="./node()"/>
+            <xsl:if test="$elementValue != ''">
+                <tr>
+                    <xsl:attribute name="class">
+                        <xsl:text>ds-table-row </xsl:text>
+                        <xsl:if test="(position() div 2 mod 2 = 0)">even</xsl:if>
+                        <xsl:if test="(position() div 2 mod 2 = 1)">odd</xsl:if>
+                    </xsl:attribute>
+                    <td class="label-cell">
+                        <xsl:value-of select="./@mdschema"/>
                         <xsl:text>.</xsl:text>
-                        <xsl:value-of select="./@qualifier"/>
-                    </xsl:if>
-                </td>
-                <td class="word-break">
-                    <xsl:copy-of select="./node()"/>
-                </td>
-                <td>
-                    <xsl:value-of select="./@language"/>
-                </td>
-            </tr>
+                        <xsl:value-of select="./@element"/>
+                        <xsl:if test="./@qualifier">
+                            <xsl:text>.</xsl:text>
+                            <xsl:value-of select="./@qualifier"/>
+                        </xsl:if>
+                    </td>
+                    <td class="word-break">
+                        <xsl:copy-of select="./node()"/>
+                    </td>
+                    <td>
+                        <xsl:value-of select="./@language"/>
+                    </td>
+                </tr>
+            </xsl:if>
         </xsl:if>
     </xsl:template>
 
