@@ -19,6 +19,7 @@ services:
       - 2641:2641
       - 8000:8000
       - 8080:8080
+      - 5000:5000
     depends_on:
       - database
     environment:
