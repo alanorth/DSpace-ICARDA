@@ -54,6 +54,9 @@ WORKDIR /tmp
 
 # Install runtime and dependencies
 RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main' \
+    && apt-get update \
     && apt-get install -y \
     ant \
     maven \
@@ -215,7 +218,7 @@ ENV GEM_HOME /var/lib/gems/2.3.0
 ENV GEM_PATH /var/lib/gems/2.3.0
 
 # Build DSpace with Mirage 2 enabled
-RUN cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false
+RUN cd dspace && mvn package -Dmirage2.on=true
 
 # Install compiled applications to $CATALINA_HOME
 RUN cd dspace/dspace/target/dspace-installer \
