@@ -36,12 +36,6 @@ ARG CONFIG_DSPACE_ACTIVE_THEME="Mirage2"
 ARG CONFIG_GOOGLE_ANALYTICS_KEY=""
 ARG REQUEST_ITEM_HELPDESK_OVERRIDE=false
 
-#DSpace statistic API variables
-ENV DATABASE_NAME=dspacestatistics
-ENV DATABASE_USER=dspacestatistics
-ENV DATABASE_PASS=dspacestatistics
-ENV DATABASE_HOST=dspace_db
-
 # Environment variables
 ENV DSPACE_HOME=/dspace
 ENV CATALINA_OPTS="-Xmx512M -Xms512M -Dfile.encoding=UTF-8" \
@@ -280,8 +274,7 @@ RUN (crontab -l 2>/dev/null; echo '# Compress DSpace logs (checker.log, cocoon.l
     && (crontab -l 2>/dev/null; echo '# Compress Tomcat logs (catalina, host-manager, localhost and manager) older older than yesterday') | crontab - \
     && (crontab -l 2>/dev/null; echo '30 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
     && (crontab -l 2>/dev/null; echo '# Compress Tomcat logs (localhost_access_log) older than 1 week') | crontab - \
-    && (crontab -l 2>/dev/null; echo '35 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.txt" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
-    && (crontab -l 2>/dev/null; echo '0 */6 * * * export SOLR_SERVER='$SOLR_SERVER' && export DATABASE_NAME='$DATABASE_NAME' && export DATABASE_USER='$DATABASE_USER' && export DATABASE_PASS='$DATABASE_PASS' && export DATABASE_HOST='$DATABASE_HOST' && cd '$DSPACE_HOME'/dspace-statistics-api && '$VIRTUAL_ENV'/bin/python -m dspace_statistics_api.indexer >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab -
+    && (crontab -l 2>/dev/null; echo '35 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.txt" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab -
 USER root
 
 RUN chown -R dspace:dspace "$DSPACE_HOME" /usr/local/tomcat/logs "$CATALINA_HOME"/conf
@@ -293,12 +286,7 @@ RUN echo "Debian GNU/Linux `cat /etc/debian_version` image. (`uname -rsv`)" >> /
     && echo "\nNote: if you need to run commands interacting with DSpace you should enter the" >> /root/.built \
     && echo "container as the dspace user, ie: docker exec -it -u dspace dspace /bin/bash" >> /root/.built
 
-##DSpae statistics API Create database and user
-COPY DSpace_statistics_api_sql.sh .
-RUN chmod +x DSpace_statistics_api_sql.sh
-
 EXPOSE 2641 8000 8080 5000
 # will run `start-dspace` script as root, then drop to dspace user
-CMD ["sh","-c","gunicorn --bind 0.0.0.0:5000 --chdir $DSPACE_HOME/dspace-statistics-api dspace_statistics_api.app --daemon && ./DSpace_statistics_api_sql.sh && start-dspace"]
-
+CMD ["sh","-c","gunicorn --bind 0.0.0.0:5000 --chdir $DSPACE_HOME/dspace-statistics-api dspace_statistics_api.app --log-file=$DSPACE_HOME/log/statistics.log --daemon && start-dspace"]
 
