@@ -272,7 +272,7 @@
                 </link>
             </xsl:for-each>
 
-            <link rel="stylesheet" href="{concat($theme-path, 'css/template.css')}"/>
+            <link rel="stylesheet" href="{concat($theme-path, 'css/template.css?v=2')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/font-awesome-4.7.0/css/font-awesome.min.css')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials.css')}"/>
             <link rel="stylesheet" href="{concat($theme-path, 'vendor/jssocials-1.4.0/jssocials-theme-minima.css')}"/>
@@ -895,6 +895,8 @@
 
         <script src="/themes/knowledgearchive/scripts/altmetrics.js"></script>
         <script src="/themes/knowledgearchive/scripts/custom.js"></script>
+        <script src="/themes/knowledgearchive/scripts/highcharts.js"></script>
+        <script src="/themes/knowledgearchive/scripts/statistics.js?v=2"></script>
 
         <!-- Add javascipt specified in DRI -->
         <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='javascript'][not(@qualifier)]">
@@ -963,6 +965,7 @@
                     showLabel: false,
                     showCount: false,
                 });
+                statistics_charts();
             });
         </script>
     </xsl:template>

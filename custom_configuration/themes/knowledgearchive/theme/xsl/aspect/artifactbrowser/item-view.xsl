@@ -37,7 +37,9 @@
     <xsl:template name="itemSummaryView-DIM">
         <!-- Generate the info about the item from the metadata section -->
         <xsl:apply-templates select="./mets:dmdSec/mets:mdWrap[@OTHERMDTYPE='DIM']/mets:xmlData/dim:dim"
-        mode="itemSummaryView-DIM"/>
+                             mode="itemSummaryView-DIM">
+            <xsl:with-param name="dspace_item_id" select="substring-after(@OBJEDIT, '/admin/item?itemID=')"/>
+        </xsl:apply-templates>
 
         <xsl:copy-of select="$SFXLink" />
 
@@ -115,6 +117,8 @@
 
 
     <xsl:template match="dim:dim" mode="itemSummaryView-DIM">
+        <xsl:param name="dspace_item_id"/>
+        <input type="hidden" name="dspace_item_id" value="{$dspace_item_id}"/>
         <div class="item-summary-view-metadata">
             <xsl:call-template name="itemSummaryView-DIM-title"/>
             <div class="row">
@@ -127,6 +131,16 @@
                     <div class="row">
                         <div class="col-xs-6 col-sm-12" style="text-align: center;">
                             <xsl:call-template name="itemSummaryView-ALTMETRICS"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br/>
+                            <div id="all_time_chart" class="statistics-container"></div>
+                            <button class="btn btn-default btn-block toggle-additional-statistics">
+                                <span>Show additional statistics</span>
+                                <span style="display: none">Hide additional statistics</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -147,6 +161,15 @@
                     <xsl:if test="$ds_item_view_toggle_url != ''">
                         <xsl:call-template name="itemSummaryView-show-full"/>
                     </xsl:if>
+                </div>
+            </div>
+            <br/>
+            <div class="row additional-statistics" style="display: none">
+                <div class="col-md-4">
+                    <div id="countries_chart" class="statistics-container" style="height: 400px"></div>
+                </div>
+                <div class="col-md-8">
+                    <div id="last_6_months_chart" class="statistics-container" style="height: 400px"></div>
                 </div>
             </div>
         </div>
