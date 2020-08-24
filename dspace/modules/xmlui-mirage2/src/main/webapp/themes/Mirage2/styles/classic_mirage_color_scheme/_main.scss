@@ -1,0 +1,44 @@
+/**
+ * The contents of this file are subject to the license and copyright
+ * detailed in the LICENSE and NOTICE files at the root of the source
+ * tree and available online at
+ *
+ * http://www.dspace.org/license/
+ */
+
+/**
+ * 2020-04-26: hack to be able to use compass mixins without compass,
+ * which allows us to use a newer SASS processor instead of ruby sass.
+ */
+@import "../node_modules/compass-sass-mixins/lib/compass";
+// variables
+@import "classic_mirage_color_scheme/bootstrap_variables";
+
+// Bootstrap
+@function twbs-font-path($font-name) {
+    @return "../fonts/" + $font-name
+}
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "classic_mirage_color_scheme/dspace_variables";
+
+// DSpace theme
+@import "classic_mirage_color_scheme/utils";
+@import "classic_mirage_color_scheme/general";
+@import "classic_mirage_color_scheme/forms";
+@import "classic_mirage_color_scheme/discovery";
+@import "classic_mirage_color_scheme/community-list";
+@import "classic_mirage_color_scheme/community-view";
+@import "classic_mirage_color_scheme/item-lists";
+@import "classic_mirage_color_scheme/item-view";
+@import "classic_mirage_color_scheme/authority-control";
+@import "classic_mirage_color_scheme/vocabulary-support";
+
+@import "classic_mirage_color_scheme/jquery_ui";
+@import "classic_mirage_color_scheme/dataTables.bootstrap";
+@import "shared/dspace-bootstrap-tweaks";
+// Import without ".css" so that node-sass includes the CSS itself, rather than
+// just adding a literal "@import url(../node_modules/jquery-ui/..)" in our CSS.
+// See: https://sass-lang.com/documentation/at-rules/import#importing-css
+@import "../node_modules/jquery-ui-dist/jquery-ui";
+@import "style";
