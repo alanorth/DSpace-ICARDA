@@ -267,7 +267,8 @@
                 &lt;![endif]--&gt;</xsl:text>
 
             <!-- Modernizr enables HTML5 elements & feature detects -->
-            <script src="{concat($theme-path, 'vendor/modernizr/modernizr.js')}">&#160;</script>
+            <!-- 2020-08-25: Disabled by Alan. This is now bundled in theme.js (see scripts.xml) -->
+            <!--<script src="{concat($theme-path, 'vendor/modernizr/modernizr.js')}">&#160;</script>-->
 
             <!-- Add the title in -->
             <xsl:variable name="page_title" select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='title'][last()]" />
