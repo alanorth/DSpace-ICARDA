@@ -192,7 +192,6 @@
             </xsl:for-each>
 
             <link rel="stylesheet" href="{concat($theme-path, 'styles/main.css')}"/>
-            <link rel="stylesheet" href="{concat($theme-path, 'styles/academicons-1.8.6/css/academicons.css')}"/>
 
             <!-- Add syndication feeds -->
             <xsl:for-each select="/dri:document/dri:meta/dri:pageMeta/dri:metadata[@element='feed']">

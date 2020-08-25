@@ -441,7 +441,7 @@
                 </xsl:attribute>
 
                 <span>
-                    <xsl:attribute name="class">ai ai-orcid</xsl:attribute>
+                    <xsl:attribute name="class">fab fa-orcid</xsl:attribute>
                     <xsl:attribute name="aria-hidden">true</xsl:attribute>
                 </span>
 

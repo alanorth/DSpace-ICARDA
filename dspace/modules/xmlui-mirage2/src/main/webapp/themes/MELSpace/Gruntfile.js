@@ -11,11 +11,15 @@
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-node-sass');
+    grunt.loadNpmTasks('grunt-webpack');
 
     // show elapsed time at the end
     require('time-grunt')(grunt);
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
+
+    // help webpack derive an absolute path
+    var path = require('path');
 
     grunt.initConfig({
         copy: {
@@ -71,6 +75,20 @@ module.exports = function (grunt) {
                 src: 'styles/main.scss',
                 dest: 'styles/main.css',
             }
+        },
+        // Compile Font Awesome JS to something that UglifyJS can use (the
+        // Font Awesome 5 SVG JavaScript API is written in ES6, which uses
+        // modules and requires, and UglifyJS doesn't support that syntax).
+        // Here we use UMD format with requires inlined.
+        webpack: {
+            config: () => ({
+                entry: './scripts/fontawesome.js',
+                output: {
+                    path: path.resolve(__dirname, 'scripts'),
+                    filename: 'fontawesome.umd.js'
+                },
+                mode: 'production',
+            }),
         },
         postcss: {
             prod: {
@@ -164,10 +182,10 @@ module.exports = function (grunt) {
         'shared-steps','uglify:generated'
     ]);
     grunt.registerTask('prod', [
-        'sass', 'postcss:prod', 'no-compass-prod'
+        'sass', 'webpack', 'postcss:prod', 'no-compass-prod'
     ]);
     grunt.registerTask('dev', [
-        'classic_mirage_color_scheme', 'sass', 'postcss:dev', 'no-compass-dev'
+        'classic_mirage_color_scheme', 'sass', 'webpack', 'postcss:dev', 'no-compass-dev'
     ]);
     grunt.registerTask('default', [
         'classic_mirage_color_scheme',

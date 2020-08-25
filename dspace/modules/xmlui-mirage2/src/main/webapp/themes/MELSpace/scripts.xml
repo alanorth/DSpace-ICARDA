@@ -51,6 +51,7 @@
     <script src="node_modules/leaflet/dist/leaflet.js">&#160;</script>
     <script src="node_modules/highcharts/highcharts.js">&#160;</script>
     <script src="scripts/highmaps.js">&#160;</script>
+    <script src="scripts/fontawesome.umd.js">&#160;</script>
 
     <!-- authorLookup and its dependencies -->
     <script src="node_modules/datatables/media/js/jquery.dataTables.js">&#160;</script>
