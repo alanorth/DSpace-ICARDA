@@ -302,6 +302,13 @@ header .navbar-default .navbar-nav:focus {
   margin-top: 15px;
 }
 
+// Workaround for glyphicon encoding issue with some SASS processors
+// like Ruby sass ~3.4.x, node-sass, and dart-sass.
+// See: https://github.com/twbs/bootstrap-sass/issues/919
+.breadcrumb > li + li:before {
+  content: "/\00a0";
+}
+
 // Import without ".css" so that node-sass includes the CSS itself, rather than
 // just adding a literal "@import url(../node_modules/leaflet/..)" in our CSS.
 // See: https://sass-lang.com/documentation/at-rules/import#importing-css
