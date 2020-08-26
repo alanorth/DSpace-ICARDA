@@ -68,6 +68,18 @@ module.exports = function (grunt) {
                         dest: 'fonts/bootstrap'
                     }
                 ]
+            },
+            // leaflet.css looks for the default icons in images, but relative
+            // to its own location, so that would be styles/images.
+            leaflet_images: {
+                files: [
+                    {
+                        src: 'node_modules/leaflet/dist/images/*',
+                        expand: true,
+                        flatten: true,
+                        dest: 'styles/images'
+                    }
+                ]
             }
         },
         sass: {
@@ -173,7 +185,7 @@ module.exports = function (grunt) {
         'copy:bootstrap_color_scheme'
     ]);
     grunt.registerTask('shared-steps', [
-        'copy:scriptsxml', 'coffee', 'handlebars', 'useminPrepare','concat', 'copy:ie8_scripts', 'copy:fonts'
+        'copy:scriptsxml', 'coffee', 'handlebars', 'useminPrepare','concat', 'copy:ie8_scripts', 'copy:fonts', 'copy:leaflet_images'
     ]);
     grunt.registerTask('no-compass-prod', [
         'shared-steps','uglify','usemin'
