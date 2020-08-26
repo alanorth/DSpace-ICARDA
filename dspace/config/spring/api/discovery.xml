@@ -188,6 +188,7 @@
                     <list>
                         <value>dc.title</value>
                         <value>dc.contributor.author</value>
+                        <value>dc.contributor</value>
                         <value>dc.creator</value>
                         <value>dc.subject</value>
                     </list>
@@ -392,6 +393,7 @@
         <property name="metadataFields">
             <list>
                 <value>dc.contributor.author</value>
+                <value>dc.contributor</value>
                 <value>dc.creator</value>
             </list>
         </property>
@@ -405,6 +407,7 @@
         <property name="metadataFields">
             <list>
                 <value>dc.subject.*</value>
+                <value>cg.subject.*</value>
             </list>
         </property>
         <property name="facetLimit" value="10"/>
