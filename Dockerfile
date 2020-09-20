@@ -75,8 +75,8 @@ RUN chown -R dspace:dspace dspace
 # Change to dspace user for build and install
 USER dspace
 
-# Copy customized DSpace build properties
-COPY config/build.properties dspace
+# Copy customized DSpace local.cfg
+COPY config/local.cfg dspace
 
 # Copy Active theme
 RUN if [ -d dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/theme ]; \
@@ -101,7 +101,7 @@ RUN sed -i -e "s/#CONFIG_DSPACE_BASE_URL#/$CONFIG_DSPACE_BASE_URL/g" \
     -e "s/#CONFIG_MAIL_REGISTRATION_NOTIFY#/$CONFIG_MAIL_REGISTRATION_NOTIFY/g" \
     -e "s/#CONFIG_HANDLE_CANONICAL_PREFIX#/$CONFIG_HANDLE_CANONICAL_PREFIX/g" \
     -e "s/#CONFIG_HANDLE_PREFIX#/$CONFIG_HANDLE_PREFIX/g" \
-    dspace/build.properties \
+    dspace/local.cfg \
     &&  sed -i -e "s/#CONFIG_MAIL_FEEDBACK_RECIPIENT#/$CONFIG_MAIL_FEEDBACK_RECIPIENT/g" \
     -e "s/#CONFIG_DSPACE_NAME#/$CONFIG_DSPACE_NAME/g" \
     dspace/dspace/config/emails/* \
