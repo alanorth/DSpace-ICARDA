@@ -48,10 +48,8 @@ WORKDIR /tmp
 
 # Install runtime and dependencies
 RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main' \
-    && apt-get update \
     && apt-get install -y \
+    software-properties-common \
     ant \
     maven \
     postgresql-client \
