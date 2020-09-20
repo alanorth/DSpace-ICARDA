@@ -155,59 +155,22 @@ RUN if [ -f org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml ]; \
     fi
 WORKDIR /tmp
 
-## Install Dmirage2 deps
-USER root
-RUN rm /bin/sh \
-    && ln -s /bin/bash /bin/sh
-USER dspace
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
-ENV NVM_DIR /dspace/.nvm
-ENV NODE_VERSION 8.17.0
-RUN source $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm alias default $NODE_VERSION \
-    && nvm use default
-ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-RUN npm install -g bower grunt grunt-cli
-
-USER root
-RUN apt-get update\
-    && apt-get install -y libyaml-dev \
-    sqlite3 \
-    autoconf \
-    libgdbm-dev \
-    libncurses5-dev \
-    automake \
-    libtool \
-    bison \
-    pkg-config \
-    libffi-dev \
-    gawk \
-    g++ \
-    libreadline6-dev \
-    zlib1g-dev \
-    libssl-dev \
-    libsqlite3-dev \
-    libgmp-dev \
-    rubygems \
-    ruby-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p ~/.gnupg \
-    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && curl -sSL https://rvm.io/mpapis.asc | gpg --import - \
-    && curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - \
-    && gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB \
-    && curl -sSL https://get.rvm.io | bash -s stable --ruby \
+# Install Mirage2 deps
+RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+    && echo 'deb [arch=amd64] https://deb.nodesource.com/node_10.x bionic main' > /etc/apt/sources.list.d/nodesource.list \
     && apt-get update \
-    && apt-get install -y rubygems ruby-dev \
-    && rm -rf /var/lib/apt/lists/* \
-    && gem install sass -v 3.3.14 \
-    && gem install compass -v 1.0.3
+    && apt-get install -y \
+    nodejs \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure Node.js to use ~/.node_modules as the global prefix
+USER dspace
+RUN echo "prefix=$DSPACE_HOME/.node_modules" > "$DSPACE_HOME/.npmrc"
+ENV PATH "$DSPACE_HOME/.node_modules/bin":$PATH
+RUN npm install -g grunt-cli yarn
 
 USER dspace
-ENV GEM_HOME /var/lib/gems/2.3.0
-ENV GEM_PATH /var/lib/gems/2.3.0
 
 # Build DSpace with Mirage 2 enabled
 RUN cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false
