@@ -210,7 +210,7 @@ ENV GEM_HOME /var/lib/gems/2.3.0
 ENV GEM_PATH /var/lib/gems/2.3.0
 
 # Build DSpace with Mirage 2 enabled
-RUN cd dspace && mvn package -Dmirage2.on=true
+RUN cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false
 
 # Install compiled applications to $CATALINA_HOME
 RUN cd dspace/dspace/target/dspace-installer \
