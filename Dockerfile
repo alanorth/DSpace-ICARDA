@@ -255,7 +255,7 @@ RUN apt-get update \
     python3-venv \
     git \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --branch v1.1.1 https://github.com/ilri/dspace-statistics-api.git
+    && git clone --branch v1.2.1 https://github.com/ilri/dspace-statistics-api.git
 
 #DSpae statistics API ENV
 RUN python3 -m venv $VIRTUAL_ENV
