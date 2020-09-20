@@ -55,7 +55,6 @@ RUN apt-get update \
     postgresql-client \
     imagemagick \
     ghostscript \
-    openjdk-8-jdk-headless \
     cron \
     less \
     vim \
