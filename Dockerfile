@@ -61,6 +61,13 @@ RUN apt-get update \
     schedtool \
     && rm -rf /var/lib/apt/lists/*
 
+# ant and maven pull in openjdk-11-jre-headless and it gets set as the system's
+# default Java, which causes Tomcat to use that instead of the intended Java 8
+# from AdoptOpenJDK in the tomcat:8.5 image. Our apps aren't ready for this so
+# we need to add Java 8 to the system "alternatives" and set it as the default.
+RUN update-alternatives --install "/usr/bin/java" "java" "/usr/local/openjdk-8/bin/java" 1 \
+    && update-alternatives --set java "/usr/local/openjdk-8/bin/java"
+
 # Add a non-root user to perform the Maven build. DSpace's Mirage 2 theme does
 # quite a bit of bootstrapping with npm and bower, which fails as root. Also
 # change ownership of DSpace and Tomcat install directories.
