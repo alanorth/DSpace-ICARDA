@@ -17,7 +17,7 @@ if [ -z $POSTGRES_DB_HOST -a -z $POSTGRES_DB_PORT ]; then
   exit 1
 fi
 
-DSPACE_CFG=/dspace/config/dspace.cfg
+DSPACE_CFG=/dspace/config/local.cfg
 if [ -n $POSTGRES_ADMIN_PASSWORD ]; then
   export PGPASSWORD=$POSTGRES_ADMIN_PASSWORD
 fi
@@ -37,7 +37,7 @@ if [ $USER_EXISTS -eq 1 ]; then
   echo "User '${POSTGRES_USER}' created"
 fi
 
-# Configure database in dspace.cfg
+# Configure database in local.cfg
 sed -i "s#db.url = jdbc:postgresql://localhost:5432/dspace#db.url = jdbc:postgresql://${POSTGRES_DB_HOST}:${POSTGRES_DB_PORT}/${POSTGRES_SCHEMA}#" ${DSPACE_CFG}
 sed -i "s#db.username = dspace#db.username = ${POSTGRES_USER}#" ${DSPACE_CFG}
 sed -i "s#db.password = dspace#db.password = ${POSTGRES_PASSWORD}#" ${DSPACE_CFG}
