@@ -3,8 +3,12 @@
 .settings/
 */target/
 dspace/modules/*/target/
-Dockerfile.*
-dspace/src/main/docker/dspace-postgres-pgcrypto
-dspace/src/main/docker/dspace-postgres-pgcrypto-curl
-dspace/src/main/docker/README.md
-dspace/src/main/docker-compose/
+Dockerfile*
+postgresData/
+solrData/
+dspace_logs/
+db_backup/
+DSPACE_BACKUP.sh
+IMPORT_DSPACE_DB.sh
+docker-compose.yml
+assetstore/
