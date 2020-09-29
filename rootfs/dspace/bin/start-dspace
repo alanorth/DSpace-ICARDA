@@ -9,8 +9,8 @@ service cron start
 CONTAINER_IP=$(awk 'END{print $1}' /etc/hosts)
 sed -i -E "s/\"bind_address\" = \"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+\"/\"bind_address\" = \"$CONTAINER_IP\"/" $DSPACE_HOME/handle-server/config.dct
 
-# start the handle server
-su - dspace -c "export PATH=/usr/local/openjdk-8/bin:$PATH && $DSPACE_HOME/bin/start-handle-server"
+# start the handle server (with su -p to preserve environment variables like PATH)
+su -p dspace -c "$DSPACE_HOME/bin/start-handle-server"
 
 POSTGRES_DB_HOST=${POSTGRES_DB_HOST:-$POSTGRES_PORT_5432_TCP_ADDR}
 POSTGRES_DB_PORT=${POSTGRES_DB_PORT:-$POSTGRES_PORT_5432_TCP_PORT}
@@ -36,5 +36,5 @@ if [ -n "$DSPACE_WEBAPPS" ]; then
     done
 fi
 
-# Start Tomcat (with full path to catalina.sh, because su resets our $PATH)
-exec su - dspace -c "$CATALINA_HOME/bin/catalina.sh run"
+# Start Tomcat (with su -p to preserve environment variables like PATH)
+exec su -p dspace -c "$CATALINA_HOME/bin/catalina.sh run"
