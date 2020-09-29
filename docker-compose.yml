@@ -3,7 +3,7 @@ version: '2'
 services:
   database:
     container_name: dspace_db
-    image: postgres:9.5-alpine
+    image: postgres:10-alpine
     volumes:
       - ./postgresData:/var/lib/postgresql/data
     restart: always
