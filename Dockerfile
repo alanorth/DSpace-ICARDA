@@ -2,7 +2,7 @@
 # DSpace image
 #
 
-FROM tomcat:8.5
+FROM maven:3-openjdk-8 as build
 LABEL maintainer="Alan Orth <alan.orth@gmail.com>"
 
 # Allow custom DSpace hostname at build time (default to localhost if undefined)
@@ -38,51 +38,39 @@ ARG REQUEST_ITEM_HELPDESK_OVERRIDE=false
 
 # Environment variables
 ENV DSPACE_HOME=/dspace
-ENV CATALINA_OPTS="-Xmx512M -Xms512M -Dfile.encoding=UTF-8" \
-    MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1" \
-    PATH=$CATALINA_HOME/bin:$DSPACE_HOME/bin:$PATH
+ENV MAVEN_OPTS="-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
 ENV SOLR_SERVER=http://localhost:"$CONFIG_DSPACE_INTERNAL_PROXY_PORT"/solr
-ENV VIRTUAL_ENV="$DSPACE_HOME"/dspace-statistics-api/venv
+
+# Use ant from a tarball so we don't have to install it from apt with Java 11
+ENV ANT_VERSION 1.10.8
+ENV ANT_HOME /tmp/ant-$ANT_VERSION
+ENV PATH $ANT_HOME/bin:$PATH
+
+RUN mkdir $ANT_HOME && \
+     wget -qO- "https://archive.apache.org/dist/ant/binaries/apache-ant-$ANT_VERSION-bin.tar.gz" | tar -zx --strip-components=1 -C $ANT_HOME
 
 WORKDIR /tmp
 
-# Install runtime and dependencies
-RUN apt-get update \
+# Install build dependencies (use upstream Node.js PPA so we can get v10.x)
+RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
+    && echo 'deb [arch=amd64] https://deb.nodesource.com/node_10.x bionic main' > /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update \
     && apt-get install -y \
-    software-properties-common \
-    ant \
-    maven \
-    postgresql-client \
-    imagemagick \
-    ghostscript \
-    cron \
-    less \
-    vim \
-    schedtool \
+    nodejs \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# ant and maven pull in openjdk-11-jre-headless and it gets set as the system's
-# default Java, which causes Tomcat to use that instead of the intended Java 8
-# from AdoptOpenJDK in the tomcat:8.5 image. Our apps aren't ready for this so
-# we need to add Java 8 to the system "alternatives" and set it as the default.
-RUN update-alternatives --install "/usr/bin/java" "java" "/usr/local/openjdk-8/bin/java" 1 \
-    && update-alternatives --set java "/usr/local/openjdk-8/bin/java"
-
-# Add a non-root user to perform the Maven build. DSpace's Mirage 2 theme does
-# quite a bit of bootstrapping with npm and bower, which fails as root. Also
-# change ownership of DSpace and Tomcat install directories.
-RUN useradd -r -s /bin/bash -m -d "$DSPACE_HOME" dspace \
-    && chown -R dspace:dspace "$DSPACE_HOME" "$CATALINA_HOME"
+# Add a non-root user to perform the Maven build
+RUN useradd -r -s /bin/bash -m -d "$DSPACE_HOME" dspace
 
 # copy source to $WORKDIR/dspace
-COPY . dspace/
-RUN chown -R dspace:dspace dspace
+COPY --chown=dspace:dspace . dspace/
 
 # Change to dspace user for build and install
 USER dspace
 
 # Copy customized DSpace local.cfg
-COPY config/local.cfg dspace
+COPY --chown=dspace:dspace config/local.cfg dspace
 
 # Copy Active theme
 RUN if [ -d dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/theme ]; \
@@ -161,79 +149,106 @@ RUN if [ -f org.dspace.app.xmlui.artifactbrowser.AbstractSearch.xml ]; \
     fi
 WORKDIR /tmp
 
-# Install Mirage2 deps
-USER root
-RUN curl -sSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
-    && echo 'deb [arch=amd64] https://deb.nodesource.com/node_10.x bionic main' > /etc/apt/sources.list.d/nodesource.list \
-    && apt-get update \
-    && apt-get install -y \
-    nodejs \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
+# Change back to dspace user to build the code
+USER dspace
 
 # Configure Node.js to use ~/.node_modules as the global prefix
-USER dspace
 RUN echo "prefix=$DSPACE_HOME/.node_modules" > "$DSPACE_HOME/.npmrc"
-ENV PATH "$DSPACE_HOME/.node_modules/bin":$PATH
+ENV PATH="$DSPACE_HOME/.node_modules/bin":$PATH
 RUN npm install -g grunt-cli yarn
-
-USER dspace
 
 # Build DSpace with Mirage 2 enabled
 RUN cd dspace && mvn package -Dmirage2.on=true -Dmirage2.deps.included=false
 
-# Install compiled applications to $CATALINA_HOME
+# Install compiled applications to $DSPACE_HOME
 RUN cd dspace/dspace/target/dspace-installer \
-    && ant init_installation init_configs install_code copy_webapps \
-    && rm -rf "$CATALINA_HOME/webapps" \
-    && mv -f "$DSPACE_HOME/webapps" "$CATALINA_HOME" \
-    && sed -i s/CONFIDENTIAL/NONE/ "$CATALINA_HOME"/webapps/rest/WEB-INF/web.xml \
-# Rename xmlui app to ROOT so it is available on /
-    && mv "$CATALINA_HOME"/webapps/xmlui "$CATALINA_HOME"/webapps/ROOT
+    && ant init_installation init_configs install_code copy_webapps
 
 # Change back to root user for cleanup
 USER root
 
+# Cleanup build deps
+RUN apt-get -y remove \
+    nodejs \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get -y autoremove \
+    && rm -rf "$DSPACE_HOME/.m2" /tmp/*
+
+
+FROM tomcat:8.5
+# Set some variables for the Tomcat container. Some were already set above in
+# the build container, but they don't get propagated in multi-stage builds.
+ENV DSPACE_HOME=/dspace \
+    CATALINA_OPTS="-Xmx512M -Xms512M -Dfile.encoding=UTF-8" \
+    VIRTUAL_ENV="$DSPACE_HOME"/dspace-statistics-api/venv
+# Make sure to set PATH *after* setting $VIRTUAL_ENV or else it won't exist yet!
+ENV PATH="$VIRTUAL_ENV"/bin:"$CATALINA_HOME/bin":"$DSPACE_HOME"/bin:$PATH
+
+# Add DSpace user to this container *without* creating the home directory
+# because we will copy it from the build container
+RUN useradd -r -s /bin/bash -M -d "$DSPACE_HOME" dspace
+
+# Remove default Tomcat webapps
+RUN rm -rf "$CATALINA_HOME/webapps"
+
+# Copy the $DSPACE_HOME (/dspace) directory from the build container to
+# the Tomcat runtime container.
+COPY --chown=dspace:dspace --from=build "$DSPACE_HOME" "$DSPACE_HOME"
+
+RUN mv -f "$DSPACE_HOME/webapps" "$CATALINA_HOME" \
+    && sed -i s/CONFIDENTIAL/NONE/ "$CATALINA_HOME"/webapps/rest/WEB-INF/web.xml \
+    # Rename xmlui app to ROOT so it is available on /
+    && mv "$CATALINA_HOME"/webapps/xmlui "$CATALINA_HOME"/webapps/ROOT
+
 # Tweak default Tomcat server configuration
 COPY config/server.xml "$CATALINA_HOME"/conf/server.xml
 
+# Install root filesystem
+COPY rootfs /
+
 RUN sed -i "s/#CONFIG_DSPACE_PROXY_PORT#/$CONFIG_DSPACE_PROXY_PORT/g" "$CATALINA_HOME"/conf/server.xml \
-    # Install root filesystem
-    && cp -r /tmp/dspace/rootfs/* / \
     # Copy Handle server
     && if [ -d /tmp/dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/handle-server ]; \
         then cp -r /tmp/dspace/custom_configuration/themes/$CONFIG_DSPACE_ACTIVE_THEME/handle-server $DSPACE_HOME/; \
         else echo "No Handle server files found"; \
     fi \
-    # Docker's COPY instruction always sets ownership to the root user, so we need
-    # to explicitly change ownership of those files and directories that we copied
-    # from rootfs.
-    && chown -R dspace:dspace $DSPACE_HOME \
     # Make sure the crontab uses the correct DSpace directory
     && sed -i "s#DSPACE=/dspace#DSPACE=$DSPACE_HOME#g" /etc/cron.d/dspace-maintenance-tasks \
-    && rm -rf "$DSPACE_HOME/.m2" /tmp/* && apt-get -y autoremove
+    && rm -rf /tmp/*
 
-WORKDIR $DSPACE_HOME
-
-#DSpae statistics API installation
-USER root
+# Install runtime dependencies
 RUN apt-get update \
     && apt-get install -y \
+    postgresql-client \
+    imagemagick \
+    ghostscript \
+    cron \
+    less \
+    vim \
+    schedtool \
     python3 \
     python3-venv \
     git \
     && rm -rf /var/lib/apt/lists/* \
-    && git clone --branch v1.2.1 https://github.com/ilri/dspace-statistics-api.git
+    && apt-get -y autoremove
 
-#DSpae statistics API ENV
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-# DSpae statistics API Install dependencies:
-RUN pip install -r /dspace/dspace-statistics-api/requirements.txt
+WORKDIR "$DSPACE_HOME"
+
+# Clone DSpace statistics API, set up virtual environment, and install deps
+RUN git clone --branch v1.2.1 https://github.com/ilri/dspace-statistics-api.git \
+    && python3 -m venv "$VIRTUAL_ENV" \
+    && . "$VIRTUAL_ENV/bin/activate" \
+    && pip install -r "$DSPACE_HOME"/dspace-statistics-api/requirements.txt
+
+# We don't need git anymore
+RUN apt-get -y remove git \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get -y autoremove
 
 COPY GeoLite2-City/GeoLite2-City.mmdb "$DSPACE_HOME"/config/
 
-# Change to dspace user for for adding the jobs
+# Change to dspace user for for adding cron jobs
 USER dspace
 RUN (crontab -l 2>/dev/null; echo '# Compress DSpace logs (checker.log, cocoon.log, handle-plugin.log and solr.log) older than yesterday') | crontab - \
     && (crontab -l 2>/dev/null; echo '20 0 * * * find /dspace/log -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*dspace\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
