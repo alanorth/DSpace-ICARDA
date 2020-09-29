@@ -226,7 +226,6 @@ RUN apt-get update \
     cron \
     less \
     vim \
-    schedtool \
     python3 \
     python3-venv \
     git \
@@ -251,13 +250,13 @@ COPY GeoLite2-City/GeoLite2-City.mmdb "$DSPACE_HOME"/config/
 # Change to dspace user for for adding cron jobs
 USER dspace
 RUN (crontab -l 2>/dev/null; echo '# Compress DSpace logs (checker.log, cocoon.log, handle-plugin.log and solr.log) older than yesterday') | crontab - \
-    && (crontab -l 2>/dev/null; echo '20 0 * * * find /dspace/log -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*dspace\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
+    && (crontab -l 2>/dev/null; echo '20 0 * * * find /dspace/log -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*dspace\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec chrt -b 0 -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
     && (crontab -l 2>/dev/null; echo '# Compress DSpace logs (dspace.log) older than 1 week') | crontab - \
-    && (crontab -l 2>/dev/null; echo '25 0 * * * find /dspace/log -regextype posix-extended -iregex ".*dspace\.log.*" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
+    && (crontab -l 2>/dev/null; echo '25 0 * * * find /dspace/log -regextype posix-extended -iregex ".*dspace\.log.*" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec chrt -b 0 -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
     && (crontab -l 2>/dev/null; echo '# Compress Tomcat logs (catalina, host-manager, localhost and manager) older older than yesterday') | crontab - \
-    && (crontab -l 2>/dev/null; echo '30 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
+    && (crontab -l 2>/dev/null; echo '30 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.log.*" ! -iregex ".*\.xz" ! -newermt "Yesterday" -exec chrt -b 0 -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab - \
     && (crontab -l 2>/dev/null; echo '# Compress Tomcat logs (localhost_access_log) older than 1 week') | crontab - \
-    && (crontab -l 2>/dev/null; echo '35 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.txt" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec schedtool -B -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab -
+    && (crontab -l 2>/dev/null; echo '35 0 * * * find /usr/local/tomcat/logs -regextype posix-extended -iregex ".*\.txt" ! -iregex ".*\.xz" ! -newermt "1 week ago" -exec chrt -b 0 -e ionice -c2 -n7 xz {} \; >> '$DSPACE_HOME'/log/cron_tab_logs.log 2>&1') | crontab -
 USER root
 
 RUN chown -R dspace:dspace "$DSPACE_HOME" /usr/local/tomcat/logs "$CATALINA_HOME"/conf
