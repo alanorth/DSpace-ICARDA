@@ -1,0 +1,63 @@
+<bean id="searchFilterType" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+    <property name="indexFieldName" value="type"/>
+    <property name="metadataFields">
+        <list>
+            <value>dc.type</value>
+        </list>
+    </property>
+    <property name="facetLimit" value="10"/>
+    <property name="sortOrderSidebar" value="COUNT"/>
+</bean>
+
+<bean id="searchFilterInstitute" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+<property name="indexFieldName" value="institute"/>
+<property name="metadataFields">
+    <list>
+        <value>cg.contributor.center</value>
+    </list>
+</property>
+<property name="facetLimit" value="10"/>
+<property name="sortOrderSidebar" value="COUNT"/>
+</bean>
+
+<bean id="searchFilterRegion" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+<property name="indexFieldName" value="region"/>
+<property name="metadataFields">
+    <list>
+        <value>cg.coverage.region</value>
+    </list>
+</property>
+<property name="facetLimit" value="10"/>
+<property name="sortOrderSidebar" value="COUNT"/>
+</bean>
+
+<bean id="searchFilterCountry" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+<property name="indexFieldName" value="country"/>
+<property name="metadataFields">
+    <list>
+        <value>mel.ISO3166/MA</value>
+    </list>
+</property>
+<property name="facetLimit" value="10"/>
+<property name="sortOrderSidebar" value="COUNT"/>
+</bean>
+
+<bean id="searchFilterCrp" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+<property name="indexFieldName" value="crp"/>
+<property name="metadataFields">
+    <list>
+        <value>cg.contributor.crp</value>
+    </list>
+</property>
+<property name="facetLimit" value="10"/>
+<property name="sortOrderSidebar" value="COUNT"/>
+</bean>
+<bean id="searchFilterYear" class="org.dspace.discovery.configuration.DiscoverySearchFilterFacet">
+<property name="indexFieldName" value="year"/>
+<property name="metadataFields">
+    <list>
+        <value>mel.date.year</value>
+    </list>
+</property>
+<property name="facetLimit" value="10"/>
+</bean>

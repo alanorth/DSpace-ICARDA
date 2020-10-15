@@ -1,0 +1,12 @@
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.type">Type</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.type">Type</message>
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.institute">Author Affiliations</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.institute">Author Affiliations</message>
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.region">Region</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.region">Region</message>
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.country">Country</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.country">Country</message>
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.crp">CRP</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.crp">CRP</message>
+<message key="xmlui.ArtifactBrowser.AbstractSearch.sort_by.year">Year</message>
+<message key="xmlui.ArtifactBrowser.SimpleSearch.filter.year">Year</message>

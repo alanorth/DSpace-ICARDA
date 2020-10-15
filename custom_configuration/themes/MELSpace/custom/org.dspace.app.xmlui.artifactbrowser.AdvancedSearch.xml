@@ -1,0 +1,12 @@
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_type">Type</message>
+<message key="xmlui.Discovery.AbstractSearch.type_type">Filter by: Type</message>
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_institute">Author Affiliations</message>
+<message key="xmlui.Discovery.AbstractSearch.type_institute">Filter by: Author Affiliations</message>
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_region">Region</message>
+<message key="xmlui.Discovery.AbstractSearch.type_region">Filter by: Region</message>
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_country">Country</message>
+<message key="xmlui.Discovery.AbstractSearch.type_country">Filter by: Country</message>
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_crp">CRP</message>
+<message key="xmlui.Discovery.AbstractSearch.type_crp">Filter by: CRP</message>
+<message key="xmlui.ArtifactBrowser.AdvancedSearch.type_year">Year</message>
+<message key="xmlui.Discovery.AbstractSearch.type_year">Filter by: Year</message>

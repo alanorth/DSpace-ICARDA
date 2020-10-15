@@ -1,0 +1,6 @@
+<ref bean="searchFilterType"/>
+<ref bean="searchFilterInstitute"/>
+<ref bean="searchFilterRegion"/>
+<ref bean="searchFilterCountry"/>
+<ref bean="searchFilterCrp"/>
+<ref bean="searchFilterYear"/>
